@@ -1,0 +1,5 @@
+pylocating
+==========
+
+.. automodule:: pylocating
+    :members:
