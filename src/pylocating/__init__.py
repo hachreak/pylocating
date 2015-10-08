@@ -1,3 +1,28 @@
+# -*- coding: utf-8 -*-
+#
+# This file is part of pysenslog.
+# Copyright 2015 Leonardo Rossi <leonardo.rossi@studenti.unipr.it>.
+#
+# pysenslog is free software: you can redistribute it and/or modify it under
+# the terms of the GNU Lesser General Public License as published by the Free
+# Software Foundation, either version 3 of the License, or (at your option) any
+# later version.
+#
+# pysenslog is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
+# details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with pysenslog.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Python Object Localization."""
+
+from __future__ import absolute_import, unicode_literals
+
+import numpy
+
+
 __version__ = "0.1.0"
 
 # Base matrix
@@ -19,7 +44,6 @@ __version__ = "0.1.0"
 # [px] [py] [px]
 #
 
-import numpy
 
 def fitness(base, point, radius):
     """Fitness function."""
@@ -31,3 +55,24 @@ def fitness(base, point, radius):
     sum_square_diff = square_difference.sum(axis=1)
     result = sum_square_diff - mradius.transpose()
     return result.sum()
+
+
+class Environment(object):
+
+    """It Contains all information shared by the particles."""
+
+
+class Particle(object):
+
+    """Particle representation."""
+
+    def __init__(self, particleInitializer):
+        """Init particle."""
+        self.position = particleInitializer.initPosition()
+        self.velocity = particleInitializer.initVelocity()
+        self.personalBestResult = particleInitializer.initPersonalBestResult()
+        self.globalBestResult = particleInitializer.initGlobalBestResult()
+
+    def new_velocity(self):
+        """Compute the new velocity."""
+        pass
