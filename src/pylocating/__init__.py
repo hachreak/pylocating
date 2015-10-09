@@ -113,11 +113,6 @@ class Environment(object):
         self.particles = {}
         self.globalBest = info or Information()
 
-    def updateParticleBest(self, info):
-        """Get particle best."""
-        if not self.globalBest.isBetterThan(info):
-            self.globalBest = info
-
     def register(self, particle):
         """Register new particle."""
         self.particles[particle.id] = particle
@@ -140,12 +135,13 @@ class Particle(object):
 
     """Particle representation."""
 
-    def __init__(self, environment, id=None, info=None):
+    def __init__(self, environment, id=None, current=None, best=None):
         """Init particle."""
         self._id = id
         self.environment = environment
         self.environment.register(self)
-        self.bestResult = info or Information()
+        self.current = current or Information()
+        self.bestResult = best or Information()
 
     @property
     def id(self):

@@ -38,30 +38,25 @@ class TestParticle(object):
         myid = "myid"
         particle = Particle(
             environment=Environment(), id=myid,
-            info=Information(position=position, fitness=fitness))
+            best=Information(position=position, fitness=fitness))
 
         assert myid == particle.id
 
         particle = Particle(
             environment=Environment(),
-            info=Information(position=position, fitness=fitness))
+            best=Information(position=position, fitness=fitness))
 
         assert str(particle) == particle.id
 
     def test_particle_register_environment(self):
         """Test if particle update environment when set new best value."""
+        env = Environment()
         position = numpy.matrix([1, 2, 3])
         fitness = 5
         myinfo = Information(position=position, fitness=fitness)
 
-        class Environment(object):
-            def updateParticleBest(self, info):
-                assert info == myinfo
-
-            def register(self, particle):
-                assert self == particle.environment
-
-        Particle(environment=Environment(), info=myinfo)
+        p1 = Particle(environment=env, best=myinfo)
+        assert env.best == p1
 
     def test_register_new_local_best_result(self):
         """Register new local best result."""
@@ -81,7 +76,7 @@ class TestParticle(object):
         fitness = 5
         info = Information(position=position, fitness=fitness)
         env.setInfo(Information(position=position, fitness=fitness))
-        particle = Particle(environment=env, info=info)
+        particle = Particle(environment=env, best=info)
 
         position = numpy.matrix([4, 5, 6])
         fitness = 4
@@ -108,22 +103,22 @@ class TestEnvironment(object):
         particles = {}
         particles[1] = Particle(
             environment=env,
-            info=Information(position=position, fitness=3))
+            best=Information(position=position, fitness=3))
         particles[2] = Particle(
             environment=env,
-            info=Information(position=position, fitness=10))
+            best=Information(position=position, fitness=10))
         particles[3] = Particle(
             environment=env,
-            info=Information(position=position, fitness=40))
+            best=Information(position=position, fitness=40))
         particles[4] = Particle(
             environment=env,
-            info=Information(position=position, fitness=25))
+            best=Information(position=position, fitness=25))
         particles[5] = Particle(
             environment=env,
-            info=Information(position=position, fitness=7))
+            best=Information(position=position, fitness=7))
         particles[6] = Particle(
             environment=env,
-            info=Information(position=position, fitness=37))
+            best=Information(position=position, fitness=37))
 
         best = env.best
         assert particles[3] == best
