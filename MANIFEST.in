@@ -13,9 +13,12 @@ include .pylintrc
 include AUTHORS.rst
 include CHANGELOG.rst
 include CONTRIBUTING.rst
-include LICENSE
+include COPYING
 include README.rst
 
 include tox.ini .travis.yml appveyor.yml
 
 global-exclude *.py[cod] __pycache__ *.so *.dylib
+
+exclude *.sh
+exclude Dockerfile

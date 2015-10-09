@@ -9,7 +9,7 @@ pylocating
       - |docs|
     * - tests
       - | |travis|
-        | |coveralls| |codecov|
+        | |codecov|
         |
     * - package
       - |version| |downloads| |wheel| |supported-versions| |supported-implementations|
@@ -21,10 +21,6 @@ pylocating
 .. |travis| image:: https://travis-ci.org/hachreak/pylocating.svg?branch=master
     :alt: Travis-CI Build Status
     :target: https://travis-ci.org/hachreak/pylocating
-
-.. |coveralls| image:: https://coveralls.io/repos/hachreak/pylocating/badge.svg?branch=master&service=github
-    :alt: Coverage Status
-    :target: https://coveralls.io/r/hachreak/pylocating
 
 .. |codecov| image:: https://codecov.io/github/hachreak/pylocating/coverage.svg?branch=master
     :alt: Coverage Status
