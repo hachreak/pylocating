@@ -32,13 +32,15 @@ class TestParticle(object):
         position = [1, 2, 3]
         fitness = 5
         myid = "myid"
-        particle = Particle(environment=Environment(), id=myid,
-                            position=position, bestResult=fitness)
+        particle = Particle(
+            environment=Environment(), id=myid,
+            info=Information(position=position, fitness=fitness))
 
         assert myid == particle.id
 
-        particle = Particle(environment=Environment(),
-                            position=position, bestResult=fitness)
+        particle = Particle(
+            environment=Environment(),
+            info=Information(position=position, fitness=fitness))
 
         assert str(particle) == particle.id
 
@@ -55,8 +57,7 @@ class TestParticle(object):
             def register(self, particle):
                 assert self == particle.environment
 
-        Particle(environment=Environment(),
-                 position=position, bestResult=fitness)
+        Particle(environment=Environment(), info=myinfo)
 
     def test_register_new_local_best_result(self):
         """Register new local best result."""
@@ -74,13 +75,14 @@ class TestParticle(object):
 
         position = [1, 2, 3]
         fitness = 5
+        info = Information(position, fitness)
         env.setInfo(Information(position, fitness))
-        particle = Particle(environment=env,
-                            position=position, bestResult=fitness)
+        particle = Particle(environment=env, info=info)
 
         position = [4, 5, 6]
         fitness = 4
-        env.setInfo(Information(position, fitness))
+        info = Information(position, fitness)
+        env.setInfo(info)
         particle.position = position
         particle.bestResult = fitness
 
@@ -92,14 +94,27 @@ class TestEnvironment(object):
     def test_env_best_result(self):
         """Test the computation of global best result."""
         env = Environment()
+        position = [0, 0, 0]
 
         particles = {}
-        particles[1] = Particle(environment=env, bestResult=3)
-        particles[2] = Particle(environment=env, bestResult=10)
-        particles[3] = Particle(environment=env, bestResult=40)
-        particles[4] = Particle(environment=env, bestResult=25)
-        particles[5] = Particle(environment=env, bestResult=7)
-        particles[6] = Particle(environment=env, bestResult=37)
+        particles[1] = Particle(
+            environment=env,
+            info=Information(position=position, fitness=3))
+        particles[2] = Particle(
+            environment=env,
+            info=Information(position=position, fitness=10))
+        particles[3] = Particle(
+            environment=env,
+            info=Information(position=position, fitness=40))
+        particles[4] = Particle(
+            environment=env,
+            info=Information(position=position, fitness=25))
+        particles[5] = Particle(
+            environment=env,
+            info=Information(position=position, fitness=7))
+        particles[6] = Particle(
+            environment=env,
+            info=Information(position=position, fitness=37))
 
         best = env.bestResult
         assert particles[3] == best
@@ -115,10 +130,13 @@ class TestInformation(object):
         """Test data inside information object."""
         position = [4, 5, 6]
         fitness = 4
-        info = Information(position=position, fitness=fitness)
+        velocity = [7, 8, 9]
+        info = Information(position=position, fitness=fitness,
+                           velocity=velocity)
 
         assert position == info.position
         assert fitness == info.fitness
+        assert velocity == info.velocity
 
     def test_equal(self):
         """Test information equal operator."""
@@ -126,7 +144,11 @@ class TestInformation(object):
         position2 = [4, 5, 6]
         fitness1 = 4
         fitness2 = 4
-        info1 = Information(position=position1, fitness=fitness1)
-        info2 = Information(position=position2, fitness=fitness2)
+        velocity1 = [7, 8, 9]
+        velocity2 = [7, 8, 9]
+        info1 = Information(position=position1, fitness=fitness1,
+                            velocity=velocity1)
+        info2 = Information(position=position2, fitness=fitness2,
+                            velocity=velocity2)
 
         assert info1 == info2

@@ -61,10 +61,11 @@ class Information(object):
 
     """Single unit of Information shareb by the particles."""
 
-    def __init__(self, position, fitness):
+    def __init__(self, position, fitness, velocity=0):
         """Init information."""
         self.position = position
         self.fitness = fitness
+        self.velocity = velocity
 
     def isBetterThan(self, info):
         """Check if this is better that the other iformation."""
@@ -73,7 +74,7 @@ class Information(object):
     def __eq__(self, other):
         """Test if `self` is equal to `other`."""
         return self.position == other.position and \
-            self.fitness == other.fitness
+            self.fitness == other.fitness and self.velocity == other.velocity
 
 
 class Environment(object):
@@ -96,6 +97,7 @@ class Environment(object):
 
     @property
     def bestResult(self):
+        """Compute realtime the new global best result."""
         max = numpy.matrix(
             [p.bestResult for p in self.particles.values()]).max()
         return list(
@@ -107,15 +109,14 @@ class Particle(object):
 
     """Particle representation."""
 
-    def __init__(self, environment, id=None,
-                 position=None, velocity=None, bestResult=None):
+    def __init__(self, environment, id=None, info=None):
         """Init particle."""
         self._id = id
         self.environment = environment
         self.environment.register(self)
-        self.position = position or [0, 0, 0]
-        self.velocity = velocity or [0, 0, 0]
-        self.bestResult = bestResult or 0
+        self.position = info.position or [0, 0, 0]
+        self.velocity = info.velocity or [0, 0, 0]
+        self.bestResult = info.fitness or 0
 
     @property
     def bestResult(self):
