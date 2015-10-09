@@ -20,15 +20,10 @@
 
 from __future__ import absolute_import, unicode_literals
 
-import numpy
-
-from copy import deepcopy
+from numpy import matrix, multiply
 
 __version__ = "0.1.0"
 
-
-class EmptyEnvironment(Exception):
-    pass
 
 # Base matrix
 #
@@ -52,14 +47,15 @@ class EmptyEnvironment(Exception):
 
 def fitness(base, point, radius):
     """Fitness function."""
-    mpoint = numpy.matrix([point, point, point])
-    mbase = numpy.matrix(base)
-    mradius = numpy.matrix(radius)
+    mpoint = matrix([point, point, point])
+    mbase = matrix(base)
+    mradius = matrix(radius)
     difference = mbase - mpoint
-    square_difference = numpy.multiply(difference, difference)
+    square_difference = multiply(difference, difference)
     sum_square_diff = square_difference.sum(axis=1)
     result = sum_square_diff - mradius.transpose()
     return result.sum()
+
 
 def move(info, binfo, w, c1, c2, random):
     """Compute next position and velocity of the particle.
@@ -88,10 +84,10 @@ class Information(object):
     def __init__(self, position=None, fitness=None, velocity=None):
         """Init information."""
         self.position = position if position is not None else \
-            numpy.matrix([0, 0, 0])
+            matrix([0, 0, 0])
         self.fitness = fitness or 0
         self.velocity = velocity if velocity is not None else \
-            numpy.matrix([0, 0, 0])
+            matrix([0, 0, 0])
 
     def isBetterThan(self, info):
         """Check if this is better that the other iformation."""
@@ -102,33 +98,6 @@ class Information(object):
         return (self.position == other.position).all() and \
             self.fitness == other.fitness and \
             (self.velocity == other.velocity).all()
-
-
-class Environment(object):
-
-    """It Contains all information shared by the particles."""
-
-    def __init__(self, info=None):
-        """Init environment."""
-        self.particles = {}
-        self.globalBest = info or Information()
-
-    def register(self, particle):
-        """Register new particle."""
-        self.particles[particle.id] = particle
-
-    @property
-    def best(self):
-        """Compute realtime the new global best result."""
-        try:
-            max = numpy.matrix(
-                [p.best.fitness for p in self.particles.values()]).max()
-            return list(
-                filter((lambda p: p.best.fitness == max),
-                       self.particles.values()))[0]
-        except ValueError:
-            raise EmptyEnvironment("""The environment is empty! """
-                                   """Please insert new particles.""")
 
 
 class Particle(object):

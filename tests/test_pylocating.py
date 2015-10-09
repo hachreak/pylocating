@@ -20,11 +20,9 @@
 
 from __future__ import absolute_import, unicode_literals
 
-import numpy
-import pytest
-
-from pylocating import Particle, Information, Environment, move, \
-    EmptyEnvironment
+from numpy import matrix
+from pylocating import Particle, Information, move
+from pylocating.environment import Environment
 
 
 class TestParticle(object):
@@ -51,7 +49,7 @@ class TestParticle(object):
     def test_particle_register_environment(self):
         """Test if particle update environment when set new best value."""
         env = Environment()
-        position = numpy.matrix([1, 2, 3])
+        position = matrix([1, 2, 3])
         fitness = 5
         myinfo = Information(position=position, fitness=fitness)
 
@@ -72,57 +70,17 @@ class TestParticle(object):
 
         env = Environment()
 
-        position = numpy.matrix([1, 2, 3])
+        position = matrix([1, 2, 3])
         fitness = 5
         info = Information(position=position, fitness=fitness)
         env.setInfo(Information(position=position, fitness=fitness))
         particle = Particle(environment=env, best=info)
 
-        position = numpy.matrix([4, 5, 6])
+        position = matrix([4, 5, 6])
         fitness = 4
         info = Information(position=position, fitness=fitness)
         env.setInfo(info)
         particle.best = info
-
-
-class TestEnvironment(object):
-
-    """Test environment."""
-
-    def test_empty_environment(self):
-        """Test empty environment."""
-        env = Environment()
-        with pytest.raises(EmptyEnvironment):
-            env.best
-
-    def test_env_best_result(self):
-        """Test the computation of global best result."""
-        env = Environment()
-        position = numpy.matrix([0, 0, 0])
-
-        particles = {}
-        particles[1] = Particle(
-            environment=env,
-            best=Information(position=position, fitness=3))
-        particles[2] = Particle(
-            environment=env,
-            best=Information(position=position, fitness=10))
-        particles[3] = Particle(
-            environment=env,
-            best=Information(position=position, fitness=40))
-        particles[4] = Particle(
-            environment=env,
-            best=Information(position=position, fitness=25))
-        particles[5] = Particle(
-            environment=env,
-            best=Information(position=position, fitness=7))
-        particles[6] = Particle(
-            environment=env,
-            best=Information(position=position, fitness=37))
-
-        best = env.best
-        assert particles[3] == best
-        assert (particles[3].best == best.best).all()
 
 
 class TestInformation(object):
@@ -131,9 +89,9 @@ class TestInformation(object):
 
     def test_internal(self):
         """Test data inside information object."""
-        position = numpy.matrix([4, 5, 6])
+        position = matrix([4, 5, 6])
         fitness = 4
-        velocity = numpy.matrix([7, 8, 9])
+        velocity = matrix([7, 8, 9])
         info = Information(position=position, fitness=fitness,
                            velocity=velocity)
 
@@ -143,12 +101,12 @@ class TestInformation(object):
 
     def test_equal(self):
         """Test information equal operator."""
-        position1 = numpy.matrix([4, 5, 6])
-        position2 = numpy.matrix([4, 5, 6])
+        position1 = matrix([4, 5, 6])
+        position2 = matrix([4, 5, 6])
         fitness1 = 4
         fitness2 = 4
-        velocity1 = numpy.matrix([7, 8, 9])
-        velocity2 = numpy.matrix([7, 8, 9])
+        velocity1 = matrix([7, 8, 9])
+        velocity2 = matrix([7, 8, 9])
         info1 = Information(position=position1, fitness=fitness1,
                             velocity=velocity1)
         info2 = Information(position=position2, fitness=fitness2,
@@ -167,14 +125,14 @@ class TestMove(object):
             def next(self):
                 return 1
 
-        info = Information(position=numpy.matrix([1, 1, 1]),
-                           velocity=numpy.matrix([1, 1, 1]), fitness=5)
-        binfo = Information(position=numpy.matrix([1, 1, 1]),
-                           velocity=numpy.matrix([1, 1, 1]), fitness=5)
+        info = Information(position=matrix([1, 1, 1]),
+                           velocity=matrix([1, 1, 1]), fitness=5)
+        binfo = Information(position=matrix([1, 1, 1]),
+                            velocity=matrix([1, 1, 1]), fitness=5)
         w = 1
         c1 = 1
         c2 = 1
         new_info = move(info=info, binfo=binfo, w=w, c1=c1, c2=c2,
-                            random=Random())
-        assert (new_info.velocity == numpy.matrix([1, 1, 1])).all()
-        assert (new_info.position == numpy.matrix([2, 2, 2])).all()
+                        random=Random())
+        assert (new_info.velocity == matrix([1, 1, 1])).all()
+        assert (new_info.position == matrix([2, 2, 2])).all()
