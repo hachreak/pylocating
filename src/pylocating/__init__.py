@@ -22,6 +22,7 @@ from __future__ import absolute_import, unicode_literals
 
 import numpy
 
+from copy import deepcopy
 
 __version__ = "0.1.0"
 
@@ -80,11 +81,13 @@ class Information(object):
 
     """Single unit of Information shareb by the particles."""
 
-    def __init__(self, position, fitness, velocity=0):
+    def __init__(self, position=None, fitness=None, velocity=None):
         """Init information."""
-        self.position = position
-        self.fitness = fitness
-        self.velocity = velocity
+        self.position = position if position is not None else \
+            numpy.matrix([0, 0, 0])
+        self.fitness = fitness or 0
+        self.velocity = velocity if velocity is not None else \
+            numpy.matrix([0, 0, 0])
 
     def isBetterThan(self, info):
         """Check if this is better that the other iformation."""
@@ -92,18 +95,19 @@ class Information(object):
 
     def __eq__(self, other):
         """Test if `self` is equal to `other`."""
-        return self.position == other.position and \
-            self.fitness == other.fitness and self.velocity == other.velocity
+        return (self.position == other.position).all() and \
+            self.fitness == other.fitness and \
+            (self.velocity == other.velocity).all()
 
 
 class Environment(object):
 
     """It Contains all information shared by the particles."""
 
-    def __init__(self):
+    def __init__(self, info=None):
         """Init environment."""
         self.particles = {}
-        self.globalBest = Information([0, 0, 0], 0)
+        self.globalBest = info or Information()
 
     def updateParticleBest(self, info):
         """Get particle best."""
@@ -115,12 +119,12 @@ class Environment(object):
         self.particles[particle.id] = particle
 
     @property
-    def bestResult(self):
+    def best(self):
         """Compute realtime the new global best result."""
         max = numpy.matrix(
-            [p.bestResult for p in self.particles.values()]).max()
+            [p.bestResult.fitness for p in self.particles.values()]).max()
         return list(
-            filter((lambda p: p.bestResult == max),
+            filter((lambda p: p.bestResult.fitness == max),
                    self.particles.values()))[0]
 
 
@@ -133,22 +137,7 @@ class Particle(object):
         self._id = id
         self.environment = environment
         self.environment.register(self)
-        self.position = info.position or [0, 0, 0]
-        self.velocity = info.velocity or [0, 0, 0]
-        self.bestResult = info.fitness or 0
-
-    @property
-    def bestResult(self):
-        """Get personal best result."""
-        return self._bestResult
-
-    @bestResult.setter
-    def bestResult(self, value):
-        """Set personal best result and update environment."""
-        self._bestResult = value
-        info = Information(
-            position=self.position, fitness=self._bestResult)
-        self.environment.updateParticleBest(info=info)
+        self.bestResult = info or Information()
 
     @property
     def id(self):

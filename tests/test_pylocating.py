@@ -48,9 +48,9 @@ class TestParticle(object):
 
     def test_particle_register_environment(self):
         """Test if particle update environment when set new best value."""
-        position = [1, 2, 3]
+        position = numpy.matrix([1, 2, 3])
         fitness = 5
-        myinfo = Information(position, fitness)
+        myinfo = Information(position=position, fitness=fitness)
 
         class Environment(object):
             def updateParticleBest(self, info):
@@ -75,18 +75,17 @@ class TestParticle(object):
 
         env = Environment()
 
-        position = [1, 2, 3]
+        position = numpy.matrix([1, 2, 3])
         fitness = 5
-        info = Information(position, fitness)
-        env.setInfo(Information(position, fitness))
+        info = Information(position=position, fitness=fitness)
+        env.setInfo(Information(position=position, fitness=fitness))
         particle = Particle(environment=env, info=info)
 
-        position = [4, 5, 6]
+        position = numpy.matrix([4, 5, 6])
         fitness = 4
-        info = Information(position, fitness)
+        info = Information(position=position, fitness=fitness)
         env.setInfo(info)
-        particle.position = position
-        particle.bestResult = fitness
+        particle.bestResult = info
 
 
 class TestEnvironment(object):
@@ -96,7 +95,7 @@ class TestEnvironment(object):
     def test_env_best_result(self):
         """Test the computation of global best result."""
         env = Environment()
-        position = [0, 0, 0]
+        position = numpy.matrix([0, 0, 0])
 
         particles = {}
         particles[1] = Particle(
@@ -118,10 +117,9 @@ class TestEnvironment(object):
             environment=env,
             info=Information(position=position, fitness=37))
 
-        best = env.bestResult
+        best = env.best
         assert particles[3] == best
-        assert particles[3].position == best.position
-        assert particles[3].bestResult == best.bestResult
+        assert (particles[3].bestResult == best.bestResult).all()
 
 
 class TestInformation(object):
@@ -130,24 +128,24 @@ class TestInformation(object):
 
     def test_internal(self):
         """Test data inside information object."""
-        position = [4, 5, 6]
+        position = numpy.matrix([4, 5, 6])
         fitness = 4
-        velocity = [7, 8, 9]
+        velocity = numpy.matrix([7, 8, 9])
         info = Information(position=position, fitness=fitness,
                            velocity=velocity)
 
-        assert position == info.position
+        assert (position == info.position).all()
         assert fitness == info.fitness
-        assert velocity == info.velocity
+        assert (velocity == info.velocity).all()
 
     def test_equal(self):
         """Test information equal operator."""
-        position1 = [4, 5, 6]
-        position2 = [4, 5, 6]
+        position1 = numpy.matrix([4, 5, 6])
+        position2 = numpy.matrix([4, 5, 6])
         fitness1 = 4
         fitness2 = 4
-        velocity1 = [7, 8, 9]
-        velocity2 = [7, 8, 9]
+        velocity1 = numpy.matrix([7, 8, 9])
+        velocity2 = numpy.matrix([7, 8, 9])
         info1 = Information(position=position1, fitness=fitness1,
                             velocity=velocity1)
         info2 = Information(position=position2, fitness=fitness2,
