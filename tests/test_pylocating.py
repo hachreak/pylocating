@@ -20,7 +20,9 @@
 
 from __future__ import absolute_import, unicode_literals
 
-from pylocating import Particle, Information, Environment
+import numpy
+
+from pylocating import Particle, Information, Environment, move
 
 
 class TestParticle(object):
@@ -152,3 +154,26 @@ class TestInformation(object):
                             velocity=velocity2)
 
         assert info1 == info2
+
+
+class TestMove(object):
+
+    """Test default function to compute new position and velocity."""
+
+    def test_move_one_values(self):
+        """Test move."""
+        class Random(object):
+            def next(self):
+                return 1
+
+        info = Information(position=numpy.matrix([1, 1, 1]),
+                           velocity=numpy.matrix([1, 1, 1]), fitness=5)
+        binfo = Information(position=numpy.matrix([1, 1, 1]),
+                           velocity=numpy.matrix([1, 1, 1]), fitness=5)
+        w = 1
+        c1 = 1
+        c2 = 1
+        new_info = move(info=info, binfo=binfo, w=w, c1=c1, c2=c2,
+                            random=Random())
+        assert (new_info.velocity == numpy.matrix([1, 1, 1])).all()
+        assert (new_info.position == numpy.matrix([2, 2, 2])).all()

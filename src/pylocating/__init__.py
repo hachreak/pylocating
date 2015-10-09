@@ -56,6 +56,25 @@ def fitness(base, point, radius):
     result = sum_square_diff - mradius.transpose()
     return result.sum()
 
+def move(info, binfo, w, c1, c2, random):
+    """Compute next position and velocity of the particle.
+
+    :param info: information about current particle
+    :param binfo: information about the particle with best fitness
+    :param w: inertial weight
+    :param c1: cognition parameter
+    :param c2: social parameter
+    :param random: randomizer object that return random diagonal matrix with
+        values uniformed distributed in the interval [0,1)
+    :return: new information of the particle
+    """
+    next_velocity = w * info.velocity + \
+        c1 * random.next() * (binfo.velocity - info.velocity) + \
+        c2 * random.next() * (binfo.position - info.position)
+    next_position = info.position + next_velocity
+    return Information(position=next_position, velocity=next_velocity,
+                       fitness=info.fitness)
+
 
 class Information(object):
 
