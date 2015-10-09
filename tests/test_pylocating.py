@@ -91,22 +91,20 @@ class TestEnvironment(object):
 
     def test_env_best_result(self):
         """Test the computation of global best result."""
-        class Particle(object):
-            def __init__(self, value):
-                self.bestResult = value
+        env = Environment()
 
         particles = {}
-        particles[1] = Particle(3)
-        particles[2] = Particle(10)
-        particles[3] = Particle(40)
-        particles[4] = Particle(25)
-        particles[5] = Particle(7)
-        particles[6] = Particle(37)
+        particles[1] = Particle(environment=env, bestResult=3)
+        particles[2] = Particle(environment=env, bestResult=10)
+        particles[3] = Particle(environment=env, bestResult=40)
+        particles[4] = Particle(environment=env, bestResult=25)
+        particles[5] = Particle(environment=env, bestResult=7)
+        particles[6] = Particle(environment=env, bestResult=37)
 
-        env = Environment()
-        env.particles = particles
-
-        assert 40 == env.bestResult
+        best = env.bestResult
+        assert particles[3] == best
+        assert particles[3].position == best.position
+        assert particles[3].bestResult == best.bestResult
 
 
 class TestInformation(object):

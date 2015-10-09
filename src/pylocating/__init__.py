@@ -96,8 +96,11 @@ class Environment(object):
 
     @property
     def bestResult(self):
-        return numpy.matrix(
+        max = numpy.matrix(
             [p.bestResult for p in self.particles.values()]).max()
+        return list(
+            filter((lambda p: p.bestResult == max),
+                   self.particles.values()))[0]
 
 
 class Particle(object):
@@ -117,7 +120,7 @@ class Particle(object):
     @property
     def bestResult(self):
         """Get personal best result."""
-        self._bestResult
+        return self._bestResult
 
     @bestResult.setter
     def bestResult(self, value):
