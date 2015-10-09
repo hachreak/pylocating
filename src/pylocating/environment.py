@@ -22,7 +22,7 @@ from __future__ import absolute_import, unicode_literals
 
 from numpy import matrix
 
-from . import Information
+from .information import Information
 
 __version__ = "0.1.0"
 

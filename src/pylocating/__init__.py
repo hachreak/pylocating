@@ -22,6 +22,8 @@ from __future__ import absolute_import, unicode_literals
 
 from numpy import matrix, multiply
 
+from .information import Information
+
 __version__ = "0.1.0"
 
 
@@ -75,29 +77,6 @@ def move(info, binfo, w, c1, c2, random):
     next_position = info.position + next_velocity
     return Information(position=next_position, velocity=next_velocity,
                        fitness=info.fitness)
-
-
-class Information(object):
-
-    """Single unit of Information shareb by the particles."""
-
-    def __init__(self, position=None, fitness=None, velocity=None):
-        """Init information."""
-        self.position = position if position is not None else \
-            matrix([0, 0, 0])
-        self.fitness = fitness or 0
-        self.velocity = velocity if velocity is not None else \
-            matrix([0, 0, 0])
-
-    def isBetterThan(self, info):
-        """Check if this is better that the other iformation."""
-        return self.fitness >= info.fitness
-
-    def __eq__(self, other):
-        """Test if `self` is equal to `other`."""
-        return (self.position == other.position).all() and \
-            self.fitness == other.fitness and \
-            (self.velocity == other.velocity).all()
 
 
 class Particle(object):
