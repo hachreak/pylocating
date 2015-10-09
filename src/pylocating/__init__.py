@@ -122,9 +122,9 @@ class Environment(object):
         """Compute realtime the new global best result."""
         try:
             max = numpy.matrix(
-                [p.bestResult.fitness for p in self.particles.values()]).max()
+                [p.best.fitness for p in self.particles.values()]).max()
             return list(
-                filter((lambda p: p.bestResult.fitness == max),
+                filter((lambda p: p.best.fitness == max),
                        self.particles.values()))[0]
         except ValueError:
             raise EmptyEnvironment("""The environment is empty! """
@@ -141,7 +141,7 @@ class Particle(object):
         self.environment = environment
         self.environment.register(self)
         self.current = current or Information()
-        self.bestResult = best or Information()
+        self.best = best or Information()
 
     @property
     def id(self):

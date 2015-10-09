@@ -82,7 +82,7 @@ class TestParticle(object):
         fitness = 4
         info = Information(position=position, fitness=fitness)
         env.setInfo(info)
-        particle.bestResult = info
+        particle.best = info
 
 
 class TestEnvironment(object):
@@ -122,7 +122,7 @@ class TestEnvironment(object):
 
         best = env.best
         assert particles[3] == best
-        assert (particles[3].bestResult == best.bestResult).all()
+        assert (particles[3].best == best.best).all()
 
 
 class TestInformation(object):
