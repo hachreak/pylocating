@@ -49,9 +49,10 @@ pylocating
     :alt: Supported implementations
     :target: https://pypi.python.org/pypi/pylocating
 
-Locating objects
+Detect the accurate object position disturbed by noise using Artificial
+Intelligence algorithms.
 
-* Free software: BSD license
+* Free software: GPLv2 license
 
 Installation
 ============
