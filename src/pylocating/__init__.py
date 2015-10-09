@@ -77,26 +77,3 @@ def move(info, binfo, w, c1, c2, random):
     next_position = info.position + next_velocity
     return Information(position=next_position, velocity=next_velocity,
                        fitness=info.fitness)
-
-
-class Particle(object):
-
-    """Particle representation."""
-
-    def __init__(self, environment, id=None, current=None, best=None):
-        """Init particle."""
-        self._id = id
-        self.environment = environment
-        self.environment.register(self)
-        self.current = current or Information()
-        self.best = best or Information()
-
-    @property
-    def id(self):
-        """Get id."""
-        return self._id if self._id else str(self)
-
-    @id.setter
-    def id(self, value):
-        """Set id."""
-        self._id = value

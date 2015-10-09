@@ -21,67 +21,8 @@
 from __future__ import absolute_import, unicode_literals
 
 from numpy import matrix
-from pylocating import Particle, move
-from pylocating.environment import Environment
+from pylocating import move
 from pylocating.information import Information
-
-
-class TestParticle(object):
-
-    """Test particle."""
-
-    def test_id(self):
-        """Test if of a particle."""
-        position = [1, 2, 3]
-        fitness = 5
-        myid = "myid"
-        particle = Particle(
-            environment=Environment(), id=myid,
-            best=Information(position=position, fitness=fitness))
-
-        assert myid == particle.id
-
-        particle = Particle(
-            environment=Environment(),
-            best=Information(position=position, fitness=fitness))
-
-        assert str(particle) == particle.id
-
-    def test_particle_register_environment(self):
-        """Test if particle update environment when set new best value."""
-        env = Environment()
-        position = matrix([1, 2, 3])
-        fitness = 5
-        myinfo = Information(position=position, fitness=fitness)
-
-        p1 = Particle(environment=env, best=myinfo)
-        assert env.best == p1
-
-    def test_register_new_local_best_result(self):
-        """Register new local best result."""
-        class Environment(object):
-            def setInfo(self, info):
-                self.info = info
-
-            def updateParticleBest(self, info):
-                assert info == self.info
-
-            def register(self, particle):
-                assert self == particle.environment
-
-        env = Environment()
-
-        position = matrix([1, 2, 3])
-        fitness = 5
-        info = Information(position=position, fitness=fitness)
-        env.setInfo(Information(position=position, fitness=fitness))
-        particle = Particle(environment=env, best=info)
-
-        position = matrix([4, 5, 6])
-        fitness = 4
-        info = Information(position=position, fitness=fitness)
-        env.setInfo(info)
-        particle.best = info
 
 
 class TestMove(object):

@@ -23,9 +23,9 @@ from __future__ import absolute_import, unicode_literals
 import pytest
 
 from numpy import matrix
-from pylocating import Particle
 from pylocating.environment import Environment, EmptyEnvironment
 from pylocating.information import Information
+from pylocating.particle import Particle
 
 
 class TestEnvironment(object):
