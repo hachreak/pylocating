@@ -57,22 +57,82 @@ def fitness(base, point, radius):
     return result.sum()
 
 
+class Information(object):
+
+    """Single unit of Information shareb by the particles."""
+
+    def __init__(self, position, fitness):
+        """Init information."""
+        self.position = position
+        self.fitness = fitness
+
+    def isBetterThan(self, info):
+        """Check if this is better that the other iformation."""
+        return self.fitness >= info.fitness
+
+    def __eq__(self, other):
+        """Test if `self` is equal to `other`."""
+        return self.position == other.position and \
+            self.fitness == other.fitness
+
+
 class Environment(object):
 
     """It Contains all information shared by the particles."""
+
+    def __init__(self):
+        """Init environment."""
+        self.particles = {}
+        self.globalBest = Information([0, 0, 0], 0)
+
+    def updateParticleBest(self, info):
+        """Get particle best."""
+        if not self.globalBest.isBetterThan(info):
+            self.globalBest = info
+
+    def register(self, particle):
+        """Register new particle."""
+        self.particles[particle.id] = particle
+
+    @property
+    def bestResult(self):
+        return numpy.matrix(
+            [p.bestResult for p in self.particles.values()]).max()
 
 
 class Particle(object):
 
     """Particle representation."""
 
-    def __init__(self, particleInitializer):
+    def __init__(self, environment, id=None,
+                 position=None, velocity=None, bestResult=None):
         """Init particle."""
-        self.position = particleInitializer.initPosition()
-        self.velocity = particleInitializer.initVelocity()
-        self.personalBestResult = particleInitializer.initPersonalBestResult()
-        self.globalBestResult = particleInitializer.initGlobalBestResult()
+        self._id = id
+        self.environment = environment
+        self.environment.register(self)
+        self.position = position or [0, 0, 0]
+        self.velocity = velocity or [0, 0, 0]
+        self.bestResult = bestResult or 0
 
-    def new_velocity(self):
-        """Compute the new velocity."""
-        pass
+    @property
+    def bestResult(self):
+        """Get personal best result."""
+        self._bestResult
+
+    @bestResult.setter
+    def bestResult(self, value):
+        """Set personal best result and update environment."""
+        self._bestResult = value
+        info = Information(
+            position=self.position, fitness=self._bestResult)
+        self.environment.updateParticleBest(info=info)
+
+    @property
+    def id(self):
+        """Get id."""
+        return self._id if self._id else str(self)
+
+    @id.setter
+    def id(self, value):
+        """Set id."""
+        self._id = value
