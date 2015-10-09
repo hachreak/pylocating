@@ -21,8 +21,10 @@
 from __future__ import absolute_import, unicode_literals
 
 import numpy
+import pytest
 
-from pylocating import Particle, Information, Environment, move
+from pylocating import Particle, Information, Environment, move, \
+    EmptyEnvironment
 
 
 class TestParticle(object):
@@ -91,6 +93,12 @@ class TestParticle(object):
 class TestEnvironment(object):
 
     """Test environment."""
+
+    def test_empty_environment(self):
+        """Test empty environment."""
+        env = Environment()
+        with pytest.raises(EmptyEnvironment):
+            env.best
 
     def test_env_best_result(self):
         """Test the computation of global best result."""

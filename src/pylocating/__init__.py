@@ -26,6 +26,10 @@ from copy import deepcopy
 
 __version__ = "0.1.0"
 
+
+class EmptyEnvironment(Exception):
+    pass
+
 # Base matrix
 #
 # [x0] [y0] [z0] - position of beacon 0
@@ -121,11 +125,15 @@ class Environment(object):
     @property
     def best(self):
         """Compute realtime the new global best result."""
-        max = numpy.matrix(
-            [p.bestResult.fitness for p in self.particles.values()]).max()
-        return list(
-            filter((lambda p: p.bestResult.fitness == max),
-                   self.particles.values()))[0]
+        try:
+            max = numpy.matrix(
+                [p.bestResult.fitness for p in self.particles.values()]).max()
+            return list(
+                filter((lambda p: p.bestResult.fitness == max),
+                       self.particles.values()))[0]
+        except ValueError:
+            raise EmptyEnvironment("""The environment is empty! """
+                                   """Please insert new particles.""")
 
 
 class Particle(object):
