@@ -22,7 +22,7 @@ from __future__ import absolute_import, unicode_literals
 
 from numpy import multiply
 
-from .information import Information
+from ..information import Information
 from .particle import Particle
 
 

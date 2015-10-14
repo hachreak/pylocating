@@ -26,7 +26,7 @@ import random
 from numpy import matrix
 from pylocating.environment import Environment, EmptyEnvironment
 from pylocating.information import Information
-from pylocating.particle import Particle
+from pylocating.particles import Particle
 
 
 class TestEnvironment(object):

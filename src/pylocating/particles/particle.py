@@ -21,7 +21,8 @@
 from __future__ import absolute_import, unicode_literals
 
 from numpy import matrix
-from .information import Information
+
+from ..information import Information
 
 
 class Particle(object):

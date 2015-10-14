@@ -64,3 +64,5 @@ docs/_build
 
 # bash history
 .bash_history
+# rope project
+.ropeproject/

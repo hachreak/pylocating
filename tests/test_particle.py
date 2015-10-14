@@ -23,7 +23,7 @@ from __future__ import absolute_import, unicode_literals
 from numpy import matrix
 from pylocating.environment import Environment
 from pylocating.information import Information
-from pylocating.particle import Particle
+from pylocating.particles import Particle
 
 
 class TestParticle(object):
