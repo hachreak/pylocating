@@ -46,7 +46,7 @@ from .particle import Particle
 #
 
 
-class PsoParticle(Particle):
+class PSOParticle(Particle):
 
     """PSO Particle."""
 
@@ -56,7 +56,7 @@ class PsoParticle(Particle):
         difference = self.base - self.current.position
         square_difference = multiply(difference, difference)
         sum_square_diff = square_difference.sum(axis=1)
-        result = (sum_square_diff - radius.transpose()).sum()
+        result = (sum_square_diff - self.radius.transpose()).sum()
         # update best result
         self.best = Information(position=self.current.position,
                                 fitness=result,
@@ -70,7 +70,7 @@ class PsoParticle(Particle):
         :return: new information of the particle
         """
         # information about the particle with best fitness
-        binfo = self.environment.best
+        binfo = self.environment.best.current
         w = self.environment.config['inertial_weight']
         c1 = self.environment.config['cognition']
         c2 = self.environment.config['social']
