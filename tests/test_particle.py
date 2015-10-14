@@ -36,12 +36,14 @@ class TestParticle(object):
         fitness = 5
         myid = "myid"
         particle = Particle(
+            base=None, radius=None,
             environment=Environment(config={}), id=myid,
             best=Information(position=position, fitness=fitness))
 
         assert myid == particle.id
 
         particle = Particle(
+            base=None, radius=None,
             environment=Environment(config={}),
             best=Information(position=position, fitness=fitness))
 
@@ -54,7 +56,9 @@ class TestParticle(object):
         fitness = 5
         myinfo = Information(position=position, fitness=fitness)
 
-        p1 = Particle(environment=env, best=myinfo)
+        p1 = Particle(
+            base=None, radius=None,
+            environment=env, best=myinfo)
         assert env.best == p1
 
     def test_register_new_local_best_result(self):
@@ -75,10 +79,31 @@ class TestParticle(object):
         fitness = 5
         info = Information(position=position, fitness=fitness)
         env.setInfo(Information(position=position, fitness=fitness))
-        particle = Particle(environment=env, best=info)
+        particle = Particle(
+            base=None, radius=None,
+            environment=env, best=info)
 
         position = matrix([4, 5, 6])
         fitness = 4
         info = Information(position=position, fitness=fitness)
         env.setInfo(info)
         particle.best = info
+
+    def test_update_best(self):
+        """Test update best result."""
+        env = Environment(config={})
+
+        old_best = Information(position=None, fitness=5)
+        better_best = Information(position=None, fitness=3)
+        worse_best = Information(position=None, fitness=7)
+        particle = Particle(
+            base=None, radius=None,
+            environment=env, best=old_best)
+
+        assert particle.best == old_best
+
+        particle.best = better_best
+        assert particle.best == better_best
+
+        particle.best = worse_best
+        assert particle.best == better_best

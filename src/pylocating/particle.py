@@ -20,6 +20,7 @@
 
 from __future__ import absolute_import, unicode_literals
 
+from numpy import matrix
 from .information import Information
 
 
@@ -27,13 +28,32 @@ class Particle(object):
 
     """Particle representation."""
 
-    def __init__(self, environment, id=None, current=None, best=None):
-        """Init particle."""
+    def __init__(self, base, radius, environment, id=None,
+                 current=None, best=None):
+        """Init particle.
+
+        :param base: position of M beacons (matrix: M x [X, Y, Z])
+        :param radius: distance of the object computed by the M beacons
+            (vector)
+        """
         self._id = id
+        self.base = base
         self.environment = environment
         self.environment.register(self)
         self.current = current or Information()
-        self.best = best or self.current
+        self._best = best or self.current
+        self.radius = radius or matrix([0, 0, 0])
+
+    @property
+    def best(self):
+        """Get best Information."""
+        return self._best
+
+    @best.setter
+    def best(self, info):
+        """Set new best (only if it's better than the previous best value)."""
+        if info.fitness < self._best.fitness:
+            self._best = info
 
     @property
     def id(self):
