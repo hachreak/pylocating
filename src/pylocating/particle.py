@@ -29,20 +29,35 @@ class Particle(object):
     """Particle representation."""
 
     def __init__(self, base, radius, environment, id=None,
-                 current=None, best=None):
+                 current=None, best=None, vmax=None):
         """Init particle.
 
         :param base: position of M beacons (matrix: M x [X, Y, Z])
         :param radius: distance of the object computed by the M beacons
             (vector)
+        :param vmax: maximun particle velocity
         """
         self._id = id
         self.base = base
         self.environment = environment
         self.environment.register(self)
+        self.vmax = vmax or 10
         self.current = current or Information()
         self._best = best or self.current
         self.radius = radius or matrix([0, 0, 0])
+
+    @property
+    def current(self):
+        """Get current information."""
+        return self._current
+
+    @current.setter
+    def current(self, info):
+        """Set current (set velocity<=vmax)."""
+        # set a maximum value for velocity
+        info.velocity[info.velocity > self.vmax] = self.vmax
+        # save new current value
+        self._current = info
 
     @property
     def best(self):

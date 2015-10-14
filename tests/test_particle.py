@@ -107,3 +107,45 @@ class TestParticle(object):
 
         particle.best = worse_best
         assert particle.best == better_best
+
+    def test_set_high_velocity(self):
+        """Test set high velocity."""
+        env = Environment(config={})
+
+        position = matrix([1, 2, 3])
+        fitness = 5
+        velocity = matrix([3, 100, 10])
+        info = Information(position=position, fitness=fitness,
+                           velocity=velocity)
+
+        particle = Particle(
+            base=None, radius=None,
+            current=info,
+            environment=env, vmax=1000
+        )
+
+        assert (particle.current.velocity == matrix([3, 100, 10])).all()
+
+        particle = Particle(
+            base=None, radius=None,
+            current=info,
+            environment=env, vmax=20
+        )
+
+        assert (particle.current.velocity == matrix([3, 20, 10])).all()
+
+        particle = Particle(
+            base=None, radius=None,
+            current=info,
+            environment=env, vmax=4
+        )
+
+        assert (particle.current.velocity == matrix([3, 4, 4])).all()
+
+        particle = Particle(
+            base=None, radius=None,
+            current=info,
+            environment=env, vmax=1
+        )
+
+        assert (particle.current.velocity == matrix([1, 1, 1])).all()
