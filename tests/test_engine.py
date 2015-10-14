@@ -16,39 +16,40 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with pysenslog.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Python Localization Particle."""
+"""Test Python Localization Particle Engine."""
 
 from __future__ import absolute_import, unicode_literals
 
-from .information import Information
+from pylocating.engines.particle_engine import ParticleEngine
 
 
-class Particle(object):
+class TestParticleEngine(object):
 
-    """Particle representation."""
+    """Test particle engine."""
 
-    def __init__(self, environment, id=None, current=None, best=None):
-        """Init particle."""
-        self._id = id
-        self.environment = environment
-        self.environment.register(self)
-        self.current = current or Information()
-        self.best = best or self.current
+    def test_max_iterations(self):
+        """Test max iterations."""
+        class Particle(object):
+            def fitness(self):
+                pass
 
-    @property
-    def id(self):
-        """Get id."""
-        return self._id if self._id else str(self)
+            def move(self):
+                pass
 
-    @id.setter
-    def id(self, value):
-        """Set id."""
-        self._id = value
+        class Environment(object):
+            def __init__(self):
+                self.particles = [Particle() for i in range(4)]
 
-    def fitness(self):
-        """Compute the fitness and update personal best."""
-        pass
+        config = {}
+        config["max_iterations"] = 100
+        pe = ParticleEngine(config, Environment())
+        pe.start()
+        pe.join()
 
-    def move(self):
-        """Move the particle."""
-        pass
+        assert pe.iterations == 100
+
+        pe = ParticleEngine({}, Environment())
+        pe.start()
+        pe.join()
+
+        assert pe.iterations == 20
