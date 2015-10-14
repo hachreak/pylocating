@@ -42,14 +42,34 @@ class TestParticleEngine(object):
 
         config = {}
         config["max_iterations"] = 100
-        pe = ParticleEngine(config, Environment())
+        # without stop condition and max_iterations = 100
+        pe = ParticleEngine(config=config, environment=Environment())
         pe.start()
         pe.join()
 
         assert pe.iterations == 100
 
-        pe = ParticleEngine({}, Environment())
+        config = {}
+        config["max_iterations"] = 100
+        pe = ParticleEngine(config=config, environment=Environment(),
+                            stop_condition=lambda x: False)
+        pe.start()
+        pe.join()
+
+        assert pe.iterations == 100
+
+        pe = ParticleEngine(config={}, environment=Environment(),
+                            stop_condition=lambda x: False)
         pe.start()
         pe.join()
 
         assert pe.iterations == 20
+
+        config = {}
+        config["max_iterations"] = 100000
+        pe = ParticleEngine(config=config, environment=Environment(),
+                            stop_condition=lambda x: True)
+        pe.start()
+        pe.join()
+
+        assert pe.iterations == 0

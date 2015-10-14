@@ -27,11 +27,12 @@ class ParticleEngine(Thread):
 
     """Abstract particle engine."""
 
-    def __init__(self, config, environment):
+    def __init__(self, config, environment, stop_condition=None):
         """Init particle engine.
 
         :param config: dict container for configuration
         :param environment: environment containing the particles
+        :param stop_condition: necessary condition to end the computation
         """
         super(ParticleEngine, self).__init__()
         self.config = config
@@ -39,6 +40,7 @@ class ParticleEngine(Thread):
         self.environment = environment
         self.config['max_iterations'] = self.config['max_iterations'] \
             if 'max_iterations' in config else 20
+        self.stop_condition = stop_condition or (lambda env: False)
 
     def run(self):
         """The main method for the thread.
@@ -47,7 +49,8 @@ class ParticleEngine(Thread):
         """
         self.iterations = 0
         while not self.shutdown_event.is_set() and \
-                self.config['max_iterations'] > self.iterations:
+                self.config['max_iterations'] > self.iterations and \
+                not self.stop_condition(self.environment):
             # calculate fitness and update personal best
             for particle in self.environment.particles:
                 particle.fitness()
