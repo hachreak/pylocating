@@ -21,6 +21,7 @@
 from __future__ import absolute_import, unicode_literals
 
 import pytest
+import random
 
 from numpy import matrix
 from pylocating.environment import Environment, EmptyEnvironment
@@ -45,24 +46,83 @@ class TestEnvironment(object):
 
         particles = {}
         particles[1] = Particle(
+            base=None, radius=None,
             environment=env,
             best=Information(position=position, fitness=3))
         particles[2] = Particle(
+            base=None, radius=None,
             environment=env,
             best=Information(position=position, fitness=10))
         particles[3] = Particle(
+            base=None, radius=None,
             environment=env,
             best=Information(position=position, fitness=40))
         particles[4] = Particle(
+            base=None, radius=None,
             environment=env,
             best=Information(position=position, fitness=25))
         particles[5] = Particle(
+            base=None, radius=None,
             environment=env,
             best=Information(position=position, fitness=7))
         particles[6] = Particle(
+            base=None, radius=None,
             environment=env,
             best=Information(position=position, fitness=37))
 
         best = env.best
         assert particles[3] == best
         assert (particles[3].best == best.best).all()
+
+    def test_randomizer(self):
+        """Test randomizer."""
+        class Random(object):
+            def random(self):
+                return "random"
+
+        config = {}
+        config['random'] = Random()
+        env = Environment(config=config)
+
+        assert env.config['random'].random() == "random"
+
+        config['random'] = random
+        env = Environment(config=config)
+
+        assert 0 <= env.config['random'].random() < 1
+
+    def test_cognition(self):
+        """Test cognition."""
+        config = {}
+        config['cognition'] = 4
+        env = Environment(config=config)
+
+        assert env.config['cognition'] == 4
+
+        env = Environment(config={})
+
+        assert env.config['cognition'] == 1
+
+    def test_social(self):
+        """Test social."""
+        config = {}
+        config['social'] = 4
+        env = Environment(config=config)
+
+        assert env.config['social'] == 4
+
+        env = Environment(config={})
+
+        assert env.config['social'] == 1
+
+    def test_inertial_weight(self):
+        """Test inertial_weight."""
+        config = {}
+        config['inertial_weight'] = 4
+        env = Environment(config=config)
+
+        assert env.config['inertial_weight'] == 4
+
+        env = Environment(config={})
+
+        assert env.config['inertial_weight'] == 1

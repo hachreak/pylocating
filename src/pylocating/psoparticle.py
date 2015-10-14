@@ -50,18 +50,19 @@ class PsoParticle(Particle):
 
     """PSO Particle."""
 
-    def fitness(self, base, radius):
-        """Fitness function.
-
-        :param base: position of M beacons (matrix: M x [X, Y, Z])
-        :param radius: distance of the object computed by the M beacons
-            (vector)
-        """
-        difference = base - self.current.position
+    def fitness(self):
+        """Fitness function."""
+        # compute fitness
+        difference = self.base - self.current.position
         square_difference = multiply(difference, difference)
         sum_square_diff = square_difference.sum(axis=1)
-        result = sum_square_diff - radius.transpose()
-        return result.sum()
+        result = (sum_square_diff - radius.transpose()).sum()
+        # update best result
+        self.best = Information(position=self.current.position,
+                                fitness=result,
+                                velocity=self.current.velocity)
+        # return computed fitness value
+        return result
 
     def move(self):
         """Compute next position and velocity of the particle.
