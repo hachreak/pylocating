@@ -36,20 +36,20 @@ class TestParticle(object):
         fitness = 5
         myid = "myid"
         particle = Particle(
-            environment=Environment(), id=myid,
+            environment=Environment(config={}), id=myid,
             best=Information(position=position, fitness=fitness))
 
         assert myid == particle.id
 
         particle = Particle(
-            environment=Environment(),
+            environment=Environment(config={}),
             best=Information(position=position, fitness=fitness))
 
         assert str(particle) == particle.id
 
     def test_particle_register_environment(self):
         """Test if particle update environment when set new best value."""
-        env = Environment()
+        env = Environment(config={})
         position = matrix([1, 2, 3])
         fitness = 5
         myinfo = Information(position=position, fitness=fitness)

@@ -34,13 +34,13 @@ class TestEnvironment(object):
 
     def test_empty_environment(self):
         """Test empty environment."""
-        env = Environment()
+        env = Environment(config={})
         with pytest.raises(EmptyEnvironment):
             env.best
 
     def test_env_best_result(self):
         """Test the computation of global best result."""
-        env = Environment()
+        env = Environment(config={})
         position = matrix([0, 0, 0])
 
         particles = {}

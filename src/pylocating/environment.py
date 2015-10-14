@@ -20,6 +20,8 @@
 
 from __future__ import absolute_import, unicode_literals
 
+import random
+
 from numpy import matrix
 
 from .information import Information
@@ -38,10 +40,24 @@ class Environment(object):
 
     """It Contains all information shared by the particles."""
 
-    def __init__(self, info=None):
+    def __init__(self, config, info=None):
         """Init environment."""
         self.particles = {}
         self.globalBest = info or Information()
+        # configuration:
+        #   inertial_weight
+        #   cognition
+        #   social
+        #   random (randomizer)
+        self.config = config
+        self.config['inertial_weight'] = self.config['inertial_weight'] \
+            if 'inertial_weight' in self.config else 1
+        self.config['cognition'] = self.config['cognition'] \
+            if 'cognition' in self.config else 1
+        self.config['social'] = self.config['social'] \
+            if 'social' in self.config else 1
+        self.config['random'] = self.config['random'] \
+            if 'random' in self.config else random
 
     def register(self, particle):
         """Register new particle."""
