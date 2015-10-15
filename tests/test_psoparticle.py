@@ -53,3 +53,53 @@ class TestPSOParticle(object):
         new_info = particle.move()
         assert (new_info.velocity == matrix([1, 1, 1])).all()
         assert (new_info.position == matrix([2, 2, 2])).all()
+
+    def test_move_defined_values(self):
+        """Test move."""
+        class Random(object):
+            def random(self):
+                return 1
+
+        info = Information(position=matrix([1, 1, 1]),
+                           velocity=matrix([1, 1, 1]), fitness=5)
+        binfo = Information(position=matrix([1, 1, 1]),
+                            velocity=matrix([1, 1, 1]), fitness=5)
+
+        config = {
+            'inertial_weight': 1,
+            'cognition': 1,
+            'social': 1,
+            'random': Random(),
+            'base': matrix([
+                [0, 0, 0],   # beacon 1
+                [7, 5, 0],   # beacon 2
+                [5, -4, 0],  # beacon 3
+            ]),
+            'radius': matrix([
+                3.024,   # beacon 1
+                6.4,     # beacon 2
+                6.63,  # beacon 3
+            ])
+        }
+        env = Environment(config)
+
+        particle = PSOParticle(environment=env,
+                               current=Information(position=matrix([1, 1, 1])))
+        particle.fitness()
+        assert 20.14 < particle.best.fitness < 20.15
+
+        particle.move()
+        assert (particle.current.position == matrix([2, 2, 2])).all()
+
+        particle.fitness()
+        assert 10.85 < particle.best.fitness < 10.86
+
+        particle.move()
+        assert (particle.current.position == matrix([3, 3, 3])).all()
+
+        particle.fitness()
+        assert 47.85 < particle.current.fitness < 47.86
+        assert 10.85 < particle.best.fitness < 10.86
+
+        particle.move()
+        assert (particle.current.position == matrix([2, 2, 2])).all()

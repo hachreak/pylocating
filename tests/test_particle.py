@@ -93,7 +93,7 @@ class TestParticle(object):
         better_best = Information(position=None, fitness=3)
         worse_best = Information(position=None, fitness=7)
         particle = Particle(
-            environment=env, best=old_best)
+            environment=env, current=old_best)
 
         assert particle.best == old_best
 

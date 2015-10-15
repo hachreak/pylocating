@@ -38,7 +38,7 @@ class TestParticleEngine(object):
 
         class Environment(object):
             def __init__(self):
-                self.particles = [Particle() for i in range(4)]
+                self.particles = {i: Particle() for i in range(4)}
 
         config = {}
         config["max_iterations"] = 100
