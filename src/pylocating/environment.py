@@ -73,10 +73,10 @@ class Environment(object):
     def best(self):
         """Compute realtime the new global best result."""
         try:
-            max = matrix(
-                [p.best.fitness for p in self.particles.values()]).max()
+            min = matrix(
+                [p.best.fitness for p in self.particles.values()]).min()
             return list(
-                filter((lambda p: p.best.fitness == max),
+                filter((lambda p: p.best.fitness == min),
                        self.particles.values()))[0]
         except ValueError:
             raise EmptyEnvironment("""The environment is empty! """
