@@ -52,10 +52,18 @@ class ParticleEngine(Thread):
                 self.config['max_iterations'] > self.iterations and \
                 not self.stop_condition(self.environment):
             # calculate fitness and update personal best
-            for particle in self.environment.particles:
+            for particle in self.environment.particles.values():
                 particle.fitness()
+                if 'logger' in self.config:
+                    self.config['logger'].debug(
+                        ("[{}] \nfitness: {}\n"
+                         "position: {}\n"
+                         "velocity: {}\n").format(particle.id,
+                                                  particle.current.fitness,
+                                                  particle.current.position,
+                                                  particle.current.velocity))
             # move the particles
-            for particle in self.environment.particles:
+            for particle in self.environment.particles.values():
                 particle.move()
             self.iterations = self.iterations + 1
 
