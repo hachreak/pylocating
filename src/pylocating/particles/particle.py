@@ -31,7 +31,7 @@ class Particle(object):
                  current=None, best=None, vmax=None):
         """Init particle.
 
-        :param environment: environmente where the particle is inserted
+        :param environment: environment where the particle is inserted
         :param id: particle's id
         :param current: initialization of current position/fitness/velocity
         :param best: initialization of best position/fitness/velocity
@@ -41,8 +41,9 @@ class Particle(object):
         self.environment = environment
         self.environment.register(self)
         self.vmax = vmax or 10
-        self.current = current or Information()
-        self._best = best or self.current
+        self._best = None
+        # self._best = best if best is not None else self.current
+        self.current = current if current is not None else Information()
 
     @property
     def current(self):
@@ -56,6 +57,8 @@ class Particle(object):
         info.velocity[info.velocity > self.vmax] = self.vmax
         # save new current value
         self._current = info
+        # try to update also the best result
+        self.best = info
 
     @property
     def best(self):
@@ -65,7 +68,8 @@ class Particle(object):
     @best.setter
     def best(self, info):
         """Set new best (only if it's better than the previous best value)."""
-        if info.fitness < self._best.fitness:
+        # print("{} < {}\n".format(info.fitness, self._best.fitness if self._best else 0))
+        if not self._best or info.fitness < self._best.fitness:
             self._best = info
 
     @property
