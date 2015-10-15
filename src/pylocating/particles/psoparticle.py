@@ -20,7 +20,7 @@
 
 from __future__ import absolute_import, unicode_literals
 
-from numpy import multiply
+from numpy import multiply, absolute, matrix
 
 from ..information import Information
 from .particle import Particle
@@ -54,15 +54,20 @@ class PSOParticle(Particle):
         """Fitness function."""
         base = self.environment.config['base']
         radius = self.environment.config['radius']
+        position = matrix([self.current.position.A[0],
+                           self.current.position.A[0],
+                           self.current.position.A[0]])
+        tradius = radius.transpose()
         # compute fitness
-        difference = base - self.current.position
+        difference = base - position
         square_difference = multiply(difference, difference)
         sum_square_diff = square_difference.sum(axis=1)
-        result = (sum_square_diff - radius.transpose()).sum()
-        # update best result
-        self.best = Information(position=self.current.position,
-                                fitness=result,
-                                velocity=self.current.velocity)
+        square_radius = multiply(tradius, tradius)
+        result = absolute(sum_square_diff - square_radius).sum()
+        # update current result
+        self.current = Information(position=self.current.position,
+                                   fitness=result,
+                                   velocity=self.current.velocity)
         # return computed fitness value
         return result
 
@@ -71,8 +76,14 @@ class PSOParticle(Particle):
 
         :return: new information of the particle
         """
-        # information about the particle with best fitness
-        binfo = self.environment.best.current
+        # global best position
+        gbpos = self.environment.best.best.position
+        # particle best position
+        pbpos = self.best.position
+        # particle current position and velocity
+        pos = self.current.position
+        vel = self.current.velocity
+        # parameters
         w = self.environment.config['inertial_weight']
         c1 = self.environment.config['cognition']
         c2 = self.environment.config['social']
@@ -80,10 +91,10 @@ class PSOParticle(Particle):
         # with values uniformed distributed in the interval [0,1)
         random = self.environment.config['random']
         # compute new position
-        next_velocity = w * self.current.velocity + \
-            c1 * random.random() * (binfo.velocity - self.current.velocity) + \
-            c2 * random.random() * (binfo.position - self.current.position)
-        next_position = self.current.position + next_velocity
+        next_velocity = w * vel + \
+            multiply(c1 * random.random(), (pbpos - pos)) + \
+            multiply(c2 * random.random(), (gbpos - pos))
+        next_position = pos + next_velocity
         self.current = Information(position=next_position,
                                    velocity=next_velocity,
                                    fitness=self.current.fitness)
