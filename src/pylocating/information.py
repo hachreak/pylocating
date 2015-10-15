@@ -31,9 +31,9 @@ class Information(object):
         """Init information."""
         self.position = position if position is not None else \
             matrix([0, 0, 0])
-        self.fitness = fitness or 0
+        self.fitness = fitness or 10000000
         self.velocity = velocity if velocity is not None else \
-            matrix([0, 0, 0])
+            matrix([1, 1, 1])
 
     def isBetterThan(self, info):
         """Check if this is better that the other iformation."""
