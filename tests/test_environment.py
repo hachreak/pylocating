@@ -46,27 +46,21 @@ class TestEnvironment(object):
 
         particles = {}
         particles[1] = Particle(
-            base=None, radius=None,
             environment=env,
             best=Information(position=position, fitness=3))
         particles[2] = Particle(
-            base=None, radius=None,
             environment=env,
             best=Information(position=position, fitness=10))
         particles[3] = Particle(
-            base=None, radius=None,
             environment=env,
             best=Information(position=position, fitness=40))
         particles[4] = Particle(
-            base=None, radius=None,
             environment=env,
             best=Information(position=position, fitness=25))
         particles[5] = Particle(
-            base=None, radius=None,
             environment=env,
             best=Information(position=position, fitness=7))
         particles[6] = Particle(
-            base=None, radius=None,
             environment=env,
             best=Information(position=position, fitness=37))
 

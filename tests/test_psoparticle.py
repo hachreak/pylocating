@@ -48,7 +48,7 @@ class TestPSOParticle(object):
         config['random'] = Random()
         env = Environment(config)
 
-        particle = PSOParticle(base=None, radius=None, environment=env,
+        particle = PSOParticle(environment=env,
                                current=info, best=binfo)
         new_info = particle.move()
         assert (new_info.velocity == matrix([1, 1, 1])).all()

@@ -36,14 +36,12 @@ class TestParticle(object):
         fitness = 5
         myid = "myid"
         particle = Particle(
-            base=None, radius=None,
             environment=Environment(config={}), id=myid,
             best=Information(position=position, fitness=fitness))
 
         assert myid == particle.id
 
         particle = Particle(
-            base=None, radius=None,
             environment=Environment(config={}),
             best=Information(position=position, fitness=fitness))
 
@@ -57,7 +55,6 @@ class TestParticle(object):
         myinfo = Information(position=position, fitness=fitness)
 
         p1 = Particle(
-            base=None, radius=None,
             environment=env, best=myinfo)
         assert env.best == p1
 
@@ -80,7 +77,6 @@ class TestParticle(object):
         info = Information(position=position, fitness=fitness)
         env.setInfo(Information(position=position, fitness=fitness))
         particle = Particle(
-            base=None, radius=None,
             environment=env, best=info)
 
         position = matrix([4, 5, 6])
@@ -97,7 +93,6 @@ class TestParticle(object):
         better_best = Information(position=None, fitness=3)
         worse_best = Information(position=None, fitness=7)
         particle = Particle(
-            base=None, radius=None,
             environment=env, best=old_best)
 
         assert particle.best == old_best
@@ -119,7 +114,6 @@ class TestParticle(object):
                            velocity=velocity)
 
         particle = Particle(
-            base=None, radius=None,
             current=info,
             environment=env, vmax=1000
         )
@@ -127,7 +121,6 @@ class TestParticle(object):
         assert (particle.current.velocity == matrix([3, 100, 10])).all()
 
         particle = Particle(
-            base=None, radius=None,
             current=info,
             environment=env, vmax=20
         )
@@ -135,7 +128,6 @@ class TestParticle(object):
         assert (particle.current.velocity == matrix([3, 20, 10])).all()
 
         particle = Particle(
-            base=None, radius=None,
             current=info,
             environment=env, vmax=4
         )
@@ -143,7 +135,6 @@ class TestParticle(object):
         assert (particle.current.velocity == matrix([3, 4, 4])).all()
 
         particle = Particle(
-            base=None, radius=None,
             current=info,
             environment=env, vmax=1
         )

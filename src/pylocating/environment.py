@@ -24,7 +24,6 @@ import random
 
 from numpy import matrix
 
-from .information import Information
 
 __version__ = "0.1.0"
 
@@ -40,15 +39,18 @@ class Environment(object):
 
     """It Contains all information shared by the particles."""
 
-    def __init__(self, config, info=None):
-        """Init environment."""
+    def __init__(self, config):
+        """Init environment.
+
+        :param config: configuration:
+              inertial_weight
+              cognition
+              social
+              random (randomizer)
+              base: position of M beacons (matrix: M x [X, Y, Z])
+              radius: distance of the object computed by the M beacons (vector)
+        """
         self.particles = {}
-        self.globalBest = info or Information()
-        # configuration:
-        #   inertial_weight
-        #   cognition
-        #   social
-        #   random (randomizer)
         self.config = config
         self.config['inertial_weight'] = self.config['inertial_weight'] \
             if 'inertial_weight' in self.config else 1
@@ -58,6 +60,10 @@ class Environment(object):
             if 'social' in self.config else 1
         self.config['random'] = self.config['random'] \
             if 'random' in self.config else random
+        self.config['base'] = self.config['base'] \
+            if 'base' in self.config else matrix([])
+        self.config['radius'] = self.config['radius'] \
+            if 'radius' in self.config else matrix([])
 
     def register(self, particle):
         """Register new particle."""

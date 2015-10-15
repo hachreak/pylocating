@@ -52,11 +52,13 @@ class PSOParticle(Particle):
 
     def fitness(self):
         """Fitness function."""
+        base = self.environment.config['base']
+        radius = self.environment.config['radius']
         # compute fitness
-        difference = self.base - self.current.position
+        difference = base - self.current.position
         square_difference = multiply(difference, difference)
         sum_square_diff = square_difference.sum(axis=1)
-        result = (sum_square_diff - self.radius.transpose()).sum()
+        result = (sum_square_diff - radius.transpose()).sum()
         # update best result
         self.best = Information(position=self.current.position,
                                 fitness=result,

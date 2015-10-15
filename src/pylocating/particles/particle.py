@@ -20,8 +20,6 @@
 
 from __future__ import absolute_import, unicode_literals
 
-from numpy import matrix
-
 from ..information import Information
 
 
@@ -29,23 +27,22 @@ class Particle(object):
 
     """Particle representation."""
 
-    def __init__(self, base, radius, environment, id=None,
+    def __init__(self, environment, id=None,
                  current=None, best=None, vmax=None):
         """Init particle.
 
-        :param base: position of M beacons (matrix: M x [X, Y, Z])
-        :param radius: distance of the object computed by the M beacons
-            (vector)
+        :param environment: environmente where the particle is inserted
+        :param id: particle's id
+        :param current: initialization of current position/fitness/velocity
+        :param best: initialization of best position/fitness/velocity
         :param vmax: maximun particle velocity
         """
         self._id = id
-        self.base = base
         self.environment = environment
         self.environment.register(self)
         self.vmax = vmax or 10
         self.current = current or Information()
         self._best = best or self.current
-        self.radius = radius or matrix([0, 0, 0])
 
     @property
     def current(self):
