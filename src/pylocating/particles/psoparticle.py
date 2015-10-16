@@ -52,6 +52,7 @@ class PSOParticle(Particle):
 
     def fitness(self):
         """Fitness function."""
+        # prepare data
         base = self.environment.config['base']
         radius = self.environment.config['radius']
         (row, column) = base.shape

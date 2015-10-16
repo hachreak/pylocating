@@ -120,3 +120,63 @@ class TestEnvironment(object):
         env = Environment(config={})
 
         assert env.config['inertial_weight'] == 1
+
+    def test_register_neighbord(self):
+        """Test register neighboard."""
+        env1 = Environment({})
+        env2 = Environment({})
+
+        assert env1 not in env2.neighbors
+        assert env2 not in env1.neighbors
+        assert len(list(filter(lambda x: x == env1, env1.neighbors))) == 1
+        assert len(list(filter(lambda x: x == env2, env2.neighbors))) == 1
+
+        env1.registerNeighbor(env2)
+
+        assert env1 in env2.neighbors
+        assert env2 in env1.neighbors
+        assert len(list(filter(lambda x: x == env1, env1.neighbors))) == 1
+        assert len(list(filter(lambda x: x == env2, env2.neighbors))) == 1
+
+        # try to register 2 times
+        env1.registerNeighbor(env2)
+
+        assert len(list(filter(lambda x: x == env2, env1.neighbors))) == 1
+        assert len(list(filter(lambda x: x == env1, env2.neighbors))) == 1
+
+    def test_best_neighbor_env(self):
+        """Test the best particle from all environments neighbor."""
+        position = matrix([0, 0, 0])
+
+        env1 = Environment({})
+        env2 = Environment({})
+
+        env1.registerNeighbor(env2)
+
+        particles = {}
+        particles[1] = Particle(
+            environment=env1,
+            current=Information(position=position, fitness=3))
+        particles[2] = Particle(
+            environment=env2,
+            current=Information(position=position, fitness=10))
+        particles[3] = Particle(
+            environment=env1,
+            current=Information(position=position, fitness=40))
+        particles[4] = Particle(
+            environment=env2,
+            current=Information(position=position, fitness=25))
+        particles[5] = Particle(
+            environment=env1,
+            current=Information(position=position, fitness=1))
+        particles[6] = Particle(
+            environment=env2,
+            current=Information(position=position, fitness=37))
+
+        best = env1.neighborBest
+        assert particles[5] == best
+        assert particles[5].best == best.best
+
+        best = env2.neighborBest
+        assert particles[5] == best
+        assert particles[5].best == best.best

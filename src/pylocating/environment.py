@@ -50,6 +50,7 @@ class Environment(object):
               base: position of M beacons (matrix: M x [X, Y, Z])
               radius: distance of the object computed by the M beacons (vector)
         """
+        self.neighbors = [self]
         self.particles = {}
         self.config = config
         self.config['inertial_weight'] = self.config['inertial_weight'] \
@@ -65,19 +66,37 @@ class Environment(object):
         self.config['radius'] = self.config['radius'] \
             if 'radius' in self.config else matrix([])
 
+    def registerNeighbor(self, environment):
+        """Register a environment."""
+        if environment not in self.neighbors:
+            self.neighbors.append(environment)
+        if self not in environment.neighbors:
+            environment.neighbors.append(self)
+
     def register(self, particle):
         """Register new particle."""
         self.particles[particle.id] = particle
 
     @property
+    def neighborBest(self):
+        """Find the global best looking inside all neighbor environments."""
+        particles = [p.best for p in self.neighbors]
+        particles = {p.id: p for p in particles}
+        return Environment._compute_best(particles)
+
+    @property
     def best(self):
         """Compute realtime the new global best result."""
+        return Environment._compute_best(self.particles)
+
+    @staticmethod
+    def _compute_best(particles):
         try:
             min = matrix(
-                [p.best.fitness for p in self.particles.values()]).min()
+                [p.best.fitness for p in particles.values()]).min()
             return list(
                 filter((lambda p: p.best.fitness == min),
-                       self.particles.values()))[0]
+                       particles.values()))[0]
         except ValueError:
             raise EmptyEnvironment("""The environment is empty! """
                                    """Please insert new particles.""")
