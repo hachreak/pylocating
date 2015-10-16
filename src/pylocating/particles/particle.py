@@ -67,22 +67,17 @@ class Particle(object):
 
     @current.setter
     def current(self, info):
-        """Set current (set velocity<=vmax)."""
+        """Set current and update best if necesary."""
         # save new current value
         self._current = info
-        # try to update also the best result
-        self.best = info
+        # Set new best (only if it's better than the previous best value).
+        if not self._best or info.fitness < self._best.fitness:
+            self._best = info
 
     @property
     def best(self):
         """Get best Information."""
         return self._best
-
-    @best.setter
-    def best(self, info):
-        """Set new best (only if it's better than the previous best value)."""
-        if not self._best or info.fitness < self._best.fitness:
-            self._best = info
 
     @property
     def id(self):

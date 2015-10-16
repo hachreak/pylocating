@@ -83,7 +83,7 @@ class TestParticle(object):
         fitness = 4
         info = Information(position=position, fitness=fitness)
         env.setInfo(info)
-        particle.best = info
+        particle.current = info
 
     def test_update_best(self):
         """Test update best result."""
@@ -97,10 +97,10 @@ class TestParticle(object):
 
         assert particle.best == old_best
 
-        particle.best = better_best
+        particle.current = better_best
         assert particle.best == better_best
 
-        particle.best = worse_best
+        particle.current = worse_best
         assert particle.best == better_best
 
     def test_set_high_velocity(self):
