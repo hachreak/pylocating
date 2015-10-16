@@ -37,16 +37,16 @@ class Random(object):
 
     def random(self):
         """Return random [0,1) matrix 3x1."""
-        return matrix([random.random(),
-                       random.random(),
-                       random.random()])
+        val = random.random()
+        return matrix([val, val, val])
+
 
 random_generator = Random()
 
 config = {
-    'inertial_weight': 1,
-    'cognition': 3,
-    'social': 7,
+    'inertial_weight': 2,
+    'cognition': 2,
+    'social': 1,
     'random': random_generator,
     'base': matrix([
         [0, 0, 0],   # beacon 1
