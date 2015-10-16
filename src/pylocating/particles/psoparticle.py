@@ -54,9 +54,8 @@ class PSOParticle(Particle):
         """Fitness function."""
         base = self.environment.config['base']
         radius = self.environment.config['radius']
-        position = matrix([self.current.position.A[0],
-                           self.current.position.A[0],
-                           self.current.position.A[0]])
+        (row, column) = base.shape
+        position = matrix([self.current.position.A[0]]*row)
         tradius = radius.transpose()
         # compute fitness
         difference = base - position
