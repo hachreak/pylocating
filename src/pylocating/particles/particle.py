@@ -25,6 +25,11 @@ from numpy import matrix
 from ..information import Information
 
 
+class ParticleException(Exception):
+
+    """Error in particle implementation."""
+
+
 class Particle(object):
 
     """Particle representation."""
@@ -91,8 +96,8 @@ class Particle(object):
 
     def fitness(self):
         """Compute the fitness and update personal best."""
-        pass
+        raise ParticleException("This function should be implemented.")
 
     def move(self):
         """Move the particle."""
-        pass
+        raise ParticleException("This function should be implemented.")
