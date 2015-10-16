@@ -66,7 +66,7 @@ class TestEnvironment(object):
 
         best = env.best
         assert particles[5] == best
-        assert (particles[5].best == best.best).all()
+        assert particles[5].best == best.best
 
     def test_randomizer(self):
         """Test randomizer."""

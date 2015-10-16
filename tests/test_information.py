@@ -32,13 +32,10 @@ class TestInformation(object):
         """Test data inside information object."""
         position = matrix([4, 5, 6])
         fitness = 4
-        velocity = matrix([7, 8, 9])
-        info = Information(position=position, fitness=fitness,
-                           velocity=velocity)
+        info = Information(position=position, fitness=fitness)
 
         assert (position == info.position).all()
         assert fitness == info.fitness
-        assert (velocity == info.velocity).all()
 
     def test_equal(self):
         """Test information equal operator."""
@@ -46,11 +43,7 @@ class TestInformation(object):
         position2 = matrix([4, 5, 6])
         fitness1 = 4
         fitness2 = 4
-        velocity1 = matrix([7, 8, 9])
-        velocity2 = matrix([7, 8, 9])
-        info1 = Information(position=position1, fitness=fitness1,
-                            velocity=velocity1)
-        info2 = Information(position=position2, fitness=fitness2,
-                            velocity=velocity2)
+        info1 = Information(position=position1, fitness=fitness1)
+        info2 = Information(position=position2, fitness=fitness2)
 
         assert info1 == info2

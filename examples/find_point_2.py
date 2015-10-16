@@ -67,8 +67,8 @@ for i in range(20):
         id="P{}".format(i),
         current=Information(
             position=config['base'][i % 3][0] + random_generator.random(),
-            velocity=random_generator.random()
         ),
+        velocity=random_generator.random(),
         vmax=5
     )
 

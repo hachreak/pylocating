@@ -66,8 +66,7 @@ class PSOParticle(Particle):
         result = absolute(sum_square_diff - square_radius).sum()
         # update current result
         self.current = Information(position=self.current.position,
-                                   fitness=result,
-                                   velocity=self.current.velocity)
+                                   fitness=result)
         # return computed fitness value
         return result
 
@@ -82,7 +81,7 @@ class PSOParticle(Particle):
         pbpos = self.best.position
         # particle current position and velocity
         pos = self.current.position
-        vel = self.current.velocity
+        vel = self.velocity
         # parameters
         w = self.environment.config['inertial_weight']
         c1 = self.environment.config['cognition']
@@ -91,11 +90,11 @@ class PSOParticle(Particle):
         # with values uniformed distributed in the interval [0,1)
         random = self.environment.config['random']
         # compute new position
-        next_velocity = w * vel + \
+        self.velocity = w * vel + \
             multiply(c1 * random.random(), (pbpos - pos)) + \
             multiply(c2 * random.random(), (gbpos - pos))
-        next_position = pos + next_velocity
+        next_position = pos + self.velocity
+        # save
         self.current = Information(position=next_position,
-                                   velocity=next_velocity,
                                    fitness=self.current.fitness)
         return self.current

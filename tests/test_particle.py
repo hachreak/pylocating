@@ -110,33 +110,36 @@ class TestParticle(object):
         position = matrix([1, 2, 3])
         fitness = 5
         velocity = matrix([3, 100, 10])
-        info = Information(position=position, fitness=fitness,
-                           velocity=velocity)
+        info = Information(position=position, fitness=fitness)
 
         particle = Particle(
             current=info,
-            environment=env, vmax=1000
+            environment=env, vmax=1000,
+            velocity=velocity
         )
 
-        assert (particle.current.velocity == matrix([3, 100, 10])).all()
+        assert (particle.velocity == matrix([3, 100, 10])).all()
 
         particle = Particle(
             current=info,
-            environment=env, vmax=20
+            environment=env, vmax=20,
+            velocity=velocity
         )
 
-        assert (particle.current.velocity == matrix([3, 20, 10])).all()
+        assert (particle.velocity == matrix([3, 20, 10])).all()
 
         particle = Particle(
             current=info,
-            environment=env, vmax=4
+            environment=env, vmax=4,
+            velocity=velocity
         )
 
-        assert (particle.current.velocity == matrix([3, 4, 4])).all()
+        assert (particle.velocity == matrix([3, 4, 4])).all()
 
         particle = Particle(
             current=info,
-            environment=env, vmax=1
+            environment=env, vmax=1,
+            velocity=velocity
         )
 
-        assert (particle.current.velocity == matrix([1, 1, 1])).all()
+        assert (particle.velocity == matrix([1, 1, 1])).all()

@@ -61,7 +61,7 @@ class ParticleEngine(Thread):
                          "velocity: {}\n").format(particle.id,
                                                   particle.current.fitness,
                                                   particle.current.position,
-                                                  particle.current.velocity))
+                                                  particle.velocity))
             # move the particles
             for particle in self.environment.particles.values():
                 particle.move()

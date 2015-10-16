@@ -27,13 +27,11 @@ class Information(object):
 
     """Single unit of Information shareb by the particles."""
 
-    def __init__(self, position=None, fitness=None, velocity=None):
+    def __init__(self, position=None, fitness=None):
         """Init information."""
         self.position = position if position is not None else \
             matrix([0, 0, 0])
         self.fitness = fitness or 10000000
-        self.velocity = velocity if velocity is not None else \
-            matrix([1, 1, 1])
 
     def isBetterThan(self, info):
         """Check if this is better that the other iformation."""
@@ -42,5 +40,4 @@ class Information(object):
     def __eq__(self, other):
         """Test if `self` is equal to `other`."""
         return (self.position == other.position).all() and \
-            self.fitness == other.fitness and \
-            (self.velocity == other.velocity).all()
+            self.fitness == other.fitness

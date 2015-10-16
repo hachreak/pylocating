@@ -31,9 +31,12 @@ from pylocating.information import Information
 from pylocating.particles import PSOParticle
 
 
-"""Test global."""
 class Random(object):
+
+    """Random generator."""
+
     def random(self):
+        """Get random matrix 3x1 with values [0,1)."""
         return matrix([random.random(),
                        random.random(),
                        random.random()])
@@ -59,22 +62,22 @@ PSOParticle(
     environment=env,
     id="P1",
     current=Information(
-        position=config['base'][0],
-        velocity=matrix([0.1, 0.1, 0.1])
+        position=config['base'][0]
     ),
+    velocity=matrix([0.1, 0.1, 0.1]),
     vmax=3
 )
 PSOParticle(
-   environment=env,
-   id="P2",
-   current=Information(position=config['base'][1]),
-   vmax=10
+    environment=env,
+    id="P2",
+    current=Information(position=config['base'][1]),
+    vmax=10
 )
 PSOParticle(
-   environment=env,
-   id="P3",
-   current=Information(position=config['base'][2]),
-   vmax=10
+    environment=env,
+    id="P3",
+    current=Information(position=config['base'][2]),
+    vmax=10
 )
 
 logging.basicConfig(filename='find_point.log',
@@ -91,4 +94,4 @@ engine.start()
 engine.join()
 
 bestParticle = env.best
-print("Object located: ",bestParticle.best.position)
+print("Object located: ", bestParticle.best.position)

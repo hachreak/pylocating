@@ -36,10 +36,9 @@ class TestPSOParticle(object):
             def random(self):
                 return 1
 
-        info = Information(position=matrix([1, 1, 1]),
-                           velocity=matrix([1, 1, 1]), fitness=5)
-        binfo = Information(position=matrix([1, 1, 1]),
-                            velocity=matrix([1, 1, 1]), fitness=5)
+        info = Information(position=matrix([1, 1, 1]), fitness=5)
+        binfo = Information(position=matrix([1, 1, 1]), fitness=5)
+        velocity = matrix([1, 1, 1])
 
         config = {}
         config['inertial_weight'] = 1
@@ -49,9 +48,9 @@ class TestPSOParticle(object):
         env = Environment(config)
 
         particle = PSOParticle(environment=env,
-                               current=info, best=binfo)
+                               current=info, best=binfo, velocity=velocity)
         new_info = particle.move()
-        assert (new_info.velocity == matrix([1, 1, 1])).all()
+        assert (particle.velocity == matrix([1, 1, 1])).all()
         assert (new_info.position == matrix([2, 2, 2])).all()
 
     def test_move_defined_values(self):
@@ -59,11 +58,6 @@ class TestPSOParticle(object):
         class Random(object):
             def random(self):
                 return 1
-
-        info = Information(position=matrix([1, 1, 1]),
-                           velocity=matrix([1, 1, 1]), fitness=5)
-        binfo = Information(position=matrix([1, 1, 1]),
-                            velocity=matrix([1, 1, 1]), fitness=5)
 
         config = {
             'inertial_weight': 1,
