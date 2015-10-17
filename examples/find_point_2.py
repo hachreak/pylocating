@@ -80,7 +80,6 @@ logging.basicConfig(filename='logs/find_point_2.log',
 
 engine = ParticleEngine(
     config={
-        'logger': logging,
         'max_iterations': 100
     },
     environment=env

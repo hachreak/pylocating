@@ -100,8 +100,7 @@ logging.config.dictConfig(data)
 # engine1 for env1
 engine1 = ParticleEngine(
     config={
-        'logger': logging,
-        'max_iterations': 100
+        'max_iterations': 40
     },
     environment=env1
 )
@@ -109,8 +108,7 @@ engine1.start()
 # engine2 for env2
 engine2 = ParticleEngine(
     config={
-        'logger': logging,
-        'max_iterations': 100
+        'max_iterations': 40
     },
     environment=env2
 )
