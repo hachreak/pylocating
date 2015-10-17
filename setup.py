@@ -26,7 +26,7 @@ def read(*names, **kwargs):
 
 setup(
     name='pylocating',
-    version='0.1.0',
+    version='0.2.0',
     license='GPLv2',
     description='Locating objects',
     long_description='%s\n%s' % (read('README.rst'), re.sub(':[a-z]+:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))),
