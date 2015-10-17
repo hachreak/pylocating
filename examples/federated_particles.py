@@ -20,10 +20,12 @@
 
 from __future__ import absolute_import, unicode_literals
 
-import logging
 import random
+import json
+import logging
 
 from numpy import matrix
+from logging import config
 
 from pylocating.engines import ParticleEngine
 from pylocating.environment import Environment
@@ -89,8 +91,11 @@ for i in range(20):
         vmax=5
     )
 
-logging.basicConfig(filename='logs/find_point_2.log',
-                    level=logging.DEBUG)
+# Load logging configuration
+config = "examples/federated_particles.json"
+with open(config) as data_file:
+    data = json.load(data_file)
+logging.config.dictConfig(data)
 
 # engine1 for env1
 engine1 = ParticleEngine(
