@@ -80,7 +80,7 @@ PSOParticle(
     vmax=10
 )
 
-logging.basicConfig(filename='find_point.log',
+logging.basicConfig(filename='logs/find_point.log',
                     level=logging.DEBUG)
 
 engine = ParticleEngine(

@@ -27,8 +27,9 @@ from numpy import matrix
 
 from pylocating.engines import ParticleEngine
 from pylocating.environment import Environment
-from pylocating.information import Information
 from pylocating.particles import PSOParticle
+from pylocating.information import Information
+from pylocating.strategies.init.position import around_beacons
 
 
 class Random(object):
@@ -63,18 +64,18 @@ config = {
 }
 env = Environment(config=config)
 
+position_generator = around_beacons(env)
+
 for i in range(40):
     PSOParticle(
         environment=env,
         id="P{}".format(i),
-        current=Information(
-            position=config['base'][i % 3][0] + random_generator.random(),
-        ),
+        current=Information(position=next(position_generator)),
         velocity=random_generator.random(),
         vmax=5
     )
 
-logging.basicConfig(filename='find_point_2.log',
+logging.basicConfig(filename='logs/find_point_2.log',
                     level=logging.DEBUG)
 
 engine = ParticleEngine(
