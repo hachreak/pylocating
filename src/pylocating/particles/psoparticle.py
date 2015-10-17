@@ -20,6 +20,8 @@
 
 from __future__ import absolute_import, unicode_literals
 
+import logging
+
 from numpy import multiply, absolute, matrix
 
 from ..information import Information
@@ -50,6 +52,12 @@ class PSOParticle(Particle):
 
     """PSO Particle."""
 
+    def __init__(self, *args, **kargs):
+        """Init."""
+        self.logger = logging.getLogger(self.__class__.__module__ +
+                                        "." + self.__class__.__name__)
+        super(PSOParticle, self).__init__(*args, **kargs)
+
     def fitness(self):
         """Fitness function."""
         # prepare data
@@ -67,6 +75,8 @@ class PSOParticle(Particle):
         # update current result
         self.current = Information(position=self.current.position,
                                    fitness=result)
+        # log result
+        self.logger.debug("[{}] fitness: {}\n".format(self.id, result))
         # return computed fitness value
         return result
 

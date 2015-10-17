@@ -20,6 +20,8 @@
 
 from __future__ import absolute_import, unicode_literals
 
+import logging
+
 from numpy import matrix
 
 from ..information import Information
@@ -45,6 +47,8 @@ class Particle(object):
         :param velocity: initialization if velocity
         :param vmax: maximun particle velocity
         """
+        self.logger = logging.getLogger(self.__class__.__module__ +
+                                        "." + self.__class__.__name__)
         self._id = id
         self.environment = environment
         self.environment.register(self)
@@ -77,6 +81,8 @@ class Particle(object):
         self._current = info
         # Set new best (only if it's better than the previous best value).
         if not self._best or info.fitness < self._best.fitness:
+            self.logger.debug(
+                "[{}] best fitness: {}\n".format(self.id, info.fitness))
             self._best = info
 
     @property

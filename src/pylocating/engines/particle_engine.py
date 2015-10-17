@@ -20,6 +20,8 @@
 
 from __future__ import absolute_import, unicode_literals
 
+import logging
+
 from threading import Event, Thread
 
 
@@ -41,6 +43,8 @@ class ParticleEngine(Thread):
         self.config['max_iterations'] = self.config['max_iterations'] \
             if 'max_iterations' in config else 20
         self.stop_condition = stop_condition or (lambda env: False)
+        self.logger = logging.getLogger(self.__class__.__module__ +
+                                        "." + self.__class__.__name__)
 
     def run(self):
         """The main method for the thread.
@@ -54,14 +58,13 @@ class ParticleEngine(Thread):
             # calculate fitness and update personal best
             for particle in self.environment.particles.values():
                 particle.fitness()
-                if 'logger' in self.config:
-                    self.config['logger'].debug(
-                        ("[{}] \nfitness: {}\n"
-                         "position: {}\n"
-                         "velocity: {}\n").format(particle.id,
-                                                  particle.current.fitness,
-                                                  particle.current.position,
-                                                  particle.velocity))
+                self.logger.debug(
+                    ("[{}] \nfitness: {}\n"
+                     "position: {}\n"
+                     "velocity: {}\n").format(particle.id,
+                                              particle.current.fitness,
+                                              particle.current.position,
+                                              particle.velocity))
             # move the particles
             for particle in self.environment.particles.values():
                 particle.move()
