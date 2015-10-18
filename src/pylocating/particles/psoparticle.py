@@ -20,8 +20,6 @@
 
 from __future__ import absolute_import, unicode_literals
 
-import logging
-
 from numpy import multiply, absolute, matrix
 
 from ..information import Information
@@ -54,8 +52,6 @@ class PSOParticle(Particle):
 
     def __init__(self, *args, **kargs):
         """Init."""
-        self.logger = logging.getLogger(self.__class__.__module__ +
-                                        "." + self.__class__.__name__)
         super(PSOParticle, self).__init__(*args, **kargs)
 
     def fitness(self):
@@ -78,13 +74,17 @@ class PSOParticle(Particle):
         # return computed fitness value
         return result
 
+    def getBestParticle(self):
+        """Return best particle inside the his environment."""
+        return self.environment.best.best
+
     def move(self):
         """Compute next position and velocity of the particle.
 
         :return: new information of the particle
         """
         # global best position
-        gbpos = self.environment.best.best.position
+        gbpos = self.getBestParticle().position
         # particle best position
         pbpos = self.best.position
         # particle current position and velocity

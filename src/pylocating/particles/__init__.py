@@ -20,5 +20,7 @@
 
 from .particle import Particle
 from .psoparticle import PSOParticle
+from .followbestparticle import FollowBestParticle, GlobalBestPSOParticle
 
-__all__ = ['Particle', 'PSOParticle']
+__all__ = ['Particle', 'PSOParticle', 'FollowBestParticle',
+           'GlobalBestPSOParticle']
