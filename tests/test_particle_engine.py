@@ -35,6 +35,7 @@ class TestParticleEngine(object):
                 self.id = id
                 self.current = Information()
                 self.velocity = 0
+                self.best = self.current
 
             def fitness(self):
                 pass
