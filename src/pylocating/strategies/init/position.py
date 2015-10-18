@@ -29,4 +29,4 @@ def around_beacons(environment):
         base = environment.config['base']
         (row, column) = base.shape
         yield base[i] + random.random()
-        i = (i + 1)%row
+        i = (i + 1) % row
