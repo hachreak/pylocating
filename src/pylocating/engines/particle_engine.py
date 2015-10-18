@@ -59,12 +59,14 @@ class ParticleEngine(Thread):
             for particle in self.environment.particles.values():
                 particle.fitness()
                 self.logger.debug(
-                    ("[{}] \nfitness: {}\n"
-                     "position: {}\n"
-                     "velocity: {}\n").format(particle.id,
-                                              particle.current.fitness,
-                                              particle.current.position,
-                                              particle.velocity))
+                    ("[{}] fitness: {} "
+                     # "position: {} "
+                     # "velocity: {}"
+                     "best: {}\n").format(particle.id,
+                                          particle.current.fitness,
+                                          # particle.current.position,
+                                          # particle.velocity,
+                                          particle.best.fitness))
             # move the particles
             for particle in self.environment.particles.values():
                 particle.move()

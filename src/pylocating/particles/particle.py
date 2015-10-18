@@ -79,6 +79,8 @@ class Particle(object):
         """Set current and update best if necesary."""
         # save new current value
         self._current = info
+        self.logger.debug(
+            "[{}] fitness: {}\n".format(self.id, info.fitness))
         # Set new best (only if it's better than the previous best value).
         if not self._best or info.fitness < self._best.fitness:
             self.logger.debug(

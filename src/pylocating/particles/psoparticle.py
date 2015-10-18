@@ -75,8 +75,6 @@ class PSOParticle(Particle):
         # update current result
         self.current = Information(position=self.current.position,
                                    fitness=result)
-        # log result
-        self.logger.debug("[{}] fitness: {}\n".format(self.id, result))
         # return computed fitness value
         return result
 
