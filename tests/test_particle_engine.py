@@ -20,6 +20,7 @@
 
 from __future__ import absolute_import, unicode_literals
 
+from pylocating.information import Information
 from pylocating.engines.particle_engine import ParticleEngine
 
 
@@ -30,6 +31,11 @@ class TestParticleEngine(object):
     def test_max_iterations(self):
         """Test max iterations."""
         class Particle(object):
+            def __init__(self, id):
+                self.id = id
+                self.current = Information()
+                self.velocity = 0
+
             def fitness(self):
                 pass
 
@@ -38,7 +44,7 @@ class TestParticleEngine(object):
 
         class Environment(object):
             def __init__(self):
-                self.particles = {i: Particle() for i in range(4)}
+                self.particles = {i: Particle(i) for i in range(4)}
 
         config = {}
         config["max_iterations"] = 100
