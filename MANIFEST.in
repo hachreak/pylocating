@@ -24,3 +24,6 @@ exclude *.sh
 exclude Dockerfile
 exclude logs
 exclude logs/*
+
+recursive-include scripts *.m
+recursive-include scripts *.sh
