@@ -95,7 +95,7 @@ class Particle(object):
     @property
     def id(self):
         """Get id."""
-        return self._id if self._id else str(self)
+        return self._id if self._id is not None else str(self)
 
     @id.setter
     def id(self, value):
@@ -109,3 +109,8 @@ class Particle(object):
     def move(self):
         """Move the particle."""
         raise ParticleException("This function should be implemented.")
+
+    @property
+    def index(self):
+        """Get index number of the particle."""
+        return list(self.environment.particles.keys()).index(self.id)

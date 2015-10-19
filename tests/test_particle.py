@@ -47,6 +47,13 @@ class TestParticle(object):
 
         assert str(particle) == particle.id
 
+        # test set id == 0
+        env = Environment(config={})
+        p = Particle(environment=env, id=0)
+
+        assert p.id == 0
+        assert env.particles[0] == p
+
     def test_particle_register_environment(self):
         """Test if particle update environment when set new best value."""
         env = Environment(config={})
@@ -143,3 +150,15 @@ class TestParticle(object):
         )
 
         assert (particle.velocity == matrix([1, 1, 1])).all()
+
+    def test_index(self):
+        """Test particle index."""
+        env = Environment(config={})
+        particles = []
+
+        for i in range(10):
+            particles.append(Particle(environment=env, id=i))
+
+        for i in range(len(particles)):
+            p = env.particles[i]
+            assert p.index == i
