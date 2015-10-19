@@ -19,8 +19,8 @@
 """Pylocating Engines."""
 
 from .particle import Particle
-from .psoparticle import PSOParticle
-from .followbestparticle import FollowBestParticle, GlobalBestPSOParticle
+from .psoparticle import PSOParticle, GlobalBestPSOParticle
+from .followbestparticle import FollowBestParticle
 
 __all__ = ['Particle', 'PSOParticle', 'FollowBestParticle',
            'GlobalBestPSOParticle']

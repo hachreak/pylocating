@@ -106,3 +106,15 @@ class PSOParticle(Particle):
         self.current = Information(position=next_position,
                                    fitness=self.current.fitness)
         return self.current
+
+
+class GlobalBestPSOParticle(PSOParticle):
+
+    """PSO Particle conditioned by the global best particle.
+
+    Not only in his environment, but the best from all environment.
+    """
+
+    def getBestParticle(self):
+        """Return the best particle considering all environments."""
+        return self.environment.neighborBest.best
