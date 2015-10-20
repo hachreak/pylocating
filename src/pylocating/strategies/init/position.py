@@ -20,9 +20,19 @@
 
 from __future__ import absolute_import, unicode_literals
 
+from math import sqrt
+
+from ...utils import generate_points_in_surface_sphere
+
 
 def around_beacons(environment):
-    """Generate position around the beacons."""
+    """Generate position around a beacon.
+
+    The beacon selected is rotated every time.
+
+    :param environment: environment of the particles
+    :return: point as matrix
+    """
     i = 0
     while True:
         random = environment.config['random']
@@ -30,3 +40,23 @@ def around_beacons(environment):
         (row, column) = base.shape
         yield base[i] + random.random()
         i = (i + 1) % row
+
+
+def on_beacon_sphere_surface(environment, beacon_index, num_of_points):
+    """Generate position around a beacon.
+
+    The beacon selected is rotated every time.
+
+    :param environment: environment of the particles
+    :param beacon_index: index of the beacon
+    :param num_of_points: how many points are generated in the surface
+    :return: point as matrix
+    """
+    base = environment.config['base']
+    radius = environment.config['radius']
+    bi = beacon_index
+    generator =  generate_points_in_surface_sphere(base[bi],
+                                                   radius.A[0][bi],
+                                                   num_of_points)
+    while True:
+        yield next(generator)
