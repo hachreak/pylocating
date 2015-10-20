@@ -23,6 +23,7 @@ from __future__ import absolute_import, unicode_literals
 import random
 import json
 import logging
+import sys
 
 from numpy import matrix
 from logging import config
@@ -32,6 +33,13 @@ from pylocating.environment import Environment
 from pylocating.particles import PSOParticle
 from pylocating.information import Information
 from pylocating.strategies.init.position import around_beacons
+
+
+if len(sys.argv) <= 2:
+    sys.stderr.write(
+        ("Usage: {} num-particles-env-1 num-particles-env-2\n").format(
+            sys.argv[0]))
+    sys.exit(1)
 
 
 class Random(object):
@@ -46,7 +54,7 @@ class Random(object):
 
 random_generator = Random()
 
-config = {
+env_config = {
     'inertial_weight': 2,
     'cognition': 2,
     'social': 1,
@@ -64,15 +72,15 @@ config = {
         30,    # beacon 4
     ])
 }
-env1 = Environment(config=config)
-env2 = Environment(config=config)
+env1 = Environment(config=env_config)
+env2 = Environment(config=env_config)
 # connect environments
 env1.registerNeighbor(env2)
 
 position_generator = around_beacons(env1)
 
 # particles inside env 1
-for i in range(20):
+for i in range(int(sys.argv[1])):
     PSOParticle(
         environment=env1,
         id="P{}env1".format(i),
@@ -82,7 +90,7 @@ for i in range(20):
     )
 
 # particles inside env 2
-for i in range(20):
+for i in range(int(sys.argv[2])):
     PSOParticle(
         environment=env2,
         id="P{}env2".format(i),
@@ -92,8 +100,8 @@ for i in range(20):
     )
 
 # Load logging configuration
-config = "examples/federated_particles.json"
-with open(config) as data_file:
+log_config = "examples/federated_particles.json"
+with open(log_config) as data_file:
     data = json.load(data_file)
 logging.config.dictConfig(data)
 

@@ -23,6 +23,7 @@ from __future__ import absolute_import, unicode_literals
 import random
 import json
 import logging
+import sys
 
 from copy import deepcopy
 from numpy import matrix
@@ -33,6 +34,13 @@ from pylocating.environment import Environment
 from pylocating.particles import GlobalBestPSOParticle, FollowBestParticle
 from pylocating.information import Information
 from pylocating.strategies.init.position import around_beacons
+
+
+if len(sys.argv) <= 2:
+    sys.stderr.write(
+        ("Usage: {} num-particles-env-1 num-particles-env-2\n").format(
+            sys.argv[0]))
+    sys.exit(1)
 
 
 class Random(object):
@@ -86,7 +94,7 @@ env1.registerNeighbor(env2)
 position_generator = around_beacons(env1)
 
 # particles inside env 1
-for i in range(20):
+for i in range(int(sys.argv[1])):
     GlobalBestPSOParticle(
         environment=env1,
         id="P{}env1".format(i),
@@ -96,7 +104,7 @@ for i in range(20):
     )
 
 # particles inside env 2
-for i in range(20):
+for i in range(int(sys.argv[2])):
     FollowBestParticle(
         environment=env2,
         id="P{}env2".format(i),

@@ -23,6 +23,7 @@ from __future__ import absolute_import, unicode_literals
 import json
 import logging
 import random
+import sys
 
 from numpy import matrix
 from logging import config
@@ -32,6 +33,12 @@ from pylocating.environment import Environment
 from pylocating.particles import PSOParticle, FollowBestParticle
 from pylocating.information import Information
 from pylocating.strategies.init.position import on_beacon_sphere_surface
+
+
+if len(sys.argv) <= 1:
+    sys.stderr.write(
+        ("Usage: {} num-particles-env-1\n").format(sys.argv[0]))
+    sys.exit(1)
 
 
 class Random3D(object):
@@ -91,7 +98,10 @@ position_generator_4 = on_beacon_sphere_surface(environment=env,
                                                 beacon_index=3,
                                                 num_of_points=16)
 
-for i in range(16):
+# divide for the number particles init every cicle
+total = (int(sys.argv[1]) // 4) + 1
+
+for i in range(total):
     # start around beacon 1
     PSOParticle(
         environment=env,
@@ -103,7 +113,7 @@ for i in range(16):
     # start around beacon 2
     PSOParticle(
         environment=env,
-        id="P{}env1".format(i + 10),
+        id="P{}env1".format(i + total),
         current=Information(position=next(position_generator_2)),
         velocity=random_generator.random(),
         vmax=1
@@ -111,7 +121,7 @@ for i in range(16):
     # start around beacon 3
     PSOParticle(
         environment=env,
-        id="P{}env1".format(i + 20),
+        id="P{}env1".format(i + total * 2),
         current=Information(position=next(position_generator_3)),
         velocity=random_generator.random(),
         vmax=1
@@ -119,7 +129,7 @@ for i in range(16):
     # start around beacon 4
     FollowBestParticle(
         environment=env,
-        id="P{}env1".format(i + 30),
+        id="P{}env1".format(i + total * 3),
         current=Information(position=next(position_generator_4)),
         velocity=random_generator.random(),
         vmax=1
