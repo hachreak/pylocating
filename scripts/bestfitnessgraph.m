@@ -7,7 +7,7 @@ ENV = arg_list{1};
 
 verbose = 1;
 % ENV=1;
-PNUM=20;
+PNUM=str2num(arg_list{2});
 
 % create graph
 hold off
