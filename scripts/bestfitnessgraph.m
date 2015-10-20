@@ -3,16 +3,17 @@
 clear all;
 
 arg_list = argv ();
-ENV = arg_list{1};
+TEMP_DIR = arg_list{1};
+ENV = arg_list{2};
 
 verbose = 1;
 % ENV=1;
-PNUM=str2num(arg_list{2});
+PNUM=str2num(arg_list{3});
 
 % create graph
 hold off
 for i = (0 : PNUM - 1)
-  fname = ["/tmp/data/data-" ENV "-" mat2str(i) ".log"]
+  fname = [TEMP_DIR "/data-" ENV "-" mat2str(i) ".log"]
   data = csvread(fname)
   plot(data(:, 1) - data(1, 1), data(:, 2), 'r-')
   hold on

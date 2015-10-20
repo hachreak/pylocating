@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Note:
 #  to works, the example shoud configure:
@@ -46,31 +46,35 @@ extract_particle_best(){
 # put all fitness information in a separate file for every particle
 separate_particle_best(){
   # read input
-  FILE=$1
+  TEMP_DIR=$1
+  FILE=$2
+  shift
   shift
   PNUMS=${@}
   ENVID=1
   # clean workspace
-  mkdir -p /tmp/data
-  rm /tmp/data/* 2> /dev/null
+  rm $TEMP_DIR/* 2> /dev/null
   # start the information split
   for i in $PNUMS; do
-    PNUM=`expr ${i} - 1)`
+    PNUM=`expr ${i} - 1`
     for j in `seq 0 $PNUM`; do
-      extract_particle_best $FILE $ENVID $j > /tmp/data/data-${ENVID}-${j}.log
+      extract_particle_best $FILE $ENVID $j > $TEMP_DIR/data-${ENVID}-${j}.log
     done
     ENVID=`expr $ENVID + 1`
   done
 }
 
 generate_graph(){
+  # read input
+  TEMP_DIR=$1
+  shift
   PNUMS=${@}
   ENVID=1
   # for every environment, generate a separate graph
   for i in $PNUMS; do
     echo $ENVID, $i
     # create graph for env $ENVID
-    scripts/bestfitnessgraph.m $ENVID $i
+    scripts/bestfitnessgraph.m $TEMP_DIR $ENVID $i
     # next env
     ENVID=`expr $ENVID + 1`
   done
@@ -85,16 +89,19 @@ generate_graph(){
 # clean logs
 echo "clean logs.."
 rm logs/${PROJECT}-* 2> /dev/null
+# create temporary directory
+TEMP_DIR=`mktemp -d`
 # execute example
 echo "execute script.."
 RESULT=`python examples/${PROJECT}.py $PNUMS`
 echo $RESULT
 # split data
 echo "analize logs.."
-separate_particle_best logs/${PROJECT}-particle-engine.log $PNUMS
+separate_particle_best $TEMP_DIR logs/${PROJECT}-particle-engine.log $PNUMS
 # execute octave and generate the graph /tmp/image.jpg
-echo "gen: $PNUMS"
-generate_graph $PNUMS
+generate_graph $TEMP_DIR $PNUMS
+# clean temporary files
+rm $TEMP_DIR -Rf
 echo "script results.."
 echo $RESULT
 echo "best fitness.."
