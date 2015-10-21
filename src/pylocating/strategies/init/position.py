@@ -20,8 +20,6 @@
 
 from __future__ import absolute_import, unicode_literals
 
-from math import sqrt
-
 from ...utils import generate_points_in_surface_sphere
 
 
@@ -55,8 +53,8 @@ def on_beacon_sphere_surface(environment, beacon_index, num_of_points):
     base = environment.config['base']
     radius = environment.config['radius']
     bi = beacon_index
-    generator =  generate_points_in_surface_sphere(base[bi],
-                                                   radius.A[0][bi],
-                                                   num_of_points)
+    generator = generate_points_in_surface_sphere(base[bi],
+                                                  radius.A[0][bi],
+                                                  num_of_points)
     while True:
         yield next(generator)
