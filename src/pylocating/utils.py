@@ -20,12 +20,15 @@
 
 from __future__ import absolute_import, unicode_literals
 
-import functools
+try:
+    from functools import lru_cache
+except ImportError:
+    from functools32.functools32 import lru_cache
 
 from numpy import matrix, linspace, meshgrid, sin, cos, pi, sqrt, multiply
 
 
-@functools.lru_cache(maxsize=100)
+@lru_cache(maxsize=100)
 def points_in_surface_sphere(num_of_points):
     """Return a point in the surface of the sphere.
 

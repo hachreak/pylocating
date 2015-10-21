@@ -3,13 +3,11 @@
 from __future__ import absolute_import, print_function
 
 import io
-import os
 import re
 from glob import glob
 from os.path import basename
 from os.path import dirname
 from os.path import join
-from os.path import relpath
 from os.path import splitext
 
 from setuptools import find_packages
@@ -29,7 +27,9 @@ setup(
     version='0.2.2',
     license='GPLv2',
     description='Locating objects',
-    long_description='%s\n%s' % (read('README.rst'), re.sub(':[a-z]+:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))),
+    long_description='%s\n%s' % (read('README.rst'),
+                                 re.sub(':[a-z]+:`~?(.*?)`', r'``\1``',
+                                        read('CHANGELOG.rst'))),
     author='Leonardo Rossi',
     author_email='leonardo.rossi@studenti.unipr.it',
     url='https://github.com/hachreak/pylocating',
@@ -39,7 +39,8 @@ setup(
     include_package_data=True,
     zip_safe=False,
     classifiers=[
-        # complete classifier list: http://pypi.python.org/pypi?%3Aaction=list_classifiers
+        # complete classifier list:
+        #    http://pypi.python.org/pypi?%3Aaction=list_classifiers
         # 'Development Status :: 5 - Production/Stable',
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
@@ -60,11 +61,14 @@ setup(
     ],
     install_requires=[
         # eg: 'aspectlib==1.1.1', 'six>=1.7',
-        'numpy>=1.7'
+        'numpy>=1.7',
     ],
     extras_require={
         # eg:
         #   'rst': ['docutils>=0.11'],
         #   ':python_version=="2.6"': ['argparse'],
+    },
+    py2_require={
+        'functools32>=3.2'
     },
 )
