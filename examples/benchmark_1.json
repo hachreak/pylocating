@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "disable_existing_loggers": false,
+  "formatters": {
+    "simple": {
+      "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    },
+    "minimal": {
+      "format": "%(asctime)s%(msecs)03d %(message)s",
+      "datefmt": "%s"
+    }
+  },
+
+  "handlers": {
+    "FileHandler": {
+      "class": "logging.FileHandler",
+      "level": "DEBUG",
+      "formatter": "minimal",
+      "filename": "logs/benchmark_1.log"
+    }
+  },
+
+  "loggers": {
+    "benchmark": {
+      "level": "DEBUG",
+      "handlers": ["FileHandler"],
+      "propagate": "no"
+    }
+  }
+}
+

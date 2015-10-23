@@ -20,6 +20,10 @@
 
 from __future__ import absolute_import, unicode_literals
 
+import logging
+import json
+
+from logging import config
 from numpy import random, matrix
 from pylocating.utils import distance
 from pylocating.benchmarks.env_builder import builder
@@ -39,7 +43,6 @@ class Random(object):
 
 center = matrix([1000, 1000, 1000])
 side_length = 100
-standard_deviation = 4
 
 base_generator = generate_matrix_of_points_in_cube(
     center=center, side_length=side_length, num_of_points=3)
@@ -53,21 +56,31 @@ random_generator = Random()
 
 params = [
     {"start": 0, "step": 1, "end": 3},  # standard deviation
-    {"start": 0, "step": 1, "end": 3},  # inertial weight
-    {"start": 0, "step": 1, "end": 3},  # cognition
-    {"start": 0, "step": 1, "end": 3},  # social
-    {"start": 10, "step": 10, "end": 60},  # number of particles
+    {"start": 1, "step": 1, "end": 3},  # inertial weight
+    {"start": 1, "step": 1, "end": 3},  # cognition
+    {"start": 1, "step": 1, "end": 3},  # social
+    {"start": 50, "step": 10, "end": 60},  # number of particles
     {"start": 1, "step": 1, "end": 5},  # max particle velocity
-    {"start": 10, "step": 10, "end": 100},  # iterations per particle
+    {"start": 60, "step": 10, "end": 100},  # iterations per particle
 ]
 
-for index, engine in enumerate(builder(base, point, params, random_generator,
-                                       around_beacons)):
+# Load logging configuration
+log_config = "examples/benchmark_1.json"
+with open(log_config) as data_file:
+    data = json.load(data_file)
+logging.config.dictConfig(data)
+
+logger = logging.getLogger("benchmark")
+
+for param, engine in builder(base, point, params, random_generator,
+                             around_beacons):
     engine.start()
     engine.join()
 
     bestParticle = engine.environment.neighborBest
     best_position = bestParticle.best.position
-    print("Object located: {} error: {}".format(
-        best_position,
-        distance(point, best_position)))
+    error = distance(point, best_position)
+
+    logger.debug("{} {} {} {} {} {} {} {}".format(
+        param[0], param[1], param[2], param[3], param[4], param[5],
+        param[6], error))

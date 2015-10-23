@@ -73,11 +73,11 @@ def builder(base, point, params, random_generator, position_initializator):
             )
 
         # engine for env
-        yield ParticleEngine(
+        yield (param, ParticleEngine(
             config={
                 'max_iterations': iterations_per_particle
             },
             environment=env
-        )
+        ))
 
         # update environment index
