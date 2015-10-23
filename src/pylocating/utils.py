@@ -29,7 +29,7 @@ from numpy import matrix, linspace, meshgrid, sin, cos, pi, sqrt, multiply
 
 
 @lru_cache(maxsize=100)
-def points_in_surface_sphere(num_of_points):
+def _points_in_surface_sphere(num_of_points):
     """Return a point in the surface of the sphere.
 
     :param num_of_points: how many point to describe the surface
@@ -52,10 +52,13 @@ def generate_points_in_surface_sphere(center, radius, num_of_points):
     :param center: sphere center
     :param radius: sphere radius
     :param num_of_points: how many points to describe the surface
-    :param i: index i
-    :param j: index j
     :return: point as matrix
     """
-    points = iter(points_in_surface_sphere(num_of_points))
+    points = iter(_points_in_surface_sphere(num_of_points))
     while True:
         yield radius * next(points) + center
+
+
+def distance(point_1, point_2):
+    """Compute the euclidean distance from the two points."""
+    return sqrt(sum((point_1-point_2).A[0]**2))

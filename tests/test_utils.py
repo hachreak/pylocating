@@ -20,9 +20,9 @@
 
 from __future__ import absolute_import, unicode_literals
 
-from numpy import around, matrix, multiply
-from pylocating.utils import points_in_surface_sphere, \
-    generate_points_in_surface_sphere
+from numpy import around, matrix, multiply, random
+from pylocating.utils import _points_in_surface_sphere, \
+    generate_points_in_surface_sphere, distance
 
 
 class TestUtils(object):
@@ -41,7 +41,7 @@ class TestUtils(object):
 
     def test_point_in_surface_sphere(self):
         """Test point in surface sphere generation."""
-        points = points_in_surface_sphere(num_of_points=256)
+        points = _points_in_surface_sphere(num_of_points=256)
         self._check_points(1, points)
 
     def test_point_in_surface_sphere_1(self):
@@ -58,3 +58,21 @@ class TestUtils(object):
         points = generate_points_in_surface_sphere(
             center=center, radius=radius, num_of_points=16)
         self._check_points(radius, points, center=center)
+
+    def test_distance(self):
+        """Test distance."""
+        for i in range(20):
+            point = matrix(random.random(3))
+            assert 0 == distance(point, point)
+
+        pa = matrix([5, 3, 4])
+        pb = matrix([10, 3, 4])
+        assert 5 == distance(pa, pb)
+
+        pa = matrix([5, 3, 4])
+        pb = matrix([5, 7, 4])
+        assert 4 == distance(pa, pb)
+
+        pa = matrix([5, 3, 4])
+        pb = matrix([5, 3, 11])
+        assert 7 == distance(pa, pb)
