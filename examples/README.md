@@ -52,3 +52,12 @@ arguments:
 
 *note*: the number of particle should be divisible for 4 (the number of
  beacons).
+
+
+#### Benchmarks
+
+Start benchmark:
+
+```bash
+python examples/benchmark_1.py examples/benchmark_1.config1.json
+```
