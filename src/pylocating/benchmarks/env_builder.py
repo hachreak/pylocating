@@ -23,7 +23,7 @@ from __future__ import absolute_import, unicode_literals
 from numpy import matrix
 from pylocating.environment import Environment
 from pylocating.utils import distance
-from pylocating.benchmarks.utils import apply_noise_gauss
+from pylocating.benchmarks.utils import apply_noise_linear
 from pylocating.particles import PSOParticle
 from pylocating.information import Information
 from pylocating.engines import ParticleEngine
@@ -36,7 +36,7 @@ def builder(base, point, params, random_generator, position_initializator):
     index = 1
     for param in parameters_matrix(params):
         # read parameters from the matrix
-        standard_deviation = param[0]
+        error = param[0]
         inertial_weight = param[1]
         cognition = param[2]
         social = param[3]
@@ -44,9 +44,7 @@ def builder(base, point, params, random_generator, position_initializator):
         velocity_max = param[5]
         iterations_per_particle = param[6]
         # point disturbed by a gaussian noise
-        disturbed_point = apply_noise_gauss(
-            point=point,
-            standard_deviation=standard_deviation)
+        disturbed_point = next(apply_noise_linear(point=point, error=error))
         # compute radius
         radius = matrix([distance(b, disturbed_point) for b in base])
         # build environment configuration
@@ -62,7 +60,7 @@ def builder(base, point, params, random_generator, position_initializator):
         # particle position generator
         position_generator = position_initializator(env)
         # particles inside env
-        for i in range(num_particles):  # FIXME param!
+        for i in range(num_particles):
             # particles
             PSOParticle(
                 environment=env,
