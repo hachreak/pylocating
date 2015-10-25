@@ -25,7 +25,8 @@ try:
 except ImportError:
     from functools32.functools32 import lru_cache
 
-from numpy import matrix, linspace, meshgrid, sin, cos, pi, sqrt, multiply
+from numpy import matrix, linspace, meshgrid, sin, cos, pi, sqrt, multiply, \
+    random as nprandom
 
 
 @lru_cache(maxsize=100)
@@ -47,7 +48,7 @@ def _points_in_surface_sphere(num_of_points):
 
 
 def generate_points_in_surface_sphere(center, radius, num_of_points):
-    """Generate a point inside the surface of sphere.
+    """Generate a point on sphere surface defined by center and radius.
 
     :param center: sphere center
     :param radius: sphere radius
@@ -57,6 +58,34 @@ def generate_points_in_surface_sphere(center, radius, num_of_points):
     points = iter(_points_in_surface_sphere(num_of_points))
     while True:
         yield radius * next(points) + center
+
+
+def generate_points_random_in_surface_sphere(center, radius, random=None):
+    """Generate random points on sphere surface defined by center and radius.
+
+    e.g. generate randomly point around center [10, 10, 10] distant 4 from it.
+
+    .. code-block:: python
+
+        from numpy import matrix
+        center = matrix([10, 10, 10])
+        radius = 4
+        generator = generate_points_random_in_surface_sphere(center, radius)
+        point = next(generator)
+
+    :param center: sphere center
+    :param radius: shere radius
+    :param random: random number generator
+    :return: point as matrix
+    """
+    while True:
+        random = random or nprandom
+        phi = 2 * pi * random.random()
+        theta = pi * random.random()
+        x = radius * sin(theta) * cos(phi)
+        y = radius * sin(theta) * sin(phi)
+        z = radius * cos(theta)
+        yield matrix([x, y, z]) + center
 
 
 def distance(point_1, point_2):

@@ -22,7 +22,8 @@ from __future__ import absolute_import, unicode_literals
 
 from numpy import around, matrix, multiply, random
 from pylocating.utils import _points_in_surface_sphere, \
-    generate_points_in_surface_sphere, distance
+    generate_points_in_surface_sphere, distance, \
+    generate_points_random_in_surface_sphere
 
 
 class TestUtils(object):
@@ -76,3 +77,43 @@ class TestUtils(object):
         pa = matrix([5, 3, 4])
         pb = matrix([5, 3, 11])
         assert 7 == distance(pa, pb)
+
+    def test_generate_points_random_in_surface_sphere_1(self):
+        """Test generate points random in surface sphere."""
+        center = matrix([0, 0, 0])
+        radius = 1
+        gen = generate_points_random_in_surface_sphere(center, radius)
+        points = []
+        for i in range(50):
+            points.append(next(gen))
+        self._check_points(radius, points, center)
+
+    def test_generate_points_random_in_surface_sphere_2(self):
+        """Test generate points random in surface sphere."""
+        center = matrix([0, 0, 0])
+        radius = 55
+        gen = generate_points_random_in_surface_sphere(center, radius)
+        points = []
+        for i in range(50):
+            points.append(next(gen))
+        self._check_points(radius, points, center)
+
+    def test_generate_points_random_in_surface_sphere_3(self):
+        """Test generate points random in surface sphere."""
+        center = matrix([45, -23, 67])
+        radius = 1
+        gen = generate_points_random_in_surface_sphere(center, radius)
+        points = []
+        for i in range(50):
+            points.append(next(gen))
+        self._check_points(radius, points, center)
+
+    def test_generate_points_random_in_surface_sphere_4(self):
+        """Test generate points random in surface sphere."""
+        center = matrix([45, -23, 67])
+        radius = 43
+        gen = generate_points_random_in_surface_sphere(center, radius)
+        points = []
+        for i in range(50):
+            points.append(next(gen))
+        self._check_points(radius, points, center)
