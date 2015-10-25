@@ -21,6 +21,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from numpy import matrix, random
+from ..utils import generate_points_random_in_surface_sphere
 
 
 def apply_noise_gauss(point, standard_deviation):
@@ -37,4 +38,10 @@ def apply_noise_gauss(point, standard_deviation):
     :param standard_deviation: Standard deviation of Gaussian noise
     :return: the deteriorated point
     """
-    return point + matrix(random.randn(*point.shape)) * standard_deviation
+    while True:
+        yield point + matrix(random.randn(*point.shape)) * standard_deviation
+
+
+def apply_noise_linear(point, error):
+    """Add a noise to the point proportional to the error specified."""
+    return generate_points_random_in_surface_sphere(center=point, radius=error)
