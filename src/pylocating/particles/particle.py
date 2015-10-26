@@ -68,6 +68,7 @@ class Particle(object):
         self._velocity = velocity
         # limit maximum velocity
         self._velocity[velocity > self.vmax] = self.vmax
+        self._velocity[velocity < -self.vmax] = -self.vmax
 
     @property
     def current(self):

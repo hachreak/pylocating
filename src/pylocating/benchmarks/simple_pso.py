@@ -66,7 +66,7 @@ def builder(base, point, params, random_generator, position_initializator):
                 environment=env,
                 id="P{}env{}".format(i, index),
                 current=Information(position=next(position_generator)),
-                velocity=random_generator.random(),
+                velocity=velocity_max * random_generator.random(),
                 vmax=velocity_max
             )
 
