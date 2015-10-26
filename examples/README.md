@@ -84,7 +84,7 @@ examples/benchmark_1.config1.sh 100
 
 At the end of execution, you can see `/tmp/image.jpg` file generated.
 
-#### Benchmarks 2 - config 2
+#### Benchmarks 1 - config 2
 
 Evaluate distance error as a function of social parameter:
 
@@ -93,7 +93,7 @@ Evaluate distance error as a function of social parameter:
 - cognition: 2
 - social: range [0, 10]
 - number of particles: 100
-- max particle velocity: 0.5
+- max particle velocity: 5
 - interations per particle: 60
 
 The environmnent is constituted by a unique space where all `PSOParticle` can
