@@ -9,6 +9,8 @@ Contents:
    readme
    installation
    usage
+   examples
+   src
    reference/index
    contributing
    authors

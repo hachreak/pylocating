@@ -1,23 +1,28 @@
-### Run examples
+Examples
+============
 
 *Note*: You should always start examples from root directory of pylocating.
 
-#### Federated Particles
+
+Federated Particles
+-------------------
 
 Two separated environments contain a different number of particles.
 All the particles are `PSOParticle` (they follow a standard PSO model).
 The initial position of particles are around the beacons.
 
-```bash
-/path/to/pylocating$ scripts/bestfitnessgraph.sh federated_particles 20 10
-```
+.. code-block:: bash
+
+  /path/to/pylocating$ scripts/bestfitnessgraph.sh federated_particles 20 10
+
 
 arguments:
   - 20: the first environment contains 20 particles
   - 10: the second environment contains 10 particles
 
 
-#### FollowBest Particles
+FollowBest Particles
+--------------------
 
 Two connected environments contain a different number of particles.
 The first environment contains `GlobalBestPSOParticle` particles (the same of
@@ -27,25 +32,26 @@ The second environment contains `FollowBestParticle`; they are special
 particles that only search around the globally found best position in that
 moment.
 
-```bash
-/path/to/pylocating$ scripts/bestfitnessgraph.sh followbest_particles 20 10
-```
+.. code-block:: bash
+
+  /path/to/pylocating$ scripts/bestfitnessgraph.sh followbest_particles 20 10
 
 arguments:
   - 20: the first environment contains 20 particles
   - 10: the second environment contains 10 particles
 
 
-#### Start from beacon sphere surface
+Start from beacon sphere surface
+--------------------------------
 
 One single environment contains all particles.
 Them are equally distributed around the beacons on the sphere surface with
 center the beacon itself and radius the distance measured.
 3/4 of all particles are `PSOParticle`. The rest are `FollowBestParticle`.
 
-```bash
-/path/to/pylocating$ scripts/bestfitnessgraph.sh start_from_sphere_surface 16
-```
+.. code-block:: bash
+
+  /path/to/pylocating$ scripts/bestfitnessgraph.sh start_from_sphere_surface 16
 
 arguments:
   - 16: the environment contains 16 particles.
@@ -54,7 +60,8 @@ arguments:
  beacons).
 
 
-#### Benchmarks 1 - config 1
+Benchmarks 1 - config 1
+-----------------------
 
 Evaluate distance error as a function of swarm size:
 
@@ -79,13 +86,17 @@ The distance error introduced is fixed and moved every time in a different
 position in the space.
 The benchmark is executed 100 times:
 
-```bash
-examples/benchmark_1.config1.sh 100
-```
+.. code-block:: bash
 
-At the end of execution, you can see `/tmp/image.jpg` file generated.
+  examples/benchmark_1.config1.sh 100
 
-#### Benchmarks 1 - config 2
+At the end of execution, you can see `/tmp/benchmark_1.config1.jpg` file generated.
+
+.. image:: examples/benchmark_1.config1.jpg
+
+
+Benchmarks 1 - config 2
+-----------------------
 
 Evaluate distance error as a function of social parameter:
 
@@ -110,13 +121,17 @@ The distance error introduced is fixed and moved every time in a different
 position in the space.
 The benchmark is executed 100 times:
 
-```bash
-examples/benchmark_1.config2.sh 100
-```
+.. code-block:: bash
 
-At the end of execution, you can see `/tmp/image.jpg` file generated.
+  examples/benchmark_1.config2.sh 100
 
-#### Benchmarks 2 - config 1
+At the end of execution, you can see `/tmp/benchmark_1.config2.jpg` file generated.
+
+.. image:: examples/benchmark_1.config2.jpg
+
+
+Benchmarks 2 - config 1
+-----------------------
 
 Evaluate distance error as a function of `FollowBestParticle` swarm size:
 
@@ -146,9 +161,11 @@ The distance error introduced is fixed and moved every time in a different
 position in the space.
 The benchmark is executed 100 times:
 
-```bash
-examples/benchmark_2.config1.sh 100
-```
+.. code-block:: bash
 
-At the end of execution, you can see `/tmp/image.jpg` file generated.
+  examples/benchmark_2.config1.sh 100
 
+
+At the end of execution, you can see `/tmp/benchmark_2.config1.jpg` file generated.
+
+.. image:: examples/benchmark_2.config1.jpg
