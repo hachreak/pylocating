@@ -5,23 +5,9 @@ LOGFILE="logs/benchmark_2.log"
 # how many simulations is started
 MATRIX=30
 SIMULATIONS=${1:-10}
-
-# compute avg value
-avg(){
-  LOGFILE=$1
-  INDEX=$2
-  cat $LOGFILE | awk '{print $2" "$8" "$11}' | grep ^"${INDEX} " | awk '{ sum+=$3; n++; x=$2 } END{ if (n > 0) print x" "(sum / n); }'
-}
-
-# extract all avg values
-extract_avg_values(){
-  LOGFILE=$1
-  MATRIX=$2
-  TOT=`expr $MATRIX - 1`
-  for i in `seq 0 $TOT`; do
-    echo `avg $LOGFILE $i`
-  done
-}
+# extract this column from log to plot (X,Y)
+X_COLUMN=8
+Y_COLUMN=11
 
 # clean logs
 echo clear log ${LOGFILE}..
@@ -36,7 +22,7 @@ echo ""
 # extract avg values
 echo "extract avg values.."
 DATALOG=`mktemp`
-extract_avg_values $LOGFILE $MATRIX > $DATALOG
+scripts/extract_avg_values.sh $LOGFILE $MATRIX $X_COLUMN $Y_COLUMN $DATALOG
 # generate graph
 echo "generate graph.."
 ./examples/benchmark_1.m $DATALOG
