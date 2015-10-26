@@ -2,6 +2,7 @@
 
 CONFIGFILE="examples/benchmark_2.config1.json"
 LOGFILE="logs/benchmark_2.log"
+IMAGE="/tmp/benchmark_2.config1.jpg"
 # how many simulations is started
 MATRIX=30
 SIMULATIONS=${1:-10}
@@ -24,5 +25,5 @@ echo "extract avg values.."
 DATALOG=`mktemp`
 scripts/extract_avg_values.sh $LOGFILE $MATRIX $X_COLUMN $Y_COLUMN $DATALOG
 # generate graph
-echo "generate graph.."
-./examples/benchmark_1.m $DATALOG
+echo "generate graph.. $IMAGE"
+./scripts/print_2d_graph.m $DATALOG $IMAGE

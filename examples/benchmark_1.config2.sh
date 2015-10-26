@@ -1,26 +1,14 @@
 #!/bin/sh
 
+CONFIGFILE="examples/benchmark_1.config2.json"
 LOGFILE="logs/benchmark_1.log"
+IMAGE="/tmp/benchmark_1.config2.jpg"
 # how many simulations is started
 MATRIX=20
 SIMULATIONS=${1:-10}
-
-# compute avg value
-avg(){
-  LOGFILE=$1
-  INDEX=$2
-  cat $LOGFILE | awk '{print $2" "$6" "$10}' | grep ^"${INDEX} " | awk '{ sum+=$3; n++; x=$2 } END{ if (n > 0) print x" "(sum / n); }'
-}
-
-# extract all avg values
-extract_avg_values(){
-  LOGFILE=$1
-  MATRIX=$2
-  TOT=`expr $MATRIX - 1`
-  for i in `seq 0 $TOT`; do
-    echo `avg $LOGFILE $i`
-  done
-}
+# extract this column from log to plot (X,Y)
+X_COLUMN=6
+Y_COLUMN=10
 
 # clean logs
 echo clear log ${LOGFILE}..
@@ -29,13 +17,13 @@ rm $LOGFILE 2> /dev/null
 echo -n "execute simulations.. "
 for i in `seq $SIMULATIONS`; do
   echo -n "$i "
-  python examples/benchmark_1.py examples/benchmark_1.config2.json
+  python examples/benchmark_1.py $CONFIGFILE
 done
 echo ""
 # extract avg values
 echo "extract avg values in ${DATALOG}.."
 DATALOG=`mktemp`
-extract_avg_values $LOGFILE $MATRIX > $DATALOG
+scripts/extract_avg_values.sh $LOGFILE $MATRIX $X_COLUMN $Y_COLUMN $DATALOG
 # generate graph
-echo "generate graph.."
-./examples/benchmark_1.m $DATALOG
+echo "generate graph.. $IMAGE"
+./scripts/print_2d_graph.m $DATALOG $IMAGE
