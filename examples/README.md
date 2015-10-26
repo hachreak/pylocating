@@ -54,10 +54,62 @@ arguments:
  beacons).
 
 
-#### Benchmarks
+#### Benchmarks 1 - config 1
 
-Start benchmark:
+Evaluate distance error as a function of swarm size:
+
+- error introduced: 3
+- inertial weight: 1
+- cognition: 2
+- social: 2
+- number of particles: range [10, 300]
+- max particle velocity: 0.5
+- interations per particle: 60
+
+The environmnent is constituted by a unique space where all `PSOParticle` can
+move.
+The space where the 4 beacons and the point is inserted is defined by:
+
+- center: [1000, 1000, 1000]
+- side length: 100
+
+Every time the benchmark is started, they are chosen randomly.
+The distance error introduced is fixed and moved every time in a different
+position in the space.
+The benchmark is executed 100 times:
 
 ```bash
-python examples/benchmark_1.py examples/benchmark_1.config1.json
+examples/benchmark_1.config1.sh 100
 ```
+
+At the end of execution, you can see `/tmp/image.jpg` file generated.
+
+#### Benchmarks 2 - config 2
+
+Evaluate distance error as a function of social parameter:
+
+- error introduced: 3
+- inertial weight: 1
+- cognition: 2
+- social: range [0, 10]
+- number of particles: 100
+- max particle velocity: 0.5
+- interations per particle: 60
+
+The environmnent is constituted by a unique space where all `PSOParticle` can
+move.
+The space where the 4 beacons and the point is inserted is defined by:
+
+- center: [1000, 1000, 1000]
+- side length: 100
+
+Every time the benchmark is started, they are chosen randomly.
+The distance error introduced is fixed and moved every time in a different
+position in the space.
+The benchmark is executed 100 times:
+
+```bash
+examples/benchmark_1.config2.sh 100
+```
+
+At the end of execution, you can see `/tmp/image.jpg` file generated.

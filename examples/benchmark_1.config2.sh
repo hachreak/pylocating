@@ -2,7 +2,7 @@
 
 LOGFILE="logs/benchmark_1.log"
 # how many simulations is started
-MATRIX=30
+MATRIX=20
 SIMULATIONS=${1:-10}
 
 # compute avg value
