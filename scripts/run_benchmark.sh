@@ -9,6 +9,8 @@ SIMULATIONS=${5:-1}
 # extract this column from log to plot (X,Y)
 X_COLUMN=$6
 Y_COLUMN=$7
+# script to execute
+SCRIPT=$8
 
 # clean logs
 echo clear log ${LOGFILE}..
@@ -17,7 +19,7 @@ rm $LOGFILE 2> /dev/null
 echo -n "execute simulations.. "
 for i in `seq $SIMULATIONS`; do
   echo -n "$i "
-  python examples/benchmark_1.py $CONFIGFILE
+  python $SCRIPT $CONFIGFILE
 done
 echo ""
 # extract avg values

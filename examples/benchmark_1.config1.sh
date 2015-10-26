@@ -9,5 +9,7 @@ SIMULATIONS=${1:-10}
 # extract this column from log to plot (X,Y)
 X_COLUMN=7
 Y_COLUMN=10
+# script to execute
+SCRIPT=examples/benchmark_1.py
 
-scripts/run_benchmark.sh $CONFIGFILE $LOGFILE $IMAGE $MATRIX $SIMULATIONS $X_COLUMN $Y_COLUMN
+scripts/run_benchmark.sh $CONFIGFILE $LOGFILE $IMAGE $MATRIX $SIMULATIONS $X_COLUMN $Y_COLUMN $SCRIPT
