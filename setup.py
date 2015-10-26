@@ -64,11 +64,11 @@ setup(
         'numpy>=1.7',
     ],
     extras_require={
+        'py2': [
+            'functools32>=3.2',
+        ],
         # eg:
         #   'rst': ['docutils>=0.11'],
         #   ':python_version=="2.6"': ['argparse'],
-    },
-    py2_require={
-        'functools32>=3.2'
     },
 )

@@ -81,7 +81,6 @@ class Environment(object):
     def neighborBest(self):
         """Find the global best looking inside all neighbor environments."""
         particles = [p.best for p in self.neighbors]
-        # particles = {p.id: p for p in particles}
         return Environment._compute_best(particles)
 
     @property
