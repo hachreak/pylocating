@@ -92,11 +92,8 @@ class Environment(object):
     @staticmethod
     def _compute_best(particles):
         try:
-            min = matrix(
-                [p.best.fitness for p in particles.values()]).min()
-            return list(
-                filter((lambda p: p.best.fitness == min),
-                       particles.values()))[0]
+            plist = {p.best.fitness: p for p in particles.values()}
+            return plist[min(plist.keys())]
         except ValueError:
             raise EmptyEnvironment("""The environment is empty! """
                                    """Please insert new particles.""")
