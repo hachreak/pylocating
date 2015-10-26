@@ -81,19 +81,18 @@ class Environment(object):
     def neighborBest(self):
         """Find the global best looking inside all neighbor environments."""
         particles = [p.best for p in self.neighbors]
-        particles = {p.id: p for p in particles}
+        # particles = {p.id: p for p in particles}
         return Environment._compute_best(particles)
 
     @property
     def best(self):
         """Compute realtime the new global best result."""
-        return Environment._compute_best(self.particles)
+        return Environment._compute_best(self.particles.values())
 
     @staticmethod
     def _compute_best(particles):
         try:
-            plist = {p.best.fitness: p for p in particles.values()}
-            return plist[min(plist.keys())]
+            return min(particles, key=lambda v: v.best.fitness)
         except ValueError:
             raise EmptyEnvironment("""The environment is empty! """
                                    """Please insert new particles.""")
