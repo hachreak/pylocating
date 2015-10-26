@@ -66,14 +66,15 @@ Evaluate distance error as a function of swarm size:
 - max particle velocity: 0.5
 - interations per particle: 60
 
-The environmnent is constituted by a unique space where all `PSOParticle` can
-move.
-The space where the 4 beacons and the point is inserted is defined by:
+There is only one environmnent where all `PSOParticle` is connected.
+
+The virtual space where the 4 beacons and the point is inserted is defined by:
 
 - center: [1000, 1000, 1000]
 - side length: 100
 
-Every time the benchmark is started, they are chosen randomly.
+Every time the benchmark is started, their position are chosen randomly inside
+this cube.
 The distance error introduced is fixed and moved every time in a different
 position in the space.
 The benchmark is executed 100 times:
@@ -96,14 +97,15 @@ Evaluate distance error as a function of social parameter:
 - max particle velocity: 5
 - interations per particle: 60
 
-The environmnent is constituted by a unique space where all `PSOParticle` can
-move.
-The space where the 4 beacons and the point is inserted is defined by:
+There is only one environmnent where all `PSOParticle` is connected.
+
+The virtual space where the 4 beacons and the point is inserted is defined by:
 
 - center: [1000, 1000, 1000]
 - side length: 100
 
-Every time the benchmark is started, they are chosen randomly.
+Every time the benchmark is started, their position are chosen randomly inside
+this cube.
 The distance error introduced is fixed and moved every time in a different
 position in the space.
 The benchmark is executed 100 times:
@@ -113,3 +115,40 @@ examples/benchmark_1.config2.sh 100
 ```
 
 At the end of execution, you can see `/tmp/image.jpg` file generated.
+
+#### Benchmarks 2 - config 1
+
+Evaluate distance error as a function of `FollowBestParticle` swarm size:
+
+- error introduced: 3
+- inertial weight: 1
+- cognition: 2
+- social: 2
+- number of particles: range 80
+- number of particles: range [1, 20]
+- max particle velocity: 5
+- interations per particle: 60
+
+There are two environmnents:
+  - the first where `PSOParticle` are inserted
+  - the second where `FollowBestParticle` are inserted
+
+The two environmnents are connected together.
+
+The virtual space where the 4 beacons and the point is inserted is defined by:
+
+- center: [1000, 1000, 1000]
+- side length: 100
+
+Every time the benchmark is started, their position are chosen randomly inside
+this cube.
+The distance error introduced is fixed and moved every time in a different
+position in the space.
+The benchmark is executed 100 times:
+
+```bash
+examples/benchmark_2.config1.sh 100
+```
+
+At the end of execution, you can see `/tmp/image.jpg` file generated.
+
