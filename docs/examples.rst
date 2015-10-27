@@ -20,8 +20,16 @@ arguments:
   - 20: the first environment contains 20 particles
   - 10: the second environment contains 10 particles
 
-.. image:: examples/example_federated_particles_1.jpg
-.. image:: examples/example_federated_particles_2.jpg
+.. figure:: examples/example_federated_particles_1.jpg
+
+  Environment 1: visualize the fitness value / virtual time.
+
+.. figure:: examples/example_federated_particles_2.jpg
+
+  Environment 2: visualize the fitness value / virtual time.
+
+On blue the current fitness value for every particle.
+On red the best fitness value for every particle.
 
 
 FollowBest Particles
@@ -43,8 +51,16 @@ arguments:
   - 20: the first environment contains 20 particles
   - 10: the second environment contains 10 particles
 
-.. image:: examples/example_followbest_particles_1.jpg
-.. image:: examples/example_followbest_particles_2.jpg
+.. figure:: examples/example_followbest_particles_1.jpg
+
+  Environment 1: visualize the fitness value / virtual time.
+
+.. figure:: examples/example_followbest_particles_2.jpg
+
+  Environment 2: visualize the fitness value / virtual time.
+
+On blue the current fitness value for every particle.
+On red the best fitness value for every particle.
 
 
 Start from beacon sphere surface
@@ -62,7 +78,12 @@ center the beacon itself and radius the distance measured.
 arguments:
   - 16: the environment contains 16 * 4 (# beacons) particles.
 
-.. image:: examples/example_start_from_sphere_surface_1.jpg
+.. figure:: examples/example_start_from_sphere_surface_1.jpg
+
+  Environment 1: visualize the fitness value / virtual time.
+
+On blue the current fitness value for every particle.
+On red the best fitness value for every particle.
 
 
 Benchmarks 1 - config 1
@@ -78,7 +99,7 @@ Evaluate distance error as a function of swarm size:
 - max particle velocity: 0.5
 - interations per particle: 60
 
-There is only one environmnent where all `PSOParticle` is connected.
+There is only one environment where all `PSOParticle` is connected.
 
 The virtual space where the 4 beacons and the point is inserted is defined by:
 
@@ -97,7 +118,9 @@ The benchmark is executed 100 times:
 
 At the end of execution, you can see `/tmp/benchmark_1.config1.jpg` file generated.
 
-.. image:: examples/benchmark_1.config1.jpg
+.. figure:: examples/benchmark_1.config1.jpg
+
+  Environment 1: visualize the error / number of particles.
 
 
 Benchmarks 1 - config 2
@@ -113,7 +136,7 @@ Evaluate distance error as a function of social parameter:
 - max particle velocity: 5
 - interations per particle: 60
 
-There is only one environmnent where all `PSOParticle` is connected.
+There is only one environment where all `PSOParticle` is connected.
 
 The virtual space where the 4 beacons and the point is inserted is defined by:
 
@@ -132,8 +155,9 @@ The benchmark is executed 100 times:
 
 At the end of execution, you can see `/tmp/benchmark_1.config2.jpg` file generated.
 
-.. image:: examples/benchmark_1.config2.jpg
+.. figure:: examples/benchmark_1.config2.jpg
 
+  Environment 1: visualize the error / social coefficient.
 
 Benchmarks 2 - config 1
 -----------------------
@@ -171,6 +195,9 @@ The benchmark is executed 100 times:
   examples/benchmark_2.config1.sh 100
 
 
-At the end of execution, you can see `/tmp/benchmark_2.config1.jpg` file generated.
+At the end of execution, you can see `/tmp/benchmark_2.config1.jpg` file
+generated.
 
-.. image:: examples/benchmark_2.config1.jpg
+.. figure:: examples/benchmark_2.config1.jpg
+
+  Environment 2: visualize error / number of FollowBestParticle particles.
