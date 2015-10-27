@@ -25,6 +25,7 @@ try:
 except ImportError:
     from functools32.functools32 import lru_cache
 
+from copy import deepcopy
 from numpy import matrix, linspace, meshgrid, sin, cos, pi, sqrt, multiply, \
     random as nprandom
 
@@ -88,6 +89,20 @@ def generate_points_random_in_surface_sphere(center, radius, random=None):
         y = radius * sin(theta) * sin(phi)
         z = radius * cos(theta)
         yield matrix([x, y, z]) + center
+
+
+def generate_sequential_points(start_point, random=None):
+    """Generate sequential points.
+
+    :param start_point: point where to start
+    :param random: random generator
+    :return: next point
+    """
+    point = deepcopy(start_point)
+    random = random or nprandom
+    while True:
+        point = point + random.random() - matrix([0.5, 0.5, 0.5])
+        yield point
 
 
 def distance(point_1, point_2):

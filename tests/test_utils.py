@@ -23,7 +23,8 @@ from __future__ import absolute_import, unicode_literals
 from numpy import around, matrix, multiply, random
 from pylocating.utils import _points_in_surface_sphere, \
     generate_points_in_surface_sphere, distance, \
-    generate_points_random_in_surface_sphere
+    generate_points_random_in_surface_sphere, \
+    generate_sequential_points
 
 
 class TestUtils(object):
@@ -117,3 +118,13 @@ class TestUtils(object):
         for i in range(50):
             points.append(next(gen))
         self._check_points(radius, points, center)
+
+    def test_generate_sequential_points(self):
+        """Test generate sequential points."""
+        gen = generate_sequential_points(matrix([0, 0, 0]), random)
+
+        point = next(gen)
+        for i in range(30):
+            next_point = next(gen)
+            assert distance(point, next_point) < 0.87
+            point = next_point
