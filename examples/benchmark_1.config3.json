@@ -1,0 +1,16 @@
+{
+  "description": "Distance error as a function of iterations for each particle",
+  "space": {
+    "center": [1000, 1000, 1000],
+    "side_length": 1000
+  },
+  "parameters": [
+    {"start": 10, "step": 1, "end": 10},
+    {"start": 1, "step": 1, "end": 1},
+    {"start": 2, "step": 1, "end": 2},
+    {"start": 2, "step": 1, "end": 2},
+    {"start": 60, "step": 10, "end": 60},
+    {"start": 5, "step": 0.1, "end": 5},
+    {"start": 50, "step": 10, "end": 200}
+  ]
+}
