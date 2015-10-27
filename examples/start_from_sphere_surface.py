@@ -81,25 +81,25 @@ env_config = {
 # create environment
 env = Environment(config=env_config)
 
+# how many particles for each beacon
+total = int(sys.argv[1])
+
 # initial point generator (on sphere surface)
 position_generator_1 = on_beacon_sphere_surface(environment=env,
                                                 beacon_index=0,
-                                                num_of_points=16)
+                                                num_of_points=total)
 
 position_generator_2 = on_beacon_sphere_surface(environment=env,
                                                 beacon_index=1,
-                                                num_of_points=16)
+                                                num_of_points=total)
 
 position_generator_3 = on_beacon_sphere_surface(environment=env,
                                                 beacon_index=2,
-                                                num_of_points=16)
+                                                num_of_points=total)
 
 position_generator_4 = on_beacon_sphere_surface(environment=env,
                                                 beacon_index=3,
-                                                num_of_points=16)
-
-# divide for the number particles init every cicle
-total = (int(sys.argv[1]) // 4) + 1
+                                                num_of_points=total)
 
 for i in range(total):
     # start around beacon 1
