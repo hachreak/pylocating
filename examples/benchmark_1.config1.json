@@ -2,15 +2,15 @@
   "description": "Distance error as a function of swarm size",
   "space": {
     "center": [1000, 1000, 1000],
-    "side_length": 100
+    "side_length": 1000
   },
   "parameters": [
-    {"start": 3, "step": 1, "end": 3},
+    {"start": 10, "step": 1, "end": 10},
     {"start": 1, "step": 1, "end": 1},
     {"start": 2, "step": 1, "end": 2},
     {"start": 2, "step": 1, "end": 2},
-    {"start": 10, "step": 10, "end": 300},
-    {"start": 0.5, "step": 0.1, "end": 0.5},
-    {"start": 60, "step": 1, "end": 60}
+    {"start": 1, "step": 1, "end": 60},
+    {"start": 5, "step": 0.1, "end": 5},
+    {"start": 200, "step": 1, "end": 200}
   ]
 }

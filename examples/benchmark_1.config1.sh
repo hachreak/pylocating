@@ -4,7 +4,7 @@ CONFIGFILE="examples/benchmark_1.config1.json"
 LOGFILE="logs/benchmark_1.log"
 IMAGE="/tmp/benchmark_1.config1.jpg"
 # how many simulations is started
-MATRIX=30
+MATRIX=60
 SIMULATIONS=${1:-10}
 # extract this column from log to plot (X,Y)
 X_COLUMN=7
