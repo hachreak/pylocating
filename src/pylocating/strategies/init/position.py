@@ -53,8 +53,6 @@ def on_beacon_sphere_surface(environment, beacon_index, num_of_points):
     base = environment.config['base']
     radius = environment.config['radius']
     bi = beacon_index
-    generator = generate_points_in_surface_sphere(base[bi],
-                                                  radius.A[0][bi],
-                                                  num_of_points)
-    while True:
-        yield next(generator)
+    return generate_points_in_surface_sphere(base[bi],
+                                             radius.A[0][bi],
+                                             num_of_points)
