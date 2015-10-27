@@ -21,7 +21,9 @@
 from __future__ import absolute_import, unicode_literals
 
 from numpy import matrix
-from pylocating.benchmarks.moving_point import MovingPointEngine
+from pylocating.benchmarks.moving_point import MovingPointEngine, \
+    EnvironmentListener
+from pylocating.utils import distance
 
 
 class TestBenchmarksMatrixGenerator(object):
@@ -43,27 +45,30 @@ class TestBenchmarksMatrixGenerator(object):
 
         # test 1
         count = 5
-        mp = MovingPointEngine(config=config, listener=Listener(),
-                         positions=generator(),
-                         stop_condition=lambda mp: mp.iterations >= count)
+        mp = MovingPointEngine(
+            config=config, listener=Listener(),
+            positions=generator(),
+            stop_condition=lambda mp: mp.iterations >= count)
         mp.start()
         mp.join()
         assert mp.iterations == count
 
         # test 2
         count = 43
-        mp = MovingPointEngine(config=config, listener=Listener(),
-                         positions=generator(),
-                         stop_condition=lambda mp: mp.iterations >= count)
+        mp = MovingPointEngine(
+            config=config, listener=Listener(),
+            positions=generator(),
+            stop_condition=lambda mp: mp.iterations >= count)
         mp.start()
         mp.join()
         assert mp.iterations == count
 
         # test 3
         count = -1
-        mp = MovingPointEngine(config=config, listener=Listener(),
-                         positions=generator(),
-                         stop_condition=lambda mp: mp.iterations >= count)
+        mp = MovingPointEngine(
+            config=config, listener=Listener(),
+            positions=generator(),
+            stop_condition=lambda mp: mp.iterations >= count)
         mp.start()
         mp.join()
         assert mp.iterations == 0
@@ -90,9 +95,10 @@ class TestBenchmarksMatrixGenerator(object):
 
         # test 1
         count = 12
-        mp = MovingPointEngine(config=config, listener=Listener(),
-                         positions=generator(),
-                         stop_condition=lambda mp: mp.iterations >= count)
+        mp = MovingPointEngine(
+            config=config, listener=Listener(),
+            positions=generator(),
+            stop_condition=lambda mp: mp.iterations >= count)
         mp.start()
         mp.join()
         assert mp.iterations == count
@@ -119,9 +125,31 @@ class TestBenchmarksMatrixGenerator(object):
 
         # test 1
         count = 12
-        mp = MovingPointEngine(config=config, listener=Listener(),
-                         positions=generator(),
-                         stop_condition=lambda mp: mp.iterations >= count)
+        mp = MovingPointEngine(
+            config=config, listener=Listener(),
+            positions=generator(),
+            stop_condition=lambda mp: mp.iterations >= count)
         mp.start()
         mp.join()
         assert mp.iterations == 4
+
+    def test_env_listener(self):
+        """Test env listener."""
+        class Environment(object):
+            def __init__(self):
+                self.config = {
+                    'base': matrix([
+                        [1, 2, 4],
+                        [5, 6, 7],
+                        [8, 9, 10]
+                    ])
+                }
+        env = Environment()
+        listener = EnvironmentListener(environment=env)
+        point = matrix([6, 5, 4])
+        listener.position(point)
+
+        result = matrix([distance(env.config['base'].A[0], point),
+                         distance(env.config['base'].A[1], point),
+                         distance(env.config['base'].A[2], point)])
+        assert (env.config['radius'] == result).all()

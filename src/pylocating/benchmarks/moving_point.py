@@ -25,6 +25,22 @@ import logging
 from numpy import matrix
 from threading import Event, Thread
 from time import sleep
+from pylocating.utils import distance
+
+
+class EnvironmentListener(object):
+
+    """Connect Environment with MovingPointEngine and update radius."""
+
+    def __init__(self, environment):
+        """Init."""
+        self.environment = environment
+
+    def position(self, point):
+        """Update radius inside the environment."""
+        self.environment.config['radius'] = matrix(list(
+            map(lambda b: distance(b, point), self.environment.config['base'])
+        ))
 
 
 class MovingPointEngine(Thread):
