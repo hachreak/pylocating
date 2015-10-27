@@ -4,11 +4,41 @@ Examples
 *Note*: You should always start examples from root directory of pylocating.
 
 
+Simple PSO
+----------
+
+One single environment that contains a specified number of particles.
+All particles are `PSOParticle`.
+
+The virtual space where the 4 beacons and the point is inserted is defined by:
+
+- center: [1000, 1000, 1000]
+- side length: 100
+
+Every time the benchmark is started, their position are chosen randomly inside
+this cube.
+The distance error introduced is fixed and moved every time in a different
+position in the space.
+
+.. code-block:: bash
+
+  scripts/bestfitnessgraph.sh simple_pso 200
+
+At the end of execution, you can see `/tmp/image1.jpg` file generated.
+
+.. figure:: examples/simple_pso.jpg
+
+  Environment 1: visualize the fitness value / virtual time.
+
+On blue the current fitness value for every particle.
+On red the best fitness value for every particle.
+
+
 Federated Particles
 -------------------
 
 Two separated environments contain a different number of particles.
-All the particles are `PSOParticle` (they follow a standard PSO model).
+All particles are `PSOParticle` (they follow a standard PSO model).
 The initial position of particles are around the beacons.
 
 .. code-block:: bash
