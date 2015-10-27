@@ -44,9 +44,9 @@ def builder(base, point, params, random_generator, position_initializator):
         velocity_max = param[5]
         iterations_per_particle = param[6]
         # point disturbed by a gaussian noise
-        disturbed_point = next(apply_noise_linear(point=point, error=error))
+        disturbed_point_gen = apply_noise_linear(point=point, error=error)
         # compute radius
-        radius = matrix([distance(b, disturbed_point) for b in base])
+        radius = matrix([distance(b, next(disturbed_point_gen)) for b in base])
         # build environment configuration
         env_config = {
             'inertial_weight': inertial_weight,
