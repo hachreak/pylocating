@@ -37,6 +37,8 @@ def _points_in_surface_sphere(num_of_points):
     :return: points
     """
     row = int(sqrt(num_of_points))
+    if num_of_points % (row**2) > 0:
+        row = row + 1
     [phi, theta] = meshgrid(linspace(0, 2 * pi, row), linspace(0, pi, row))
     phi = matrix(phi)
     theta = matrix(theta)
