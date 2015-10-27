@@ -20,6 +20,9 @@ arguments:
   - 20: the first environment contains 20 particles
   - 10: the second environment contains 10 particles
 
+.. image:: examples/example_federated_particles_1.jpg
+.. image:: examples/example_federated_particles_2.jpg
+
 
 FollowBest Particles
 --------------------
@@ -40,6 +43,9 @@ arguments:
   - 20: the first environment contains 20 particles
   - 10: the second environment contains 10 particles
 
+.. image:: examples/example_followbest_particles_1.jpg
+.. image:: examples/example_followbest_particles_2.jpg
+
 
 Start from beacon sphere surface
 --------------------------------
@@ -54,10 +60,9 @@ center the beacon itself and radius the distance measured.
   /path/to/pylocating$ scripts/bestfitnessgraph.sh start_from_sphere_surface 16
 
 arguments:
-  - 16: the environment contains 16 particles.
+  - 16: the environment contains 16 * 4 (# beacons) particles.
 
-*note*: the number of particle should be divisible for 4 (the number of
- beacons).
+.. image:: examples/example_start_from_sphere_surface_1.jpg
 
 
 Benchmarks 1 - config 1
