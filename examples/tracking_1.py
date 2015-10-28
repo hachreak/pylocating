@@ -23,6 +23,7 @@ from __future__ import absolute_import, unicode_literals
 import sys
 import logging
 import json
+import time
 
 from logging import config
 from numpy import matrix, random
@@ -32,7 +33,7 @@ from pylocating.benchmarks.matrix_generator import \
 from pylocating.benchmarks.utils import apply_noise_linear
 from pylocating.utils import distance, generate_sequential_points
 from pylocating.strategies.init.position import around_beacons
-from pylocating.particles import PSOParticle
+from pylocating.particles import PSOParticle, FollowBestParticle
 from pylocating.information import Information
 from pylocating.engines import ParticleEngine
 from pylocating.benchmarks.moving_point import LoggingMovingPointEngine, \
@@ -89,6 +90,15 @@ for i in range(num_particles):
         vmax=velocity_max
     )
 
+# add a different particle
+FollowBestParticle(
+    environment=env,
+    id="P{}env".format(i),
+    current=Information(position=next(particle_position_generator)),
+    velocity=velocity_max * random.random(3),
+    vmax=velocity_max
+)
+
 # engine for env
 engine = ParticleEngine(
     config={},
@@ -104,7 +114,8 @@ mpe = LoggingMovingPointEngine(
     positions=seq_point_gen,
     stop_condition=lambda mpe: mpe.iterations > 100000
 )
-mpe.start()
 engine.start()
+time.sleep(3)
+mpe.start()
 mpe.join()
 # engine.join()
