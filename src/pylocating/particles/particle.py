@@ -87,6 +87,8 @@ class Particle(object):
             self.logger.debug(
                 "[{}] best fitness: {}\n".format(self.id, info.fitness))
             self._best = info
+            # update environment
+            self.environment.best = self
 
     @property
     def best(self):

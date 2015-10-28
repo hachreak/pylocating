@@ -47,7 +47,7 @@ class TestEnvironment(object):
         particles = {}
         particles[1] = Particle(
             environment=env,
-            current=Information(position=position, fitness=3))
+            current=Information(position=position, fitness=7))
         particles[2] = Particle(
             environment=env,
             current=Information(position=position, fitness=10))
@@ -59,7 +59,7 @@ class TestEnvironment(object):
             current=Information(position=position, fitness=25))
         particles[5] = Particle(
             environment=env,
-            current=Information(position=position, fitness=1))
+            current=Information(position=position, fitness=5))
         particles[6] = Particle(
             environment=env,
             current=Information(position=position, fitness=37))
@@ -67,6 +67,18 @@ class TestEnvironment(object):
         best = env.best
         assert particles[5] == best
         assert particles[5].best == best.best
+
+        particles[6].current = Information(position=position, fitness=3)
+
+        best = env.best
+        assert particles[6] == best
+        assert particles[6].best == best.best
+
+        particles[4].current = Information(position=position, fitness=40)
+
+        best = env.best
+        assert particles[6] == best
+        assert particles[6].best == best.best
 
     def test_randomizer(self):
         """Test randomizer."""

@@ -62,6 +62,7 @@ class Environment(object):
             if 'base' in self.config else matrix([])
         self.config['radius'] = self.config['radius'] \
             if 'radius' in self.config else matrix([])
+        self._best = None
 
     def registerNeighbor(self, environment):
         """Register a environment."""
@@ -83,7 +84,16 @@ class Environment(object):
     @property
     def best(self):
         """Compute realtime the new global best result."""
-        return Environment._compute_best(self.particles.values())
+        if self._best is None:
+            self._best = Environment._compute_best(self.particles.values())
+        return self._best
+
+    @best.setter
+    def best(self, particle):
+        """Update best particle (only if better than current best)."""
+        if self._best is None or \
+                self._best.best.fitness > particle.best.fitness:
+            self._best = particle
 
     @staticmethod
     def _compute_best(particles):
