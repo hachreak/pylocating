@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "disable_existing_loggers": false,
+  "formatters": {
+    "simple": {
+      "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    },
+    "minimal": {
+      "format": "%(asctime)s%(msecs)03d %(message)s",
+      "datefmt": "%s"
+    }
+  },
+
+  "handlers": {
+    "ParticleEngineFileHandler": {
+      "class": "logging.FileHandler",
+      "level": "DEBUG",
+      "formatter": "minimal",
+      "filename": "logs/tracking_1-particle-engine.log"
+    },
+    "PSOParticleFileHandler": {
+      "class": "logging.FileHandler",
+      "level": "DEBUG",
+      "formatter": "minimal",
+      "filename": "logs/tracking_1-psoparticle.log"
+    },
+    "LoggingMovingPointFileHandler": {
+      "class": "logging.FileHandler",
+      "level": "DEBUG",
+      "formatter": "minimal",
+      "filename": "logs/tracking_1-movingpoint.log"
+    }
+  },
+
+  "loggers": {
+    "pylocating.engines.particle_engine.ParticleEngine": {
+      "level": "DEBUG",
+      "handlers": ["ParticleEngineFileHandler"],
+      "propagate": "no"
+    },
+    "pylocating.particles.psoparticle.PSOParticle": {
+      "level": "DEBUG",
+      "handlers": ["PSOParticleFileHandler"],
+      "propagate": "no"
+    },
+    "pylocating.benchmarks.moving_point.LoggingMovingPointEngine": {
+      "level": "DEBUG",
+      "handlers": ["LoggingMovingPointFileHandler"],
+      "propagate": "no"
+    }
+  }
+}
+
