@@ -107,8 +107,14 @@ class LoggingMovingPointEngine(MovingPointEngine):
     def _move(self):
         # log nex position
         bestParticle = self.listener.environment.neighborBest
-        self.logger.debug("{} {} {} {}".format(
-            self.iterations, self.point,
-            bestParticle.best.position,
-            distance(self.point, bestParticle.best.position)))
+        self.logger.debug("{} {} {} {} {} {} {} {}".format(
+            self.iterations,
+            self.point.A[0][0],
+            self.point.A[0][1],
+            self.point.A[0][2],
+            bestParticle.best.position.A[0][0],
+            bestParticle.best.position.A[0][1],
+            bestParticle.best.position.A[0][2],
+            distance(self.point, bestParticle.best.position)
+        ))
         super(LoggingMovingPointEngine, self)._move()
