@@ -30,6 +30,48 @@ from numpy import matrix, linspace, meshgrid, sin, cos, pi, sqrt, multiply, \
     random as nprandom
 
 
+class Random(object):
+
+    """Randomizer."""
+
+    def random(self):
+        """Return random [0,1) matrix 3x1."""
+        val = nprandom.random()
+        return matrix([val, val, val])
+
+
+class Random3D(object):
+
+    """Randomizer."""
+
+    def random(self):
+        """Return random [0,1) matrix 3x1."""
+        return matrix([nprandom.random(),
+                       nprandom.random(),
+                       nprandom.random()])
+
+
+class Randn(object):
+
+    """Randomizer with a normal distribution."""
+
+    def random(self):
+        """Return random [0,1) matrix 3x1."""
+        val = nprandom.random()
+        return matrix([val, val, val])
+
+
+class Randn3D(object):
+
+    """Randomizer with a normal distribution."""
+
+    def random(self):
+        """Return random [0,1) matrix 3x1."""
+        return matrix([nprandom.random(),
+                       nprandom.random(),
+                       nprandom.random()])
+
+
 @lru_cache(maxsize=100)
 def _points_in_surface_sphere(num_of_points):
     """Return a point in the surface of the sphere.
