@@ -26,20 +26,24 @@ from numpy import matrix
 from threading import Event, Thread
 from time import sleep
 from pylocating.utils import distance
+from pylocating.benchmarks.utils import apply_noise_linear
 
 
 class EnvironmentListener(object):
 
     """Connect Environment with MovingPointEngine and update radius."""
 
-    def __init__(self, environment):
+    def __init__(self, environment, error=1):
         """Init."""
         self.environment = environment
+        self.error = error
 
     def position(self, point):
         """Update radius inside the environment."""
+        disturbed_point_gen = apply_noise_linear(point=point, error=self.error)
         self.environment.config['radius'] = matrix(list(
-            map(lambda b: distance(b, point), self.environment.config['base'])
+            map(lambda b: distance(b, next(disturbed_point_gen)),
+                self.environment.config['base'])
         ))
 
 
@@ -47,7 +51,8 @@ class MovingPointEngine(Thread):
 
     """Animate a point: follow a defined path."""
 
-    def __init__(self, config, listener, positions, stop_condition=None):
+    def __init__(self, config, listener, start_point, positions,
+                 stop_condition=None):
         """Init moving particle.
 
         :param config: dict container for configuration
@@ -60,6 +65,7 @@ class MovingPointEngine(Thread):
         self.shutdown_event = Event()
         self.listener = listener
         self.positions = positions
+        self.point = start_point
         self.stop_condition = stop_condition or \
             (lambda mp: mp.iterations >= 100)
         self.logger = logging.getLogger(self.__class__.__module__ +
@@ -74,19 +80,35 @@ class MovingPointEngine(Thread):
         while not self.shutdown_event.is_set() and \
                 not self.stop_condition(self):
             # generate next position
-            try:
-                point = next(self.positions)
-                # log nex position
-                self.logger.debug("{} {}".format(self.iterations, point))
-                # alert listener
-                self.listener.position(point)
-                # sleep
-                sleep(self.config['sleep'])
-                # update counter
-                self.iterations = self.iterations + 1
-            except StopIteration:
-                self.shutdown()
+            self._move()
+
+    def _move(self):
+        """Move point."""
+        try:
+            self.point = next(self.positions)
+            # alert listener
+            self.listener.position(self.point)
+            # sleep
+            sleep(self.config['sleep'])
+            # update counter
+            self.iterations = self.iterations + 1
+        except StopIteration:
+            self.shutdown()
 
     def shutdown(self):
         """Shutdown the engine."""
         self.shutdown_event.set()
+
+
+class LoggingMovingPointEngine(MovingPointEngine):
+
+    """Add a logger."""
+
+    def _move(self):
+        # log nex position
+        bestParticle = self.listener.environment.neighborBest
+        self.logger.debug("{} {} {} {}".format(
+            self.iterations, self.point,
+            bestParticle.best.position,
+            distance(self.point, bestParticle.best.position)))
+        super(LoggingMovingPointEngine, self)._move()

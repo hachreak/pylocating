@@ -47,6 +47,7 @@ class TestBenchmarksMatrixGenerator(object):
         count = 5
         mp = MovingPointEngine(
             config=config, listener=Listener(),
+            start_point=matrix([0, 0, 0]),
             positions=generator(),
             stop_condition=lambda mp: mp.iterations >= count)
         mp.start()
@@ -57,6 +58,7 @@ class TestBenchmarksMatrixGenerator(object):
         count = 43
         mp = MovingPointEngine(
             config=config, listener=Listener(),
+            start_point=matrix([0, 0, 0]),
             positions=generator(),
             stop_condition=lambda mp: mp.iterations >= count)
         mp.start()
@@ -67,6 +69,7 @@ class TestBenchmarksMatrixGenerator(object):
         count = -1
         mp = MovingPointEngine(
             config=config, listener=Listener(),
+            start_point=matrix([0, 0, 0]),
             positions=generator(),
             stop_condition=lambda mp: mp.iterations >= count)
         mp.start()
@@ -97,6 +100,7 @@ class TestBenchmarksMatrixGenerator(object):
         count = 12
         mp = MovingPointEngine(
             config=config, listener=Listener(),
+            start_point=matrix([0, 0, 0]),
             positions=generator(),
             stop_condition=lambda mp: mp.iterations >= count)
         mp.start()
@@ -127,6 +131,7 @@ class TestBenchmarksMatrixGenerator(object):
         count = 12
         mp = MovingPointEngine(
             config=config, listener=Listener(),
+            start_point=matrix([0, 0, 0]),
             positions=generator(),
             stop_condition=lambda mp: mp.iterations >= count)
         mp.start()
@@ -145,11 +150,11 @@ class TestBenchmarksMatrixGenerator(object):
                     ])
                 }
         env = Environment()
-        listener = EnvironmentListener(environment=env)
+        listener = EnvironmentListener(environment=env, error=1)
         point = matrix([6, 5, 4])
         listener.position(point)
 
         result = matrix([distance(env.config['base'].A[0], point),
                          distance(env.config['base'].A[1], point),
                          distance(env.config['base'].A[2], point)])
-        assert (env.config['radius'] == result).all()
+        assert (env.config['radius'] != result).all()
