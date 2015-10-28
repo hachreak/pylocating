@@ -91,7 +91,7 @@ def generate_points_random_in_surface_sphere(center, radius, random=None):
         yield matrix([x, y, z]) + center
 
 
-def generate_sequential_points(start_point, random=None):
+def generate_sequential_points(start_point, vmax=None, random=None):
     """Generate sequential points.
 
     :param start_point: point where to start
@@ -99,9 +99,11 @@ def generate_sequential_points(start_point, random=None):
     :return: next point
     """
     point = deepcopy(start_point)
+    vmax = vmax or 1
     random = random or nprandom
     while True:
-        point = point + random.random() - matrix([0.5, 0.5, 0.5])
+        point = point + vmax * random.random() - \
+            matrix([vmax/2, vmax/2, vmax/2])
         yield point
 
 

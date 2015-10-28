@@ -121,7 +121,8 @@ class TestUtils(object):
 
     def test_generate_sequential_points(self):
         """Test generate sequential points."""
-        gen = generate_sequential_points(matrix([0, 0, 0]), random)
+        gen = generate_sequential_points(start_point=matrix([0, 0, 0]),
+                                         random=random)
 
         point = next(gen)
         for i in range(30):
