@@ -42,7 +42,9 @@ class ParticleEngine(Thread):
         self.environment = environment
         self.config['max_iterations'] = self.config['max_iterations'] \
             if 'max_iterations' in config else 20
-        self.stop_condition = stop_condition or (lambda env: False)
+        self.stop_condition = stop_condition or (
+            lambda engine: engine.iterations >= engine.config['max_iterations']
+        )
         self.logger = logging.getLogger(self.__class__.__module__ +
                                         "." + self.__class__.__name__)
 
@@ -53,8 +55,7 @@ class ParticleEngine(Thread):
         """
         self.iterations = 0
         while not self.shutdown_event.is_set() and \
-                self.config['max_iterations'] > self.iterations and \
-                not self.stop_condition(self.environment):
+                not self.stop_condition(self):
             # calculate fitness and update personal best
             for particle in self.environment.particles.values():
                 particle.fitness()

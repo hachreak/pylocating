@@ -58,15 +58,13 @@ class TestParticleEngine(object):
 
         config = {}
         config["max_iterations"] = 100
-        pe = ParticleEngine(config=config, environment=Environment(),
-                            stop_condition=lambda x: False)
+        pe = ParticleEngine(config=config, environment=Environment())
         pe.start()
         pe.join()
 
         assert pe.iterations == 100
 
-        pe = ParticleEngine(config={}, environment=Environment(),
-                            stop_condition=lambda x: False)
+        pe = ParticleEngine(config={}, environment=Environment())
         pe.start()
         pe.join()
 
