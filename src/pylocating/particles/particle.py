@@ -120,7 +120,7 @@ class Particle(object):
                                    fitness=fitness)
         return fitness
 
-    def move(self):
+    def _move(self):
         """Move the particle."""
         raise ParticleException("This function should be implemented.")
 
@@ -128,6 +128,13 @@ class Particle(object):
         """Move and compute new fitness."""
         self.move()
         self.fitness()
+
+    def move(self):
+        """Move the particle."""
+        next_position = self._move()
+        self.current = Information(position=next_position,
+                                   fitness=self.current.fitness)
+        return next_position
 
     @property
     def index(self):

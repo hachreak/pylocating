@@ -49,9 +49,9 @@ class TestPSOParticle(object):
 
         particle = PSOParticle(environment=env,
                                current=info, best=binfo, velocity=velocity)
-        new_info = particle.move()
+        new_position = particle.move()
         assert (particle.velocity == matrix([1, 1, 1])).all()
-        assert (new_info.position == matrix([2, 2, 2])).all()
+        assert (new_position == matrix([2, 2, 2])).all()
 
     def test_move_defined_values(self):
         """Test move."""

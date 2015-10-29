@@ -22,7 +22,6 @@ from __future__ import absolute_import, unicode_literals
 
 from numpy import multiply
 
-from ..information import Information
 from .psoparticle import PSOParticle
 
 
@@ -44,8 +43,4 @@ class FollowBestParticle(PSOParticle):
         random = self.environment.config['random']
         # compute new position
         self.velocity = multiply(w * random.random(), vel) + (gbpos - pos)
-        next_position = pos + self.velocity
-        # save
-        self.current = Information(position=next_position,
-                                   fitness=self.current.fitness)
-        return self.current
+        return pos + self.velocity

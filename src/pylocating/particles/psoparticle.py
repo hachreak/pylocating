@@ -22,7 +22,6 @@ from __future__ import absolute_import, unicode_literals
 
 from numpy import multiply, absolute, matrix
 
-from ..information import Information
 from .particle import Particle
 
 
@@ -73,10 +72,10 @@ class PSOParticle(Particle):
         """Return best particle inside the his environment."""
         return self.environment.best.best
 
-    def move(self):
+    def _move(self):
         """Compute next position and velocity of the particle.
 
-        :return: new information of the particle
+        :return: new particle position
         """
         # global best position
         gbpos = self.getBestParticle().position
@@ -96,11 +95,7 @@ class PSOParticle(Particle):
         self.velocity = w * vel + \
             multiply(c1 * random.random(), (pbpos - pos)) + \
             multiply(c2 * random.random(), (gbpos - pos))
-        next_position = pos + self.velocity
-        # save
-        self.current = Information(position=next_position,
-                                   fitness=self.current.fitness)
-        return self.current
+        return pos + self.velocity
 
 
 class GlobalBestPSOParticle(PSOParticle):
