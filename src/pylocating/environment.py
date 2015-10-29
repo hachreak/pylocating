@@ -58,9 +58,21 @@ class Environment(object):
             if 'social' in self.config else 1
         self.config['random'] = self.config['random'] \
             if 'random' in self.config else random
-        self.base = base if base is not None else matrix([])
+        self._base = base if base is not None else matrix([])
         self._radius = radius if radius is not None else matrix([])
         self._best = None
+
+    @property
+    def base(self):
+        """Get base."""
+        return self._base
+
+    @base.setter
+    def base(self, value):
+        """Set base (and update best fitness found)."""
+        self._base = value
+        # compute again the best fitness found
+        self.best.update_best_fitness()
 
     @property
     def radius(self):
