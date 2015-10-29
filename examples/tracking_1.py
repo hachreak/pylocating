@@ -30,7 +30,7 @@ from numpy import matrix, random
 from pylocating.environment import Environment
 from pylocating.benchmarks.utils import apply_noise_linear
 from pylocating.utils import distance, generate_sequential_points, \
-    generate_matrix_of_points_in_cube
+    generate_matrix_of_points_in_cube, generate_line_of_points
 from pylocating.strategies.init.position import around_beacons
 from pylocating.particles import PSOParticle, FollowBestParticle
 from pylocating.information import Information
@@ -54,8 +54,8 @@ point_generator = generate_matrix_of_points_in_cube(
     center=center, side_length=side_length, num_of_points=1)
 
 base = next(base_generator)
-seq_point_gen = generate_sequential_points(
-    start_point=next(point_generator), vmax=20, random=random)
+seq_point_gen = generate_line_of_points(
+    start_point=next(point_generator), vmax=0.5)
 point = next(seq_point_gen)
 error = 10
 disturbed_point_gen = apply_noise_linear(point=point, error=error)
