@@ -24,7 +24,7 @@ def read(*names, **kwargs):
 
 setup(
     name='pylocating',
-    version='0.2.2',
+    version='0.3.0',
     license='GPLv2',
     description='Locating objects',
     long_description='%s\n%s' % (read('README.rst'),
