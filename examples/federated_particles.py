@@ -59,21 +59,22 @@ env_config = {
     'cognition': 2,
     'social': 1,
     'random': random_generator,
-    'base': matrix([
-        [0, 0, 0],      # beacon 1
-        [60, -40, 0],   # beacon 2
-        [50, 50, 0],    # beacon 3
-        [25, 0, 25]     # beacon 4
-    ]),
-    'radius': matrix([
-        20,    # beacon 1
-        60,    # beacon 2
-        60,    # beacon 3
-        30,    # beacon 4
-    ])
 }
-env1 = Environment(config=env_config)
-env2 = Environment(config=env_config)
+base = matrix([
+    [0, 0, 0],      # beacon 1
+    [60, -40, 0],   # beacon 2
+    [50, 50, 0],    # beacon 3
+    [25, 0, 25]     # beacon 4
+])
+radius = matrix([
+    20,    # beacon 1
+    60,    # beacon 2
+    60,    # beacon 3
+    30,    # beacon 4
+])
+
+env1 = Environment(config=env_config, base=base, radius=radius)
+env2 = Environment(config=env_config, base=base, radius=radius)
 # connect environments
 env1.registerNeighbor(env2)
 

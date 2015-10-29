@@ -41,21 +41,22 @@ class TestOnBeaconSphereSurfaceInitStrategy(object):
 
     def test_generate(self):
         """Test generation."""
-        env = Environment({
-            'base': matrix([
+        env = Environment(
+            config={},
+            base=matrix([
                 [0, 0, 0],      # beacon 1
                 [60, -40, 0],   # beacon 2
                 [50, 50, 0],    # beacon 3
             ]),
-            'radius': matrix([
+            radius=matrix([
                 20,    # beacon 1
                 60,    # beacon 2
                 60,    # beacon 3
             ])
-        })
+        )
 
         points = on_beacon_sphere_surface(environment=env, beacon_index=1,
                                           num_of_points=256)
-        center = env.config['base'][1]
-        radius = env.config['radius'].A[0][1]
+        center = env.base[1]
+        radius = env.radius.A[0][1]
         self._check_points(radius, points, center=center)

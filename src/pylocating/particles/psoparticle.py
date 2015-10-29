@@ -57,8 +57,8 @@ class PSOParticle(Particle):
     def fitness(self):
         """Fitness function."""
         # prepare data
-        base = self.environment.config['base']
-        radius = self.environment.config['radius']
+        base = self.environment.base
+        radius = self.environment.radius
         (row, column) = base.shape
         position = matrix([self.current.position.A[0]]*row)
         tradius = radius.transpose()

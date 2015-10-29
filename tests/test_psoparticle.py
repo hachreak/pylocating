@@ -64,18 +64,19 @@ class TestPSOParticle(object):
             'cognition': 1,
             'social': 1,
             'random': Random(),
-            'base': matrix([
-                [0, 0, 0],   # beacon 1
-                [7, 5, 0],   # beacon 2
-                [5, -4, 0],  # beacon 3
-            ]),
-            'radius': matrix([
-                3.024,   # beacon 1
-                6.4,     # beacon 2
-                6.63,  # beacon 3
-            ])
         }
-        env = Environment(config)
+        base = matrix([
+            [0, 0, 0],   # beacon 1
+            [7, 5, 0],   # beacon 2
+            [5, -4, 0],  # beacon 3
+        ])
+        radius = matrix([
+            3.024,   # beacon 1
+            6.4,     # beacon 2
+            6.63,  # beacon 3
+        ])
+
+        env = Environment(config, base=base, radius=radius)
 
         particle = PSOParticle(environment=env,
                                current=Information(position=matrix([1, 1, 1])))

@@ -53,10 +53,8 @@ def builder(base, point, params, random_generator, position_initializator):
             'cognition': cognition,
             'social': social,
             'random': random_generator,
-            'base': base,
-            'radius': radius
         }
-        env = Environment(config=env_config)
+        env = Environment(config=env_config, base=base, radius=radius)
         # particle position generator
         position_generator = position_initializator(env)
         # particles inside env

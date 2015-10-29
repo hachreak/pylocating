@@ -69,25 +69,25 @@ config_env1 = {
     'cognition': 2,
     'social': 1,
     'random': random_generator,
-    'base': matrix([
-        [0, 0, 0],      # beacon 1
-        [60, -40, 0],   # beacon 2
-        [50, 50, 0],    # beacon 3
-        [25, 0, 25]     # beacon 4
-    ]),
-    'radius': matrix([
-        20,    # beacon 1
-        60,    # beacon 2
-        60,    # beacon 3
-        30,    # beacon 4
-    ])
 }
+base = matrix([
+    [0, 0, 0],      # beacon 1
+    [60, -40, 0],   # beacon 2
+    [50, 50, 0],    # beacon 3
+    [25, 0, 25]     # beacon 4
+])
+radius = matrix([
+    20,    # beacon 1
+    60,    # beacon 2
+    60,    # beacon 3
+    30,    # beacon 4
+])
 
 config_env2 = deepcopy(config_env1)
 config_env2['random'] = Random3D()
 
-env1 = Environment(config=config_env1)
-env2 = Environment(config=config_env2)
+env1 = Environment(config=config_env1, base=base, radius=radius)
+env2 = Environment(config=config_env2, base=base, radius=radius)
 # connect environments
 env1.registerNeighbor(env2)
 

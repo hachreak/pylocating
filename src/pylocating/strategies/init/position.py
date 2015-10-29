@@ -34,7 +34,7 @@ def around_beacons(environment):
     i = 0
     while True:
         random = environment.config['random']
-        base = environment.config['base']
+        base = environment.base
         (row, column) = base.shape
         yield base[i] + random.random()
         i = (i + 1) % row
@@ -50,8 +50,8 @@ def on_beacon_sphere_surface(environment, beacon_index, num_of_points):
     :param num_of_points: how many points are generated in the surface
     :return: point as matrix
     """
-    base = environment.config['base']
-    radius = environment.config['radius']
+    base = environment.base
+    radius = environment.radius
     bi = beacon_index
     return generate_points_in_surface_sphere(base[bi],
                                              radius.A[0][bi],

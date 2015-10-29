@@ -75,10 +75,8 @@ env_config = {
     'cognition': 2,
     'social': 1,
     'random': random_generator,
-    'base': base,
-    'radius': radius
 }
-env1 = Environment(config=env_config)
+env1 = Environment(config=env_config, base=base, radius=radius)
 
 position_generator = around_beacons(env1)
 

@@ -72,10 +72,8 @@ env_config = {
     'cognition': 2,
     'social': 1,
     'random': random,
-    'base': base,
-    'radius': radius
 }
-env = Environment(config=env_config)
+env = Environment(config=env_config, base=base, radius=radius)
 # particle position generator
 particle_position_generator = around_beacons(env)
 # particles inside env

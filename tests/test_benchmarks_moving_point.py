@@ -142,19 +142,19 @@ class TestBenchmarksMatrixGenerator(object):
         """Test env listener."""
         class Environment(object):
             def __init__(self):
-                self.config = {
-                    'base': matrix([
-                        [1, 2, 4],
-                        [5, 6, 7],
-                        [8, 9, 10]
-                    ])
-                }
+                self.config = {}
+                self.base = matrix([
+                    [1, 2, 4],
+                    [5, 6, 7],
+                    [8, 9, 10]
+                ])
+
         env = Environment()
         listener = EnvironmentListener(environment=env, error=1)
         point = matrix([6, 5, 4])
         listener.position(point)
 
-        result = matrix([distance(env.config['base'].A[0], point),
-                         distance(env.config['base'].A[1], point),
-                         distance(env.config['base'].A[2], point)])
-        assert (env.config['radius'] != result).all()
+        result = matrix([distance(env.base.A[0], point),
+                         distance(env.base.A[1], point),
+                         distance(env.base.A[2], point)])
+        assert (env.radius != result).all()

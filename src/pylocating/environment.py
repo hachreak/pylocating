@@ -36,7 +36,7 @@ class Environment(object):
 
     """It Contains all information shared by the particles."""
 
-    def __init__(self, config):
+    def __init__(self, config, base=None, radius=None):
         """Init environment.
 
         :param config: configuration:
@@ -44,8 +44,8 @@ class Environment(object):
               cognition
               social
               random (randomizer)
-              base: position of M beacons (matrix: M x [X, Y, Z])
-              radius: distance of the object computed by the M beacons (vector)
+        :param base: position of M beacons (matrix: M x [X, Y, Z])
+        :param radius: object distance computed by the M beacons (vector)
         """
         self.neighbors = [self]
         self.particles = {}
@@ -58,10 +58,8 @@ class Environment(object):
             if 'social' in self.config else 1
         self.config['random'] = self.config['random'] \
             if 'random' in self.config else random
-        self.config['base'] = self.config['base'] \
-            if 'base' in self.config else matrix([])
-        self.config['radius'] = self.config['radius'] \
-            if 'radius' in self.config else matrix([])
+        self.base = base if base is not None else matrix([])
+        self.radius = radius if radius is not None else matrix([])
         self._best = None
 
     def registerNeighbor(self, environment):

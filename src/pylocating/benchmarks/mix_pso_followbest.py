@@ -55,12 +55,10 @@ def builder(base, point, params, random_generator, position_initializator):
             'cognition': cognition,
             'social': social,
             'random': random_generator,
-            'base': base,
-            'radius': radius
         }
 
         # [ENV1 - PSOParticles]
-        env1 = Environment(config=env_config)
+        env1 = Environment(config=env_config, base=base, radius=radius)
         # particle position generator
         position_generator = position_initializator(env1)
         # particles inside env1
@@ -75,7 +73,7 @@ def builder(base, point, params, random_generator, position_initializator):
             )
 
         # [ENV2 - FollowBestParticles]
-        env2 = Environment(config=env_config)
+        env2 = Environment(config=env_config, base=base, radius=radius)
         # particle position generator
         position_generator = position_initializator(env2)
         # particles inside env2
