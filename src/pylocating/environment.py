@@ -59,8 +59,20 @@ class Environment(object):
         self.config['random'] = self.config['random'] \
             if 'random' in self.config else random
         self.base = base if base is not None else matrix([])
-        self.radius = radius if radius is not None else matrix([])
+        self._radius = radius if radius is not None else matrix([])
         self._best = None
+
+    @property
+    def radius(self):
+        """Get radius."""
+        return self._radius
+
+    @radius.setter
+    def radius(self, value):
+        """Set radius (and update best fitness found)."""
+        self._radius = value
+        # compute again the best fitness found
+        self.best.update_best_fitness()
 
     def registerNeighbor(self, environment):
         """Register a environment."""
