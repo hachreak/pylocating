@@ -54,25 +54,20 @@ class PSOParticle(Particle):
         """Init."""
         super(PSOParticle, self).__init__(*args, **kargs)
 
-    def fitness(self):
+    def _fitness(self, position):
         """Fitness function."""
         # prepare data
         base = self.environment.base
         radius = self.environment.radius
         (row, column) = base.shape
-        position = matrix([self.current.position.A[0]]*row)
+        mposition = matrix([position.A[0]]*row)
         tradius = radius.transpose()
         # compute fitness
-        difference = base - position
+        difference = base - mposition
         square_difference = multiply(difference, difference)
         sum_square_diff = square_difference.sum(axis=1)
         square_radius = multiply(tradius, tradius)
-        result = absolute(sum_square_diff - square_radius).sum()
-        # update current result
-        self.current = Information(position=self.current.position,
-                                   fitness=result)
-        # return computed fitness value
-        return result
+        return absolute(sum_square_diff - square_radius).sum()
 
     def getBestParticle(self):
         """Return best particle inside the his environment."""

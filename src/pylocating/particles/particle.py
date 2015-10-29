@@ -105,9 +105,16 @@ class Particle(object):
         """Set id."""
         self._id = value
 
+    def _fitness(self, position):
+        """Compute the fitness and and return."""
+        raise ParticleException("This function should be implemented.")
+
     def fitness(self):
         """Compute the fitness and update personal best."""
-        raise ParticleException("This function should be implemented.")
+        fitness = self._fitness(self.current.position)
+        self.current = Information(position=self.current.position,
+                                   fitness=fitness)
+        return fitness
 
     def move(self):
         """Move the particle."""
