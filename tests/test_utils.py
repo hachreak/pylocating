@@ -24,7 +24,7 @@ from numpy import around, matrix, multiply, random
 from pylocating.utils import _points_in_surface_sphere, \
     generate_points_in_surface_sphere, distance, \
     generate_points_random_in_surface_sphere, \
-    generate_sequential_points
+    generate_sequential_points, generate_matrix_of_points_in_cube
 
 
 class TestUtils(object):
@@ -129,3 +129,16 @@ class TestUtils(object):
             next_point = next(gen)
             assert distance(point, next_point) < 0.87
             point = next_point
+
+    def test_generate_matrix_of_points_in_cube(self):
+        """Test generate matrix of points in cube."""
+        num_of_points = 20
+        side_length = 100
+        gen = generate_matrix_of_points_in_cube(center=matrix([0, 0, 0]),
+                                                side_length=side_length,
+                                                num_of_points=num_of_points)
+        for i in range(20):
+            points = next(gen)
+            assert (num_of_points, 3) == points.shape
+            assert (points < (side_length / 2)).all()
+            assert (points > (-side_length / 2)).all()

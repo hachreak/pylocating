@@ -34,9 +34,7 @@ from pylocating.particles import PSOParticle
 from pylocating.information import Information
 from pylocating.strategies.init.position import around_beacons
 from pylocating.benchmarks.utils import apply_noise_linear
-from pylocating.benchmarks.matrix_generator import \
-    generate_matrix_of_points_in_cube
-from pylocating.utils import distance
+from pylocating.utils import generate_matrix_of_points_in_cube, distance
 
 
 if len(sys.argv) <= 1:

@@ -29,8 +29,7 @@ from numpy import random, matrix
 from pylocating.utils import distance
 from pylocating.benchmarks.simple_pso import builder
 from pylocating.strategies.init.position import around_beacons
-from pylocating.benchmarks.matrix_generator import \
-    generate_matrix_of_points_in_cube
+from pylocating.utils import generate_matrix_of_points_in_cube
 
 
 class Random(object):

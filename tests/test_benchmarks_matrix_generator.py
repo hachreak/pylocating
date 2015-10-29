@@ -20,24 +20,9 @@
 
 from __future__ import absolute_import, unicode_literals
 
-from numpy import matrix
-from pylocating.benchmarks.matrix_generator import \
-    generate_matrix_of_points_in_cube
-
 
 class TestBenchmarksMatrixGenerator(object):
 
     """Test Benchmarks Matrix generator."""
 
-    def test_generate_matrix_of_points_in_cube(self):
-        """Test generate matrix of points in cube."""
-        num_of_points = 20
-        side_length = 100
-        gen = generate_matrix_of_points_in_cube(center=matrix([0, 0, 0]),
-                                                side_length=side_length,
-                                                num_of_points=num_of_points)
-        for i in range(20):
-            points = next(gen)
-            assert (num_of_points, 3) == points.shape
-            assert (points < (side_length / 2)).all()
-            assert (points > (-side_length / 2)).all()
+    pass

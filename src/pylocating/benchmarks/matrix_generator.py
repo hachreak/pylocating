@@ -22,30 +22,6 @@ from __future__ import absolute_import, unicode_literals
 
 import itertools
 
-from numpy import matrix, random
-
-
-def generate_matrix_of_points_in_cube(center, side_length, num_of_points):
-    """Generate a matrix of points inside a cube.
-
-    e.g. Generate a matrix of 3 points inside a cube centered in
-         (1000, 1000, 1000) with a side length of 40 (9980<x,y,z<1020)
-
-    .. code-block:: python
-
-        gen = generate_points_in_cube(matrix([1000,1000,1000]), 40, 3)
-
-        mypoints = next(gen)
-
-    :param center: sphere center
-    :param num_of_points: number of row of the generated matrix
-    :param side_length: cube side_length
-    :return: matrix of point inside the cube.
-    """
-    new_center = center - matrix([side_length/2, side_length/2, side_length/2])
-    while True:
-        yield matrix(random.rand(num_of_points, 3)) * side_length + new_center
-
 
 def parameter_values(start, step, end):
     """Generate a list of all possible values of a numeric parameter.

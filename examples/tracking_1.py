@@ -28,10 +28,9 @@ import time
 from logging import config
 from numpy import matrix, random
 from pylocating.environment import Environment
-from pylocating.benchmarks.matrix_generator import \
-    generate_matrix_of_points_in_cube
 from pylocating.benchmarks.utils import apply_noise_linear
-from pylocating.utils import distance, generate_sequential_points
+from pylocating.utils import distance, generate_sequential_points, \
+    generate_matrix_of_points_in_cube
 from pylocating.strategies.init.position import around_beacons
 from pylocating.particles import PSOParticle, FollowBestParticle
 from pylocating.information import Information

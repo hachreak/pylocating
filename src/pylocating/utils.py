@@ -149,6 +149,30 @@ def generate_sequential_points(start_point, vmax=None, random=None):
         yield point
 
 
+def generate_matrix_of_points_in_cube(center, side_length, num_of_points,
+                                      random=None):
+    """Generate a matrix of points inside a cube.
+
+    e.g. Generate a matrix of 3 points inside a cube centered in
+         (1000, 1000, 1000) with a side length of 40 (9980<x,y,z<1020)
+
+    .. code-block:: python
+
+        gen = generate_points_in_cube(matrix([1000,1000,1000]), 40, 3)
+
+        mypoints = next(gen)
+
+    :param center: sphere center
+    :param num_of_points: number of row of the generated matrix
+    :param side_length: cube side_length
+    :return: matrix of point inside the cube.
+    """
+    random = random or nprandom
+    new_center = center - matrix([side_length/2, side_length/2, side_length/2])
+    while True:
+        yield matrix(random.rand(num_of_points, 3)) * side_length + new_center
+
+
 def distance(point_1, point_2):
     """Compute the euclidean distance from the two points."""
     return sqrt(sum((point_1-point_2).A[0]**2))
