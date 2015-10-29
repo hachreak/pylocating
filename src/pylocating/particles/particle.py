@@ -105,6 +105,10 @@ class Particle(object):
         """Set id."""
         self._id = value
 
+    def update_best_fitness(self):
+        """Compute again the best fitness (because radius changed)."""
+        self._best.fitness = self._fitness(self._best.position)
+
     def _fitness(self, position):
         """Compute the fitness and and return."""
         raise ParticleException("This function should be implemented.")
