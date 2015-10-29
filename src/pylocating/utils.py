@@ -149,6 +149,20 @@ def generate_sequential_points(start_point, vmax=None, random=None):
         yield point
 
 
+def generate_line_of_points(start_point, vmax=None):
+    """Generate sequential points.
+
+    :param start_point: point where to start
+    :param random: random generator
+    :return: next point
+    """
+    point = deepcopy(start_point)
+    vmax = vmax or 1
+    while True:
+        point = point + vmax
+        yield point
+
+
 def generate_matrix_of_points_in_cube(center, side_length, num_of_points,
                                       random=None):
     """Generate a matrix of points inside a cube.
