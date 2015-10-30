@@ -26,10 +26,10 @@ import json
 import time
 
 from logging import config
-from numpy import matrix, random
+from numpy import matrix
 from pylocating.environment import Environment
 from pylocating.benchmarks.utils import apply_noise_linear
-from pylocating.utils import distance, generate_sequential_points, \
+from pylocating.utils import distance, Randn, Randn3D, \
     generate_matrix_of_points_in_cube, generate_line_of_points
 from pylocating.strategies.init.position import around_beacons
 from pylocating.particles import PSOParticle, FollowBestParticle
@@ -63,15 +63,13 @@ radius = matrix([distance(b, next(disturbed_point_gen)) for b in base])
 
 velocity_max = 5
 num_particles = sys.argv[1] if 1 in sys.argv else 70
-iterations_per_particle = sys.argv[2] if 2 in sys.argv else 100
-# sleep_time = 0.1
 
 # build environment configuration
 env_config = {
     'inertial_weight': 1,
     'cognition': 2,
-    'social': 1,
-    'random': random,
+    'social': 2,
+    'random': Randn(),
 }
 env = Environment(config=env_config, base=base, radius=radius)
 # particle position generator
@@ -83,7 +81,7 @@ for i in range(num_particles):
         environment=env,
         id="P{}env{}".format(i, 1),
         current=Information(position=next(particle_position_generator)),
-        velocity=velocity_max * random.random(3),
+        velocity=velocity_max * Randn3D().random(),
         vmax=velocity_max
     )
 
@@ -92,7 +90,7 @@ FollowBestParticle(
     environment=env,
     id="P{}env".format(i),
     current=Information(position=next(particle_position_generator)),
-    velocity=velocity_max * random.random(3),
+    velocity=velocity_max * Randn3D().random(),
     vmax=velocity_max
 )
 
@@ -104,15 +102,15 @@ engine = ParticleEngine(
 )
 mpe = LoggingMovingPointEngine(
     config={
-        'sleep': 0.5
+        'sleep': 3
     },
-    listener=EnvironmentListener(environment=env, error=10),
+    listener=EnvironmentListener(environment=env, error=1),
     start_point=point,
     positions=seq_point_gen,
     stop_condition=lambda mpe: mpe.iterations > 100000
 )
 engine.start()
-time.sleep(3)
+time.sleep(5)
 mpe.start()
 mpe.join()
 # engine.join()
