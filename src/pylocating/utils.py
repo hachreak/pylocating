@@ -55,21 +55,27 @@ class Randn(object):
 
     """Randomizer with a normal distribution."""
 
+    def __init__(self, sigma=None, mu=None):
+        """Init."""
+        self._sigma = sigma or 1
+        self._mu = mu or 0
+
+    def _random_num(self, count=1):
+        """Get new random num."""
+        return self._sigma * nprandom.randn(count) + self._mu
+
     def random(self):
         """Return random [0,1) matrix 3x1."""
-        val = nprandom.random()
-        return matrix([val, val, val])
+        return matrix(self._random_num(1))
 
 
-class Randn3D(object):
+class Randn3D(Randn):
 
     """Randomizer with a normal distribution."""
 
     def random(self):
         """Return random [0,1) matrix 3x1."""
-        return matrix([nprandom.random(),
-                       nprandom.random(),
-                       nprandom.random()])
+        return matrix(self._random_num(3))
 
 
 @lru_cache(maxsize=100)
