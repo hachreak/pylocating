@@ -83,8 +83,9 @@ class Environment(object):
     def radius(self, value):
         """Set radius (and update best fitness found)."""
         self._radius = value
-        # compute again the best fitness found
-        self.best.update_best_fitness()
+        # compute again the best fitness found for all particles
+        for p in self.particles.values():
+            p.update_best_fitness()
 
     def registerNeighbor(self, environment):
         """Register a environment."""
