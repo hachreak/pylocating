@@ -21,6 +21,7 @@
 from __future__ import absolute_import, unicode_literals
 
 import logging
+import threading
 
 from numpy import matrix
 
@@ -56,6 +57,7 @@ class Particle(object):
         self.velocity = velocity if velocity is not None else matrix([1, 1, 1])
         self._best = None
         self.current = current if current is not None else Information()
+        self.lock = threading.RLock()
 
     @property
     def velocity(self):
@@ -107,7 +109,8 @@ class Particle(object):
 
     def update_best_fitness(self):
         """Compute again the best fitness (because radius changed)."""
-        self._best.fitness = self._fitness(self._best.position)
+        with self.lock:
+            self._best.fitness = self._fitness(self._best.position)
 
     def _fitness(self, position):
         """Compute the fitness and and return."""
@@ -126,8 +129,9 @@ class Particle(object):
 
     def next(self):
         """Move and compute new fitness."""
-        self.move()
-        self.fitness()
+        with self.lock:
+            self.move()
+            self.fitness()
 
     def move(self):
         """Move the particle."""
