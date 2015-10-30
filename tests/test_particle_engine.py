@@ -43,6 +43,9 @@ class TestParticleEngine(object):
             def move(self):
                 pass
 
+            def next(self):
+                pass
+
         class Environment(object):
             def __init__(self):
                 self.particles = {i: Particle(i) for i in range(4)}

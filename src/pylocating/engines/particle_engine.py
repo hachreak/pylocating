@@ -56,21 +56,14 @@ class ParticleEngine(Thread):
         self.iterations = 0
         while not self.shutdown_event.is_set() and \
                 not self.stop_condition(self):
-            # calculate fitness and update personal best
+            # move and calculate fitness and update personal best
             for particle in self.environment.particles.values():
-                particle.fitness()
+                particle.next()
                 self.logger.debug(
                     ("[{}] fitness: {} "
-                     # "position: {} "
-                     # "velocity: {}"
                      "best: {}\n").format(particle.id,
                                           particle.current.fitness,
-                                          # particle.current.position,
-                                          # particle.velocity,
                                           particle.best.fitness))
-            # move the particles
-            for particle in self.environment.particles.values():
-                particle.move()
             self.iterations = self.iterations + 1
 
     def shutdown(self):
