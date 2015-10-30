@@ -20,7 +20,6 @@
 
 from __future__ import absolute_import, unicode_literals
 
-import random
 import json
 import logging
 import sys
@@ -29,6 +28,7 @@ from copy import deepcopy
 from numpy import matrix
 from logging import config
 
+from pylocating.utils import Random, Randn3D
 from pylocating.engines import ParticleEngine
 from pylocating.environment import Environment
 from pylocating.particles import GlobalBestPSOParticle, FollowBestParticle
@@ -41,25 +41,6 @@ if len(sys.argv) <= 2:
         ("Usage: {} num-particles-env-1 num-particles-env-2\n").format(
             sys.argv[0]))
     sys.exit(1)
-
-
-class Random(object):
-
-    """Randomizer."""
-
-    def random(self):
-        """Return random [0,1) matrix 3x1."""
-        val = random.random()
-        return matrix([val, val, val])
-
-
-class Random3D(object):
-
-    """Randomizer."""
-
-    def random(self):
-        """Return random [0,1) matrix 3x1."""
-        return matrix([random.random(), random.random(), random.random()])
 
 
 random_generator = Random()
@@ -84,7 +65,7 @@ radius = matrix([
 ])
 
 config_env2 = deepcopy(config_env1)
-config_env2['random'] = Random3D()
+config_env2['random'] = Randn3D()
 
 env1 = Environment(config=config_env1, base=base, radius=radius)
 env2 = Environment(config=config_env2, base=base, radius=radius)

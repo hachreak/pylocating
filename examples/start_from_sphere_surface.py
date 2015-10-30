@@ -22,12 +22,12 @@ from __future__ import absolute_import, unicode_literals
 
 import json
 import logging
-import random
 import sys
 
 from numpy import matrix
 from logging import config
 
+from pylocating.utils import Random3D
 from pylocating.engines import ParticleEngine
 from pylocating.environment import Environment
 from pylocating.particles import PSOParticle, FollowBestParticle
@@ -39,16 +39,6 @@ if len(sys.argv) <= 1:
     sys.stderr.write(
         ("Usage: {} num-particles-env-1\n").format(sys.argv[0]))
     sys.exit(1)
-
-
-class Random3D(object):
-
-    """Randomizer."""
-
-    def random(self):
-        """Return random [0,1) matrix 3x1."""
-        return matrix([random.random(), random.random(), random.random()])
-
 
 # Load logging configuration
 log_config = "examples/start_from_sphere_surface.json"

@@ -25,22 +25,15 @@ import json
 import sys
 
 from logging import config
-from numpy import random, matrix
-from pylocating.utils import distance
+from numpy import matrix
+
+from pylocating.utils import distance, Random
 from pylocating.benchmarks.simple_pso import builder
 from pylocating.strategies.init.position import around_beacons
 from pylocating.utils import generate_matrix_of_points_in_cube
 
 
-class Random(object):
-
-    """Randomizer."""
-
-    def random(self):
-        """Return random [0,1) matrix 3x1."""
-        value = random.random(1)
-        return matrix([value, value, value])
-
+# load log configuration
 log_config = sys.argv[1]
 with open(log_config) as data_file:
     data = json.load(data_file)

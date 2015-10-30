@@ -20,7 +20,6 @@
 
 from __future__ import absolute_import, unicode_literals
 
-import random
 import json
 import logging
 import sys
@@ -28,6 +27,7 @@ import sys
 from numpy import matrix
 from logging import config
 
+from pylocating.utils import Random
 from pylocating.engines import ParticleEngine
 from pylocating.environment import Environment
 from pylocating.particles import PSOParticle
@@ -42,17 +42,6 @@ if len(sys.argv) <= 1:
         ("Usage: {} num-particles-env-1\n").format(
             sys.argv[0]))
     sys.exit(1)
-
-
-class Random(object):
-
-    """Randomizer."""
-
-    def random(self):
-        """Return random [0,1) matrix 3x1."""
-        val = random.random()
-        return matrix([val, val, val])
-
 
 random_generator = Random()
 

@@ -44,7 +44,6 @@ with open(log_config) as data_file:
     data = json.load(data_file)
 logging.config.dictConfig(data)
 
-
 center = [1000, 1000, 1000]
 side_length = 100
 
