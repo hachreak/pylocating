@@ -233,27 +233,55 @@ generated.
   Environment 2: visualize error / number of FollowBestParticle particles.
 
 
-Tracking 1
-----------
+Tracking 1 - 1
+--------------
 
-Test tracking a slow moving object with a not high measurement error.
+Test tracking a slow moving object with a not high measurement error with
+normal `PSOParticles`.
 
 .. code-block:: bash
 
-  rm logs/tracking_1-*
-  examples/tracking_1.py 200
+  rm logs/tracking_1_1-*
+  python examples/tracking_1_1.py 200
 
-Execute 200 particles.
+Execute with 200 particles.
 After performing the examples, open a different shell to analize logs and
 to produce a partial graph.
 
 .. code-block:: bash
 
-  examples/tracking_1.m
+  examples/tracking_1.m logs/tracking_1_1-movingpoint.log /tmp/tracking_1_1.jpg
 
-The script produce a image in `/tmp/tracking_1.jpg`.
+The script produce a image in `/tmp/tracking_1_1.jpg`.
 
-.. figure:: examples/tracking_1.jpg
+.. figure:: examples/tracking_1_1.jpg
+
+  On the left: the distance error / time.
+  On the right: the object tracked in red and the tracker in blue.
+
+
+Tracking 1 - 2
+--------------
+
+Test tracking a slow moving object with a not high measurement error with
+normal `RestartFromBestParticle`.
+
+.. code-block:: bash
+
+  rm logs/tracking_1_2-*
+  python examples/tracking_1_2.py 100
+
+Execute with 100 particles.
+After performing the examples, open a different shell to analize logs and
+to produce a partial graph.
+
+.. code-block:: bash
+
+  examples/tracking_1.m logs/tracking_1_2-movingpoint.log /tmp/tracking_1_2.jpg
+
+The script produce a image in `/tmp/tracking_1_2.jpg`.
+
+.. figure:: examples/tracking_1_2.jpg
 
   On the left: the distance error / time.
   On the right: the object tracked in red and the tracker in blue.
