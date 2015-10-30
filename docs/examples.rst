@@ -231,3 +231,29 @@ generated.
 .. figure:: examples/benchmark_2.config1.jpg
 
   Environment 2: visualize error / number of FollowBestParticle particles.
+
+
+Tracking 1
+----------
+
+Test tracking a slow moving object with a not high measurement error.
+
+.. code-block:: bash
+
+  rm logs/tracking_1-*
+  examples/tracking_1.py 200
+
+Execute 200 particles.
+After performing the examples, open a different shell to analize logs and
+to produce a partial graph.
+
+.. code-block:: bash
+
+  examples/tracking_1.m
+
+The script produce a image in `/tmp/tracking_1.jpg`.
+
+.. figure:: examples/tracking_1.jpg
+
+  On the left: the distance error / time.
+  On the right: the object tracked in red and the tracker in blue.
