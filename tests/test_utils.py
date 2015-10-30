@@ -24,7 +24,8 @@ from numpy import around, matrix, multiply, random
 from pylocating.utils import _points_in_surface_sphere, \
     generate_points_in_surface_sphere, distance, \
     generate_points_random_in_surface_sphere, \
-    generate_sequential_points, generate_matrix_of_points_in_cube
+    generate_sequential_points, generate_matrix_of_points_in_cube, \
+    RandomND
 
 
 class TestUtils(object):
@@ -121,8 +122,7 @@ class TestUtils(object):
 
     def test_generate_sequential_points(self):
         """Test generate sequential points."""
-        gen = generate_sequential_points(start_point=matrix([0, 0, 0]),
-                                         random=random)
+        gen = generate_sequential_points(start_point=matrix([0, 0, 0]))
 
         point = next(gen)
         for i in range(30):
@@ -142,3 +142,13 @@ class TestUtils(object):
             assert (num_of_points, 3) == points.shape
             assert (points < (side_length / 2)).all()
             assert (points > (-side_length / 2)).all()
+
+    def test_randomnd(self):
+        """Test RandomND."""
+        point = matrix([1, 2, 3])
+        random = RandomND(dimensions=point.shape[1])
+        assert (1, 3) == random.random().shape
+
+        point = matrix([1, 2])
+        random = RandomND(dimensions=point.shape[1])
+        assert (1, 2) == random.random().shape

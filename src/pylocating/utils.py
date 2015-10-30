@@ -51,6 +51,19 @@ class Random3D(object):
                        nprandom.random()])
 
 
+class RandomND(object):
+
+    """Randomizer."""
+
+    def __init__(self, dimensions=1):
+        """Init."""
+        self._dimensions = dimensions
+
+    def random(self):
+        """Return random [0,1) matrix 3x1."""
+        return matrix([nprandom.random() for i in range(self._dimensions)])
+
+
 class Randn(object):
 
     """Randomizer with a normal distribution."""
@@ -131,7 +144,7 @@ def generate_points_random_in_surface_sphere(center, radius, random=None):
     """
     while True:
         random = random or nprandom
-        phi = 2 * pi * random.random()
+        phi = 2.0 * pi * random.random()
         theta = pi * random.random()
         x = radius * sin(theta) * cos(phi)
         y = radius * sin(theta) * sin(phi)
@@ -147,8 +160,8 @@ def generate_sequential_points(start_point, vmax=None, random=None):
     :return: next point
     """
     point = deepcopy(start_point)
-    vmax = vmax or 1
-    random = random or nprandom
+    vmax = vmax or 1.0
+    random = random or RandomND(dimensions=point.shape[1])
     while True:
         point = point + vmax * random.random() - \
             matrix([vmax/2, vmax/2, vmax/2])
@@ -163,7 +176,7 @@ def generate_line_of_points(start_point, vmax=None):
     :return: next point
     """
     point = deepcopy(start_point)
-    vmax = vmax or 1
+    vmax = vmax or 1.0
     while True:
         point = point + vmax
         yield point
