@@ -113,6 +113,11 @@ class Particle(object):
         """Move the particle."""
         raise ParticleException("This function should be implemented.")
 
+    def next(self):
+        """Move and compute new fitness."""
+        self.move()
+        self.fitness()
+
     @property
     def index(self):
         """Get index number of the particle."""
