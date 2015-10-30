@@ -32,14 +32,15 @@ from pylocating.benchmarks.utils import apply_noise_linear
 from pylocating.utils import distance, Randn, Randn3D, \
     generate_matrix_of_points_in_cube, generate_line_of_points
 from pylocating.strategies.init.position import around_beacons
-from pylocating.particles import PSOParticle, FollowBestParticle
+from pylocating.particles import PSOParticle, FollowBestParticle, \
+    RestartFromBestParticle
 from pylocating.information import Information
 from pylocating.engines import ParticleEngine
 from pylocating.benchmarks.moving_point import LoggingMovingPointEngine, \
     EnvironmentListener
 
 # Load logging configuration
-log_config = "examples/tracking_1.json"
+log_config = "examples/tracking_1_2.json"
 with open(log_config) as data_file:
     data = json.load(data_file)
 logging.config.dictConfig(data)
@@ -76,7 +77,7 @@ particle_position_generator = around_beacons(env)
 # particles inside env
 for i in range(num_particles):
     # particles
-    PSOParticle(
+    RestartFromBestParticle(
         environment=env,
         id="P{}env{}".format(i, 1),
         current=Information(position=next(particle_position_generator)),
