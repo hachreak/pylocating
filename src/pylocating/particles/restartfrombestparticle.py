@@ -16,12 +16,25 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with pysenslog.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Pylocating Engines."""
+"""Restart From the best position - Particle."""
 
-from .particle import Particle
-from .psoparticle import PSOParticle, GlobalBestPSOParticle
-from .followbestparticle import FollowBestParticle
-from .restartfrombestparticle import RestartFromBestParticle
+from __future__ import absolute_import, unicode_literals
 
-__all__ = ['Particle', 'PSOParticle', 'FollowBestParticle',
-           'GlobalBestPSOParticle', 'RestartFromBestParticle']
+from copy import deepcopy
+
+from .psoparticle import PSOParticle
+
+
+class RestartFromBestParticle(PSOParticle):
+
+    """PSOParticle: restart from best position if the environment change."""
+
+    def __init__(self, *args, **kwargs):
+        """Init."""
+        super(RestartFromBestParticle, self).__init__(*args, **kwargs)
+
+    def update_best_fitness(self):
+        """Compute again the best fitness (because radius changed)."""
+        super(RestartFromBestParticle, self).update_best_fitness()
+        with self.lock:
+            self.current = deepcopy(self.environment.best.best)
