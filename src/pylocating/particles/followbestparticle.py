@@ -20,8 +20,7 @@
 
 from __future__ import absolute_import, unicode_literals
 
-from numpy import multiply
-
+from ..utils import Randn3D
 from .psoparticle import PSOParticle
 
 
@@ -29,18 +28,16 @@ class FollowBestParticle(PSOParticle):
 
     """Follow the best particle."""
 
-    def move(self):
+    def __init__(self, *args, **kwargs):
+        """Init randomizer."""
+        self._random = Randn3D()
+        super(FollowBestParticle, self).__init__(*args, **kwargs)
+
+    def _move(self):
         """Move toward the best particle."""
         # global (in all environment) particle position
         gbpos = self.environment.neighborBest.best.position
-        # particle current position and velocity
-        pos = self.current.position
-        vel = self.velocity
         # parameters
         w = self.environment.config['inertial_weight']
-        # randomizer object that return random diagonal matrix
-        # with values uniformed distributed in the interval [0,1)
-        random = self.environment.config['random']
         # compute new position
-        self.velocity = multiply(w * random.random(), vel) + (gbpos - pos)
-        return pos + self.velocity
+        return gbpos + w * self._random.random()
