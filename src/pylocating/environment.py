@@ -71,8 +71,7 @@ class Environment(object):
     def base(self, value):
         """Set base (and update best fitness found)."""
         self._base = value
-        # compute again the best fitness found
-        self.best.update_best_fitness()
+        self._sync_particles()
 
     @property
     def radius(self):
@@ -83,6 +82,10 @@ class Environment(object):
     def radius(self, value):
         """Set radius (and update best fitness found)."""
         self._radius = value
+        self._sync_particles()
+
+    def _sync_particles(self):
+        """Synchronize particles best value when environment change."""
         # compute again the best fitness found for all particles
         for p in self.particles.values():
             p.update_best_fitness()
