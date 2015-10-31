@@ -41,10 +41,13 @@ class EnvironmentListener(object):
     def position(self, point):
         """Update radius inside the environment."""
         disturbed_point_gen = apply_noise_linear(point=point, error=self.error)
-        self.environment.radius = matrix(list(
-            map(lambda b: distance(b, next(disturbed_point_gen)),
-                self.environment.base)
-        ))
+        new_point = next(disturbed_point_gen)
+        # update all environments
+        for env in self.environment.neighbors:
+            env.radius = matrix(list(
+                map(lambda b: distance(b, new_point),
+                    self.environment.base)
+            ))
 
 
 class MovingPointEngine(Thread):
