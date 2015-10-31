@@ -22,10 +22,10 @@ from __future__ import absolute_import, unicode_literals
 
 from copy import deepcopy
 
-from .psoparticle import PSOParticle
+from .psoparticle import GlobalBestPSOParticle
 
 
-class RestartFromBestParticle(PSOParticle):
+class RestartFromBestParticle(GlobalBestPSOParticle):
 
     """PSOParticle: restart from best position if the environment change."""
 
